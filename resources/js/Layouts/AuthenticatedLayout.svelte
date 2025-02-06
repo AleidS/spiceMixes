@@ -31,6 +31,9 @@
                         <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </NavLink>
+                        <NavLink href={route('mixes')} active={route().current('mixes.index')}>
+                            Mixes
+                        </NavLink>
                     </div>
                 </div>
 

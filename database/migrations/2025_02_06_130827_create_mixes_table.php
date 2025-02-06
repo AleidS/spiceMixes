@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->json('ingredients');
-            $table->integer('user_id');
+            $table->string('description');
+            $table->integer('user_id')->nullable();
             $table->integer('cuisine');
             $table->string('photo_url');
             $table->timestamps();
@@ -23,7 +24,9 @@ return new class extends Migration
          Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('continent');
+            $table->integer('measure_id');
+            $table->integer('quantity');
+            $table->boolean('show_alternatives');
             $table->timestamps();
         });
         Schema::create('measures', function (Blueprint $table) {
