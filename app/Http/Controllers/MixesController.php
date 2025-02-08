@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mixes;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Resources\MixesResource;
 use Illuminate\Support\Facades\Auth;
 
 class MixesController extends Controller
@@ -12,15 +13,28 @@ class MixesController extends Controller
     /**
      * Display a listing of the mixes.
      */
-    public function index()
+    public function index(Request $request)
     {
         
         $userId = Auth::id();
 
-        $mixes = Mixes::where('user_id', $userId)
-            ->orWhereNull('user_id')
-            ->get();
-        
+        $mixesQuery = Mixes::where('user_id', $userId)
+            ->orWhereNull('user_id');
+
+        if ($request->selectAll) {
+            return MixesResource::collection(
+                $mixesQuery->get()
+            );
+        }
+
+        $mixes = $mixesQuery->paginate($request->pageSize ?? 10);
+
+          // Add debug statement here
+        // dd($mixes);
+    
+        // Transform the pagination result using MixesResource
+        $mixes = MixesResource::collection($mixes);
+
         return Inertia::render('Mixes/Index', ['mixes' => $mixes]);
     }
 
@@ -47,9 +61,22 @@ class MixesController extends Controller
             'photo_url' => 'required|string|max:255',
         ]);
 
-        Mixes::create($validatedData);
+        $mix = Mixes::create($validatedData);
 
-        // return to_route('mixes.index');
+        $mix
+            ->addMedia($request->avatar[0])
+            ->toMediaCollection('avatars');
+
+        //Debugging
+        // $avatarUrl = $mix->getFirstMediaUrl('avatars');
+        // dd($avatarUrl);  // This will dump the URL of the avatar to check if it's stored correctly
+
+        return redirect()->route('mixes.index')
+        ->with('message', 'Mix created successfully');
+
+        // return redirect()->route('mixes.index')
+        //     ->with('message', 'Mix created successfully');
+    
     }
 
     /**
@@ -73,6 +100,7 @@ class MixesController extends Controller
             'user_id' => 'nullable|integer',
             'cuisine' => 'required|integer',
             'photo_url' => 'required|string|max:255',
+            'avatar'=>'required',
         ]);
 
         $mix = Mixes::find($id);

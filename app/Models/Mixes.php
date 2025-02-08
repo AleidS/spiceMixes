@@ -4,9 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-class Mixes extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
+// tutorial: https://www.youtube.com/watch?v=iTiC-fpj3gs&ab_channel=TapanSharma
+
+class Mixes extends Model implements HasMedia
 {
     use HasFactory;
+      use InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -14,6 +20,7 @@ class Mixes extends Model
         'description',
         'user_id',
         'cuisine',
-        'photo_url'
+        'photo_url',
+        'avatar'
     ];
 }

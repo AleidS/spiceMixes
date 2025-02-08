@@ -1,7 +1,8 @@
 <script>
-    let { children, class: className, type, ...attrs } = $props();
+    let { children, class: className, type,label, ...attrs } = $props();
 </script>
 
+<div>{label}</div>
 <input
     type={type}
     {...attrs}
@@ -9,3 +10,6 @@
 >
     {@render children()}
 </input>
+{if error}
+<div>{error}</div>
+{}

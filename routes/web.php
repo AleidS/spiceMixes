@@ -25,7 +25,7 @@ Route::resource('mixes', MixesController::class);
 Route::get('mixes/create', function () {
     return Inertia::render('Mixes/Add');
 })->name('mixes.create');
-Route::post('mixes', [MixesController::class, 'run'])->name('mixes');
+Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
 Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
 
 Route::middleware('auth')->group(function () {
