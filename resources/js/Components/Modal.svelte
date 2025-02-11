@@ -57,7 +57,7 @@
             >
                 <!-- svelte-ignore a11y_consider_explicit_label -->
                 <button class="transform-select-none fixed inset-0 transition-all" onclick={close}>
-                    <div class="absolute inset-0 bg-gray-500 opacity-75 dark:bg-gray-900">
+                    <div class="bg-uiGray-500 dark:bg-uiGray-900 absolute inset-0 opacity-75">
                         &nbsp;
                     </div>
                 </button>
@@ -68,7 +68,7 @@
                 out:fade={{ duration: 200, easing: cubicIn }}
             >
                 <div
-                    class="mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full dark:bg-gray-800 {maxWidthClass}"
+                    class="dark:bg-uiGray-800 mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full {maxWidthClass}"
                 >
                     {@render children()}
                 </div>

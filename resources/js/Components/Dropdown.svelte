@@ -4,7 +4,7 @@
     let {
         align = 'right',
         content,
-        contentClasses = 'py-1 bg-white dark:bg-gray-700',
+        contentClasses = 'py-1 bg-white dark:bg-uiGray-700',
         trigger,
         width = '48'
     } = $props();

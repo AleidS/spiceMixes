@@ -18,8 +18,11 @@ class MixesResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description'=>$this->description,
+            'ingredients'=>json_decode($this->ingredients),
             'user_id' => $this->user_id,
-            'cuisine' => $this->cuisine,
+             'cuisine_id' => $this->cuisine_id,
+             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),
+            // $this->cuisine->name : null, // Include the cuisine name
             'photo_url' => $this->photo_url,
             'avatar' => $this?->getFirstMediaUrl('avatars'),
         ];

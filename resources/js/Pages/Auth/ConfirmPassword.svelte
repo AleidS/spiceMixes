@@ -25,7 +25,7 @@
 </svelte:head>
 
 <GuestLayout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <div class="text-uiGray-600 dark:text-uiGray-400 mb-4 text-sm">
         This is a secure area of the application. Please confirm your password before continuing.
     </div>
 

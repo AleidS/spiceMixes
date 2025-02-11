@@ -19,8 +19,13 @@ class Mixes extends Model implements HasMedia
         'ingredients',
         'description',
         'user_id',
-        'cuisine',
+        'cuisine_id',
         'photo_url',
         'avatar'
     ];
+    // Define the relationship with the Cuisine model
+    public function cuisine()
+    {
+        return $this->belongsTo(Cuisine::class, 'cuisine_id');
+    }
 }

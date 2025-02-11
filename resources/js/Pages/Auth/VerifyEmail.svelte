@@ -19,7 +19,7 @@
 </svelte:head>
 
 <GuestLayout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <div class="text-uiGray-600 dark:text-uiGray-400 mb-4 text-sm">
         Thanks for signing up! Before getting started, could you verify your email address by
         clicking on the link we just emailed to you? If you didn't receive the email, we will gladly
         send you another.
@@ -40,7 +40,7 @@
 
             <button
                 use:inertia={{ href: route('logout'), method: 'post' }}
-                class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                class="text-uiGray-600 hover:text-uiGray-900 dark:text-uiGray-400 dark:hover:text-uiGray-100 dark:focus:ring-offset-uiGray-800 rounded-md text-sm underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
                 Log Out
             </button>

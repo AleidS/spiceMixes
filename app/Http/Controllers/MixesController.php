@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CuisineResource;
 use App\Models\Mixes;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Resources\MixesResource;
+use App\models\Cuisine;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class MixesController extends Controller
@@ -15,11 +18,17 @@ class MixesController extends Controller
      */
     public function index(Request $request)
     {
-        
         $userId = Auth::id();
 
-        $mixesQuery = Mixes::where('user_id', $userId)
-            ->orWhereNull('user_id');
+        $mixesQuery = Mixes::with('cuisine')
+            ->where(function ($query) use ($userId) {
+                $query->where('user_id', $userId)
+                      ->orWhereNull('user_id');
+            });
+
+        if ($request->has('cuisine_id') && $request->cuisine_id) {
+            $mixesQuery->where('cuisine_id', $request->cuisine_id);
+        }
 
         if ($request->selectAll) {
             return MixesResource::collection(
@@ -29,13 +38,16 @@ class MixesController extends Controller
 
         $mixes = $mixesQuery->paginate($request->pageSize ?? 10);
 
-          // Add debug statement here
-        // dd($mixes);
-    
+        $cuisines = CuisineResource::collection(Cuisine::all());
+
         // Transform the pagination result using MixesResource
         $mixes = MixesResource::collection($mixes);
 
-        return Inertia::render('Mixes/Index', ['mixes' => $mixes]);
+        return Inertia::render('Mixes/Index', [
+            'mixes' => $mixes,
+            'cuisines' => $cuisines,
+            'selectedCuisineId' => $request->cuisine_id,
+        ]);
     }
 
 
@@ -57,7 +69,7 @@ class MixesController extends Controller
             'ingredients' => 'required|json',
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
-            'cuisine' => 'required|integer',
+            'cuisine_id' => 'required|integer',
             'photo_url' => 'required|string|max:255',
         ]);
 
@@ -84,8 +96,14 @@ class MixesController extends Controller
      */
     public function show($id)
     {
-        $mix = Mixes::find($id);
-        return Inertia::render('Mixes/Show', ['mix' => $mix]);
+        $mix = Mixes::with('cuisine')->find($id);
+       if (!$mix) {
+        return redirect()->route('mixes.index')->with('error', 'Mix not found.');
+    }
+
+    $mixResource = new MixesResource($mix);
+
+    return Inertia::render('Mixes/Show', ['mix' => $mixResource]);
     }
 
     /**
@@ -98,7 +116,7 @@ class MixesController extends Controller
             'ingredients' => 'required|json',
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
-            'cuisine' => 'required|integer',
+            'cuisine_id' => 'required|integer',
             'photo_url' => 'required|string|max:255',
             'avatar'=>'required',
         ]);
