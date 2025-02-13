@@ -2,29 +2,33 @@
     // import { page, useForm } from '@inertiajs/svelte';
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte';
     import { router, page, useForm } from '@inertiajs/svelte';
+
     import Button from '@/Components/Button.svelte';
-    let { mixes, errors } = $props();
+    import Input from '@/Components/Input.svelte';
+
+    import { FileUpload } from 'melt/builders';
+
+    const fileUpload = new FileUpload();
+
+    let { mixes, errors, measures } = $props();
 
     const form = useForm({
         name: 'Henkiee',
-        ingredients: '{"name":"John", "age":30, "car":null}',
+        ingredients: '[{}]',
         description: '123',
         user_id: $page.props.auth.user.id,
-        cuisine: '2',
-        photo_url: 'abc.com',
+        cuisine_id: '2',
         avatar: null
+    });
+
+    $effect(() => {
+        console.log(form.avatar);
     });
 
     async function addMix(event) {
         event.preventDefault();
+        console.log(form.avatar);
         $form.post('/mixes');
-        // form.name = '';
-        // form.ingredients = '';
-        // form.description = '';
-        // form.user_id = '';
-        // form.cuisine = '';
-        // form.photo_url = '';
-        // form.avatar = '';
     }
 </script>
 
@@ -33,18 +37,53 @@
 </svelte:head>
 <AuthenticatedLayout>
     <h2>Add Mix</h2>
-    <form onsubmit={addMix} class="flex flex-col gap-y-1">
-        <input type="text" bind:value={$form.name} placeholder="Name" class="text-black" />
-        {#if errors?.name}
-            <div class="error">{errors.name}</div>
-        {/if}
 
-        <input
+    <form onsubmit={addMix} class="flex flex-col gap-y-1">
+        <input {...fileUpload.input} />
+        <div {...fileUpload.dropzone}>
+            {#if fileUpload.isDragging}
+                Drop files here
+            {:else}
+                Click to upload or drag and drop
+            {/if}
+        </div>
+
+        <Input
             type="text"
-            bind:value={$form.ingredients}
-            placeholder="Ingredients (JSON)"
+            bind:value={$form.name}
+            placeholder="Name"
             class="text-black"
+            label="Title"
+            error={errors?.name}
         />
+
+        {#each $form.ingredients as ingredient}
+            <div class="flex">
+                <Input
+                    label="quantity"
+                    type="select"
+                    bind:value={ingredient.quantity}
+                    placeholder="Ingredients (JSON)"
+                    class="text-black"
+                />
+                <Input
+                    label="measure"
+                    options={measures}
+                    type="select"
+                    bind:value={ingredient.measure}
+                    placeholder="Ingredients (JSON)"
+                    class="text-black"
+                />
+                <Input
+                    label="name"
+                    type="text"
+                    bind:value={ingredient.name}
+                    placeholder="Ingredients (JSON)"
+                    class="text-black"
+                />
+            </div>
+        {/each}
+
         {#if errors?.ingredients}
             <div class="error">{errors.ingredients}</div>
         {/if}
@@ -59,11 +98,17 @@
             <div class="error">{errors.description}</div>
         {/if}
 
-        <input type="number" bind:value={$form.cuisine} placeholder="Cuisine" class="text-black" />
+        <input
+            type="number"
+            bind:value={$form.cuisine_id}
+            placeholder="Cuisine"
+            class="text-black"
+        />
         {#if errors?.cuisine}
-            <div class="error">{errors.cuisine}</div>
+            <div class="error">{errors.cuisine_id}</div>
         {/if}
 
+        <!-- <ImageInput bind:files={$form.avatar} onchange={console.log($form.avatar)} /> -->
         <input
             type="file"
             id="avatar"

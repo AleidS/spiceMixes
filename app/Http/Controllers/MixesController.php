@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CuisineResource;
+
 use App\Models\Mixes;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Resources\CuisineResource;
+use App\Http\Resources\MeasureResource;
 use App\Http\Resources\MixesResource;
 use App\models\Cuisine;
+use App\models\Measure;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +42,7 @@ class MixesController extends Controller
         $mixes = $mixesQuery->paginate($request->pageSize ?? 10);
 
         $cuisines = CuisineResource::collection(Cuisine::all());
+        $measures = MeasureResource::collection(Measure::all());
 
         // Transform the pagination result using MixesResource
         $mixes = MixesResource::collection($mixes);
@@ -46,6 +50,7 @@ class MixesController extends Controller
         return Inertia::render('Mixes/Index', [
             'mixes' => $mixes,
             'cuisines' => $cuisines,
+            'measures'=> $measures,
             'selectedCuisineId' => $request->cuisine_id,
         ]);
     }
@@ -70,7 +75,6 @@ class MixesController extends Controller
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
-            'photo_url' => 'required|string|max:255',
         ]);
 
         $mix = Mixes::create($validatedData);
@@ -101,9 +105,15 @@ class MixesController extends Controller
         return redirect()->route('mixes.index')->with('error', 'Mix not found.');
     }
 
+    $cuisines = CuisineResource::collection(Cuisine::all());
+    $measures = MeasureResource::collection(Measure::all());
+
+        // Transform the pagination result using MixesResource
+       
     $mixResource = new MixesResource($mix);
 
-    return Inertia::render('Mixes/Show', ['mix' => $mixResource]);
+    return Inertia::render('Mixes/Show', 
+    ['mix' => $mixResource, 'measures'=>$measures]);
     }
 
     /**
@@ -117,7 +127,6 @@ class MixesController extends Controller
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
-            'photo_url' => 'required|string|max:255',
             'avatar'=>'required',
         ]);
 

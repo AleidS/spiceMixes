@@ -8,6 +8,13 @@ export default defineConfig({
             input: 'resources/js/app.js',
             refresh: true,
         }),
-        svelte()
-    ]
+        svelte(),
+        Icons({
+            /* options */
+            autoInstall: true,
+        }),
+    ],
+     optimizeDeps: {
+        exclude: ['js-big-decimal']
+    }
 });

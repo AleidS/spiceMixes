@@ -14,11 +14,15 @@ class MeasuresTableSeeder extends Seeder
      public function run()
     {
         DB::table('measures')->insert([
-            ['name' => 'Cup', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Tablespoon', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Teaspoon', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Gram', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Kilogram', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Tbsp','info'=>'Tablespoon', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Ts','info'=>'Teaspoon', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Pinches','info'=>'Pinch', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Cups', 'info'=>'Cup', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Gr','info'=>'Grams', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Kg','info'=>'Kilograms', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'ml','info'=>'millilitres', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'dl','info'=>'decilitre', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'l','info'=>'litre', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

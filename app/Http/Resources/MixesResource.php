@@ -20,10 +20,9 @@ class MixesResource extends JsonResource
             'description'=>$this->description,
             'ingredients'=>json_decode($this->ingredients),
             'user_id' => $this->user_id,
-             'cuisine_id' => $this->cuisine_id,
-             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),
+            'cuisine_id' => $this->cuisine_id,
+            'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),
             // $this->cuisine->name : null, // Include the cuisine name
-            'photo_url' => $this->photo_url,
             'avatar' => $this?->getFirstMediaUrl('avatars'),
         ];
     }

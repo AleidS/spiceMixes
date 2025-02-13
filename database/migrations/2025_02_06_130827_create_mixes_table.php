@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('description');
             $table->integer('user_id')->nullable();
             $table->integer('cuisine_id')->default(1);
-            $table->string('photo_url');
             $table->timestamps();
         });
          Schema::create('ingredients', function (Blueprint $table) {
@@ -32,6 +31,7 @@ return new class extends Migration
         Schema::create('measures', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('info');
             $table->timestamps();
         });
         Schema::create('cuisines', function (Blueprint $table) {

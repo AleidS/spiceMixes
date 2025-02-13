@@ -14,8 +14,9 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                'primary': ['Josefin Sans', 'sans-serif'],
-                'secondary': ['Zilla Slab', 'serif'],
+               
+                'primary': ['Zilla Slab', 'serif'],
+                 'secondary': ['Josefin Sans', 'sans-serif'],
             },
             // https://tailcolor.com/ to easily get color palette!
             // https://www.tints.dev/purple/D08152 to generate
@@ -34,6 +35,19 @@ export default {
                     950: "#1C0C02" 
                 },
                 'secondary':{
+                    50: "#E9F1F1",
+                    100: "#D4E3E2",
+                    200: "#A9C7C6",
+                    300: "#7AA8A7",
+                    400: "#578583",
+                    500: "#3A5958",
+                    600: "#2E4746",
+                    700: "#223434",
+                    800: "#182525",
+                    900: "#0C1312",
+                    950: "#060909"
+                },
+                'secondaryOld':{
                     "50": "#ecf4f3",
                     "100": "#d9e8e7",
                     "200": "#b3d1d0",

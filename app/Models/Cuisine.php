@@ -12,5 +12,6 @@ class Cuisine extends Model
     protected $fillable = [
         'name',
         'continent',
+        'color'
     ];
 }

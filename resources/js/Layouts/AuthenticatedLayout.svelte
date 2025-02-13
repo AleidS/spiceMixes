@@ -5,16 +5,19 @@
     import NavLink from '@/Components/NavLink.svelte';
     import ResponsiveNavLink from '@/Components/ResponsiveNavLink.svelte';
     import { inertia, page } from '@inertiajs/svelte';
+    import MixesFilters from './LayoutParts/MixesFilters.svelte';
 
-    let { children, header } = $props();
+    let { children, header, cuisines, selectedCuisineId, showFilter = false } = $props();
 
     let showingNavigationDropdown = $state(false);
 </script>
 
-<div class="dark:bg-uiDark-800 bg-uiGray-100 min-h-screen">
-    <nav class="dark:bg-uiDark-600 border-uiGray-100 dark:border-uiGray-700 border-b bg-white">
+<div class="dark:bg-uiDark-800 bg-uiGray-100 relative flex h-screen flex-col">
+    <nav
+        class="dark:bg-uiDark-600 border-uiGray-100 dark:border-uiGray-700 sticky top-0 z-40 border-b bg-white"
+    >
         <!-- Primary Navigation Menu -->
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto w-full px-4 sm:px-16 lg:px-16">
             <div class="flex h-16 justify-between">
                 <div class="flex">
                     <!-- Logo -->
@@ -27,7 +30,7 @@
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <div class="z-40 hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </NavLink>
@@ -45,7 +48,7 @@
                                 <span class="inline-flex rounded-md">
                                     <button
                                         type="button"
-                                        class="text-uiGray-500 dark:bg-uiDark-500 dark:text-uiGray-200 dark:hover:text-uiGray-100 hover:text-uiGray-700 inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 transition duration-150 ease-in-out focus:outline-none"
+                                        class="text-uiGray-500 dark:bg-uiDark-500 dark:text-uiGray-200 dark:hover:text-uiGray-100 hover:text-uiGray-700 font-secondary inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 transition duration-150 ease-in-out focus:outline-none"
                                     >
                                         {$page.props.auth.user.name}
                                         <svg
@@ -108,6 +111,9 @@
                 <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                     Dashboard
                 </ResponsiveNavLink>
+                <ResponsiveNavLink href={route('mixes')} active={route().current('mixes.index')}>
+                    Mixes
+                </ResponsiveNavLink>
             </div>
 
             <!-- Responsive Settings Options -->
@@ -144,7 +150,12 @@
     {/if}
 
     <!-- Page Content -->
-    <main class="md:p-10">
-        {@render children()}
+    <main class="relative h-full flex-1 overflow-hidden">
+        <div class="z-1 absolute top-0 h-full w-full overflow-auto p-2 md:p-10">
+            {@render children()}
+        </div>
+        {#if showFilter}
+            <MixesFilters {cuisines} {selectedCuisineId} class="fixed left-0 top-0 z-20 h-full" />
+        {/if}
     </main>
 </div>

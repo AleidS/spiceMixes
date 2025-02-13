@@ -3,4 +3,17 @@
 @tailwind utilities;
 
 
-* {@apply text-white}
+* {@apply  font-secondary}
+
+h1, h2, p, ul {
+    @apply text-[#eeeeee]
+}
+h1 {
+    @apply font-primary text-4xl font-semibold text-white
+}
+h2 {
+    @apply font-primary font-semibold mb-2
+}
+p, ul{
+    @apply font-secondary font-light
+}
