@@ -7,14 +7,20 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+// Route::get('/', function () {
+//     return Inertia::render('Mixes/Index');
+// })->middleware(['auth', 'verified'])->name('mixes');
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -28,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [MixesController::class, 'index'])->name('mixes');
     Route::resource('mixes', MixesController::class);
     Route::get('mixes/create', [MixesController::class, 'create'], function () {
         return Inertia::render('Mixes/Add');

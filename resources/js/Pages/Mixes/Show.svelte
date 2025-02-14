@@ -18,10 +18,12 @@
                 {mix.data.name}
             </h1>
              <Link href={route('mixes.edit', mix.data.id)}>
+            {#if mix.data.editable}
             <Button class='rounded-xl !bg-primary-400'>
                 <Icon icon='mdi:pencil' class='mb-1'/>
                 Edit
             </Button>
+            {/if}
         </Link>
         </div>
         <div class="flex flex-wrap justify-stretch gap-6 md:justify-between">

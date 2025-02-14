@@ -47,10 +47,10 @@
         if ($form.avatar && !$form.processing && preventEffect == false) {
             if (typeof form.avatar === 'string') {
             // If avatar is a filename, set the image source directly
-            image.setAttribute('src', form.avatar);
+            image.setAttribute('src', $form.avatar);
         } else if (form.avatar instanceof Blob) {
             // If avatar is a Blob, read it as Data URL
-            reader.readAsDataURL(form.avatar);
+            reader.readAsDataURL($form.avatar);
         }
         }
     });
@@ -87,21 +87,27 @@
     <title>Add a mix</title>
 </svelte:head>
 <AuthenticatedLayout>
+    {#if mix?.data?.editable!=false}
     <div class="page">
         <!-- <h1>{mix?'Edit mix':'Add Mix'}</h1> -->
 
         <form onsubmit={addMix} class="flex flex-col gap-y-6">
-           <div class='flex gap-3 !justify-start lg:justify-between flex-row-reverse flex-wrap'>
+            {mix?.data?.editable}
+            {mix?.data?.user_id}
+            
+           <div class='flex gap-3 justify-start md:justify-between flex-row-reverse flex-wrap items-center'>
              <Button 
                     type="submit" 
-                    class="w-fit h-fit text-nowrap !bg-primary-500 !text-white">
+                    class="w-fit h-auto text-nowrap !bg-primary-500 !text-white">
+                    
+                    <Icon icon='mdi:floppy' class='size-5 mb-1'/>
                     {mix?'Save mix':'Add Mix'}
                 </Button>
                 <Input
                     type="text"
                     bind:value={$form.name}
                     placeholder="Title"
-                    class="!w-64 text-black !text-2xl font-primary !font-bold border !border-uiGray-400"
+                    class="!w-64 text-black !text-2xl !py-1 font-primary !font-bold border !border-uiGray-400"
                     wrapperClass="!justify-start !w-[300px]"
                     label={mix?null:'Title'}
                     
@@ -111,14 +117,14 @@
            </div>
 
 
-            <div class="flex min-h-56 flex-wrap items-stretch justify-center gap-6">
-                <div class='h-auto flex flex-col justify-start'>
+            <div class="flex min-h-56 flex-wrap items-stretch gap-6 justify-stretch">
+                <div class='md:h-auto h-fit flex flex-col justify-start w-full md:w-fit bg-uiDark-600 rounded-md items-center'>
                     <FileUpload class="h-auto w-96" onSelectedChange={handleImage}>
                         {#snippet children(fileUpload)}
                             <input accept="image/*" {...fileUpload.input} type="file" onchange={handleImage}  />
                             <div
                                 {...fileUpload.dropzone}
-                                class="relative flex h-[250px] w-[300px] items-center justify-center rounded-md border border-dashed border-white bg-uiDark-500 p-4 text-center overflow-hidden"
+                                class="relative flex h-[250px] w-[300px] max-w-full items-center justify-center rounded-md border border-dashed border-white bg-uiDark-500 p-4 text-center overflow-hidden"
                             >
                                 {#if $form.avatar}
                                     <img
@@ -139,7 +145,7 @@
                         {/snippet}
                     </FileUpload>
                 </div>
-                <div class="flex flex-1 flex-col gap-4 min-w-[300px]">
+                <div class="flex flex-1 flex-col gap-4 w-[300px] max-w-full">
                     <div class="box h-full flex flex-col gap-4">
                         <h3 class="">Ingredients</h3>
 
@@ -185,7 +191,7 @@
                                             $form.ingredients.splice(index, 1);
                                             $form.ingredients = $form.ingredients;
                                         }}
-                                        class="!bg-danger-500 !text-white col-span-1 lg:col-span-2 w-fit"
+                                        class="!bg-transparent !text-danger-100 col-span-1 lg:col-span-2 w-fit"
                                     >
                                         <Icon icon="mdi:trash" class="mb-[2px] size-3" />
                                         Remove
@@ -200,7 +206,7 @@
                                     $form.ingredients.push({ quantity: '', measure_id: '', name: '' }),
                                         ($form.ingredients = $form.ingredients);
                                 }}
-                                class="w-fit !bg-success-500 !text-white"
+                                class="w-fit !bg-success-400 !bg-opacity-50 !text-white"
                             >
                                 <Icon icon="mdi:plus-circle" class="mb-[2px] size-3" />
                                 Add
@@ -236,6 +242,7 @@
                     error={errors.cuisine_id}
                 />
            </div>
+         
 
             <!-- <ImageInput bind:files={$form.avatar} onchange={console.log($form.avatar)} /> -->
             <!-- <input
@@ -262,6 +269,9 @@
             <Button type="submit" class="w-fit !bg-primary-500 !text-white">{mix?'Save mix':'Add Mix'}</Button>
         </form>
     </div>
+      {:else}
+           Nope, manually typing in that url does not work :) 
+    {/if}
 </AuthenticatedLayout>
 
 <!-- <button onclick={deleteMix}>Delete Mix</button> -->
