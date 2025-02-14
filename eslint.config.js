@@ -1,6 +1,7 @@
 import prettier from 'eslint-config-prettier';
 import js from '@eslint/js';
 import svelte from 'eslint-plugin-svelte';
+import php from '@eslint/php'
 import globals from 'globals';
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -23,6 +24,15 @@ export default [
     {
         rules: {
             'no-undef': 'off'
+        }
+    },
+	
+    {
+        files: ['*.svelte'],
+        processor: 'svelte3/svelte3',
+        plugins: ['svelte3'],
+        rules: {
+            // Add Svelte-specific rules here
         }
     }
 ];

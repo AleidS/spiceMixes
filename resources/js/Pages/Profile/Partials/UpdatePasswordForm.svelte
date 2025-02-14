@@ -39,9 +39,9 @@
 
 <section class={className}>
     <header>
-        <h2 class="text-uiGray-900 dark:text-uiGray-100 text-lg font-medium">Update Password</h2>
+        <h2 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">Update Password</h2>
 
-        <p class="text-uiGray-600 dark:text-uiGray-400 mt-1 text-sm">
+        <p class="mt-1 text-sm text-uiGray-600 dark:text-uiGray-400">
             Ensure your account is using a long, random password to stay secure.
         </p>
     </header>
@@ -96,7 +96,7 @@
 
             {#if $form.recentlySuccessful}
                 <div transition:fade={{ easing: cubicInOut }}>
-                    <p class="text-uiGray-600 dark:text-uiGray-400 text-sm transition ease-in-out">
+                    <p class="text-sm text-uiGray-600 transition ease-in-out dark:text-uiGray-400">
                         Saved.
                     </p>
                 </div>

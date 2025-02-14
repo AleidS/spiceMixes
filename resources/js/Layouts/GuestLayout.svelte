@@ -6,16 +6,16 @@
 </script>
 
 <div
-    class="bg-uiGray-100 dark:bg-uiGray-900 flex min-h-screen flex-col items-center pt-6 sm:justify-center sm:pt-0"
+    class="flex min-h-screen flex-col items-center bg-uiGray-100 pt-6 sm:justify-center sm:pt-0 dark:bg-uiGray-900"
 >
     <div>
         <a use:inertia href="/">
-            <ApplicationLogo class="text-uiGray-500 h-20 w-20 fill-current" />
+            <ApplicationLogo class="h-20 w-20 fill-current text-uiGray-500" />
         </a>
     </div>
 
     <div
-        class="dark:bg-uiGray-800 mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg"
+        class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg dark:bg-uiGray-800"
     >
         {@render children()}
     </div>

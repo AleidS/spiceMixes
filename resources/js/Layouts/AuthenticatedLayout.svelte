@@ -12,9 +12,9 @@
     let showingNavigationDropdown = $state(false);
 </script>
 
-<div class="dark:bg-uiDark-800 bg-uiGray-100 relative flex h-screen flex-col">
+<div class="relative flex h-screen flex-col bg-uiGray-100 dark:bg-uiDark-800">
     <nav
-        class="dark:bg-uiDark-600 border-uiGray-100 dark:border-uiGray-700 sticky top-0 z-40 border-b bg-white"
+        class="sticky top-0 z-40 border-b border-uiGray-100 bg-white dark:border-uiGray-700 dark:bg-uiDark-600"
     >
         <!-- Primary Navigation Menu -->
         <div class="mx-auto w-full px-4 sm:px-16 lg:px-16">
@@ -24,7 +24,7 @@
                     <div class="flex shrink-0 items-center">
                         <a use:inertia href={route('dashboard')}>
                             <ApplicationLogo
-                                class="text-uiGray-800 dark:text-uiGray-200 block h-9 w-auto fill-current"
+                                class="block h-9 w-auto fill-current text-uiGray-800 dark:text-uiGray-200"
                             />
                         </a>
                     </div>
@@ -48,7 +48,7 @@
                                 <span class="inline-flex rounded-md">
                                     <button
                                         type="button"
-                                        class="text-uiGray-500 dark:bg-uiDark-500 dark:text-uiGray-200 dark:hover:text-uiGray-100 hover:text-uiGray-700 font-secondary inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 transition duration-150 ease-in-out focus:outline-none"
+                                        class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 font-secondary text-sm font-medium leading-4 text-uiGray-500 transition duration-150 ease-in-out hover:text-uiGray-700 focus:outline-none dark:bg-uiDark-500 dark:text-uiGray-200 dark:hover:text-uiGray-100"
                                     >
                                         {$page.props.auth.user.name}
                                         <svg
@@ -82,7 +82,7 @@
                     <!-- svelte-ignore a11y_consider_explicit_label -->
                     <button
                         onclick={() => (showingNavigationDropdown = !showingNavigationDropdown)}
-                        class="text-uiGray-400 dark:text-uiGray-500 dark:hover:bg-uiGray-900 dark:hover:text-uiGray-400 dark:focus:bg-uiGray-900 dark:focus:text-uiGray-400 hover:bg-uiGray-100 hover:text-uiGray-500 focus:bg-uiGray-100 focus:text-uiGray-500 inline-flex items-center justify-center rounded-md p-2 transition duration-150 ease-in-out focus:outline-none"
+                        class="inline-flex items-center justify-center rounded-md p-2 text-uiGray-400 transition duration-150 ease-in-out hover:bg-uiGray-100 hover:text-uiGray-500 focus:bg-uiGray-100 focus:text-uiGray-500 focus:outline-none dark:text-uiGray-500 dark:hover:bg-uiGray-900 dark:hover:text-uiGray-400 dark:focus:bg-uiGray-900 dark:focus:text-uiGray-400"
                     >
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path
@@ -117,12 +117,12 @@
             </div>
 
             <!-- Responsive Settings Options -->
-            <div class="dark:border-uiGray-600 border-uiGray-200 border-t pb-1 pt-4">
+            <div class="border-t border-uiGray-200 pb-1 pt-4 dark:border-uiGray-600">
                 <div class="px-4">
-                    <div class="dark:text-uiGray-200 text-uiGray-800 text-base font-medium">
+                    <div class="text-base font-medium text-uiGray-800 dark:text-uiGray-200">
                         {$page.props.auth.user.name}
                     </div>
-                    <div class="text-uiGray-500 text-sm font-medium">
+                    <div class="text-sm font-medium text-uiGray-500">
                         {$page.props.auth.user.email}
                     </div>
                 </div>
@@ -142,7 +142,7 @@
 
     <!-- Page Heading -->
     {#if header}
-        <header class="dark:bg-uiGray-800 bg-white shadow">
+        <header class="bg-white shadow dark:bg-uiGray-800">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 {@render header()}
             </div>

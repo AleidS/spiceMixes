@@ -4,7 +4,7 @@
 
 <label
     {...attrs}
-    class="text-uiGray-700 dark:text-uiGray-300 block text-sm font-medium {className}"
+    class="block text-sm font-medium text-uiGray-700 dark:text-uiGray-300 {className}"
 >
     {#if value}
         <span>{value}</span>

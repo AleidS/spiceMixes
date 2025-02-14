@@ -18,7 +18,7 @@ class MixesResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description'=>$this->description,
-            'ingredients'=>json_decode($this->ingredients),
+            'ingredients'=>json_decode($this->ingredients, true),
             'user_id' => $this->user_id,
             'cuisine_id' => $this->cuisine_id,
             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),

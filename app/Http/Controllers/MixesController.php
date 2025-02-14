@@ -23,7 +23,7 @@ class MixesController extends Controller
     {
         $userId = Auth::id();
 
-        $mixesQuery = Mixes::with('cuisine')
+         $mixesQuery = Mixes::with('cuisine')
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId)
                       ->orWhereNull('user_id');
@@ -56,6 +56,18 @@ class MixesController extends Controller
     }
 
 
+    public function create()
+        {
+          
+            $cuisines = CuisineResource::collection(Cuisine::all());
+            $measures = MeasureResource::collection(Measure::all());
+
+            return Inertia::render('Mixes/Add', [
+                'measures' => $measures,
+                'cuisines' => $cuisines,
+            ]);
+        }
+
     /**
      * Store a newly created mix in storage.
      */
@@ -75,13 +87,14 @@ class MixesController extends Controller
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
+             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Make avatar nullable and validate file type
         ]);
 
         $mix = Mixes::create($validatedData);
 
-        $mix
-            ->addMedia($request->avatar[0])
-            ->toMediaCollection('avatars');
+        if ($request->hasFile('avatar')) {
+            $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
+        }
 
         //Debugging
         // $avatarUrl = $mix->getFirstMediaUrl('avatars');
@@ -101,19 +114,43 @@ class MixesController extends Controller
     public function show($id)
     {
         $mix = Mixes::with('cuisine')->find($id);
-       if (!$mix) {
-        return redirect()->route('mixes.index')->with('error', 'Mix not found.');
-    }
+        if (!$mix) {
+            return redirect()->route('mixes.index')->with('error', 'Mix not found.');
+        }
 
-    $cuisines = CuisineResource::collection(Cuisine::all());
-    $measures = MeasureResource::collection(Measure::all());
+        $cuisines = CuisineResource::collection(Cuisine::all());
+        $measures = MeasureResource::collection(Measure::all());
+
+            // Transform the pagination result using MixesResource
+        
+        $mixResource = new MixesResource($mix);
+
+        return Inertia::render('Mixes/Show', 
+        ['mix' => $mixResource, 'measures'=>$measures]);
+    }
+    /**
+     * Display the specified mix.
+     */
+    public function edit($id)
+    {
+        $mix = Mixes::with('cuisine')->find($id);
+        if (!$mix) {
+            return redirect()->route('mixes.index')->with('error', 'Mix not found.');
+        }
+
+        $cuisines = CuisineResource::collection(Cuisine::all());
+        $measures = MeasureResource::collection(Measure::all());
 
         // Transform the pagination result using MixesResource
        
-    $mixResource = new MixesResource($mix);
+        $mixResource = new MixesResource($mix);
 
-    return Inertia::render('Mixes/Show', 
-    ['mix' => $mixResource, 'measures'=>$measures]);
+         return Inertia::render('Mixes/Add', 
+
+            ['mix' => $mixResource,
+            'measures'=>$measures, 
+            'cuisines' => $cuisines,]
+        );
     }
 
     /**
@@ -123,16 +160,35 @@ class MixesController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'ingredients' => 'required|json',
+            'ingredients' => 'required|json',           
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
-            'avatar'=>'required',
+            'avatar' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Make avatar nullable and validate file type
+
         ]);
 
-        $mix = Mixes::find($id);
+        if ($request->hasFile('avatar')) {
+            $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
+        }
+
+        
+       $mix = Mixes::with('cuisine')->find($id);
         $mix->update($validatedData);
-        return redirect()->route('mixes.index');
+        $mixResource = new MixesResource($mix);
+
+         $cuisines = CuisineResource::collection(Cuisine::all());
+        $measures = MeasureResource::collection(Measure::all());
+
+
+        $this->show($id);
+        
+         return Inertia::render('Mixes/Show', 
+
+            ['mix' => $mixResource,
+            'measures'=>$measures, 
+            'cuisines' => $cuisines,]
+        );
     }
 
     /**

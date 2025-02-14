@@ -1,33 +1,63 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+    import Icon from '@iconify/svelte';
+
     let {
         children,
         wrapperClass,
         labelClass,
+        labelMobileOnly=false,
         class: className,
         label,
         error,
         type,
+        value = $bindable(''),
         options,
         ...attrs
     } = $props();
+
+    // You can use type = select (in which case, send a list of options with id and Name),
+    //  textArea (large area), number, or text (possibly file)
 </script>
 
-<div class="label flex items-center gap-3 {wrapperClass}">
-    <div class="text-white {labelClass}">{label}</div>
+<div
+    class="label flex w-full max-w-full lg:max-w-80 flex-wrap items-center gap-3
+<!-- {wrapperClass}  -->
+    {type == 'textArea'? 'flex-col !items-start !justify-start  text-left' : ''}"
+>
+    
+{#if label}
+    <div class="text-white {labelClass} {labelMobileOnly? 'block lg:hidden':''}">{label}</div>
+{/if}
     {#if type == 'select'}
-        <select>
+        <select
+            {...attrs}
+            bind:value
+            class="inputClass {className}"
+        >
             {#each options as option}
-                <option value={option.value}> {option}</option>
+                <option value={option.id}> {option.name}</option>
             {/each}
         </select>
+    {:else if type == 'textArea'}
+        <textarea
+            bind:value
+            {...attrs}
+            class="inputClass w-full min-w-full {className}"
+        >
+        </textarea>
     {:else}
         <input
             {type}
+            bind:value
             {...attrs}
-            class="bg-uiGray-800 hover:bg-uiGray-700 focus:bg-uiGray-700 active:bg-uiGray-900 dark:text-uiGray-800 dark:focus:ring-offset-uiGray-800 dark:active:bg-uiGray-300 inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-gray-50 dark:hover:bg-white dark:focus:bg-white {className}"
+            class="inputClass {className}"
         />
     {/if}
 </div>
 {#if error}
-    <div>{error}</div>
+    <div class="error text-danger-300">
+        <Icon icon="tabler:exclamation-circle-filled" class="mb-[4px] inline size-4" />
+        {error}
+    </div>
 {/if}

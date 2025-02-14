@@ -9,10 +9,7 @@ export default defineConfig({
             refresh: true,
         }),
         svelte(),
-        Icons({
-            /* options */
-            autoInstall: true,
-        }),
+        
     ],
      optimizeDeps: {
         exclude: ['js-big-decimal']

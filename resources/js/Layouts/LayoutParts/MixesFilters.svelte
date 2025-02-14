@@ -18,8 +18,8 @@
 >
     {#each cuisines.data as cuisine}
         <Button
-            class="!bg-primary-600 h-12 origin-left rounded-l-none !text-white transition-transform duration-200 ease-in-out
-                    {cuisine.id == selectedCuisineId
+            class="h-12 origin-left rounded-l-none !bg-primary-600 !text-white transition-transform duration-200 ease-in-out
+                        {cuisine.id == selectedCuisineId
                 ? 'scale-x-99 left-5 border border-l-0 border-white'
                 : 'hover:scale-x-99 scale-x-95'}"
             style="background-color: {cuisine.color ?? ''}!important;"

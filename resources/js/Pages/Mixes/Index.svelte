@@ -4,10 +4,14 @@
     import { router, page, Link, useForm } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
     import MixesFilters from '@/Layouts/LayoutParts/MixesFilters.svelte';
+    import autoAnimate from '@formkit/auto-animate';
+    import Icon from '@iconify/svelte';
     export let mixes;
     export let measures;
     export let cuisines;
     export let selectedCuisineId;
+
+    console.log(mixes);
 </script>
 
 <svelte:head>
@@ -17,15 +21,27 @@
     <!-- <MixesFilters {cuisines} {selectedCuisineId} /> -->
     <!-- User ID: {$page.props.auth.user.id} -->
     <div class="m-auto mt-5 flex h-full max-w-[750px] flex-1 flex-wrap items-center gap-2 gap-y-10">
-        <h1 class="w-full text-center md:text-left">Mixes</h1>
-        <div class="grid w-full grid-cols-1 gap-8 md:grid-cols-3">
+        <div class="flex w-full flex-row justify-between">
+            <h1 class="w-full text-center md:text-left">Mixes</h1>
+            <Link
+                as="Button"
+                href={route('mixes.create')}
+                class="m-auto w-fit text-white hover:scale-105 hover:underline"
+            >
+                <Button class="w-fit text-nowrap !bg-primary-600 !text-white">
+                    <Icon icon="mdi:plus-circle" class="mb-[2px] inline size-5" />
+                    Add New Mix
+                </Button>
+            </Link>
+        </div>
+        <div class="grid w-full grid-cols-1 gap-8 md:grid-cols-3" use:autoAnimate>
             {#each mixes.data as mix}
                 <Link href={route('mixes.show', mix.id)}>
                     <div
-                        class="bg-uiGray-700 border-uiGray-500 relative col-span-1 overflow-hidden rounded-lg border-[1px] transition duration-200 ease-out hover:scale-105 hover:brightness-105 md:p-4"
+                        class="relative col-span-1 overflow-hidden rounded-lg border-[1px] border-uiGray-500 bg-uiGray-700 transition duration-200 ease-out hover:scale-105 hover:brightness-105 md:p-4"
                     >
                         <div
-                            class="font-secondary bg-primary-900 absolute bottom-0 left-0 w-full bg-opacity-10 p-4 text-center text-3xl font-light text-white backdrop-blur-md backdrop-brightness-50"
+                            class="absolute bottom-0 left-0 w-full bg-primary-900 bg-opacity-10 p-4 text-center font-secondary text-3xl font-light text-white backdrop-blur-md backdrop-brightness-50"
                         >
                             {mix.name}
                         </div>
@@ -41,14 +57,6 @@
                 </Link>
             {/each}
         </div>
-
-        <Link
-            as="Button"
-            href={route('mixes.create')}
-            class="m-auto text-white hover:scale-105 hover:underline"
-        >
-            <Button class="!bg-primary-600 font-primary !text-white">Add New Mix</Button>
-        </Link>
     </div>
 </AuthenticatedLayout>
 

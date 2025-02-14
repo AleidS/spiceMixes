@@ -70,7 +70,7 @@
         <div class="mt-4 block">
             <label for="remember-me" class="flex items-center">
                 <Checkbox id="remember-me" name="remember" />
-                <span class="text-uiGray-600 dark:text-uiGray-400 ms-2 text-sm">Remember me</span>
+                <span class="ms-2 text-sm text-uiGray-600 dark:text-uiGray-400">Remember me</span>
             </label>
         </div>
 
@@ -79,7 +79,7 @@
                 <a
                     use:inertia
                     href={route('password.request')}
-                    class="text-uiGray-600 hover:text-uiGray-900 dark:text-uiGray-400 dark:hover:text-uiGray-100 dark:focus:ring-offset-uiGray-800 rounded-md text-sm underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="rounded-md text-sm text-uiGray-600 underline hover:text-uiGray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-uiGray-400 dark:hover:text-uiGray-100 dark:focus:ring-offset-uiGray-800"
                 >
                     Forgot your password?
                 </a>

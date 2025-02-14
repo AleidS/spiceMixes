@@ -29,11 +29,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('mixes', MixesController::class);
-    Route::get('mixes/create', function () {
+    Route::get('mixes/create', [MixesController::class, 'create'], function () {
         return Inertia::render('Mixes/Add');
     })->middleware(['auth', 'verified'])->name('mixes.create');
     Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
     Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
+    Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
