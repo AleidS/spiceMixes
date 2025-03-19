@@ -22,6 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    public function mixes()
+    {
+        return $this->hasMany('App\Project', 'id', 'user_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -32,9 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('cuisines', CuisineController::class);
 });
 
+Route::get('/', [MixesController::class, 'home'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [MixesController::class, 'index'])->name('mixes');
+    // Route::get('/', [MixesController::class, 'index'])->name('mixes');
     Route::resource('mixes', MixesController::class);
     Route::get('mixes/create', [MixesController::class, 'create'], function () {
         return Inertia::render('Mixes/Add');

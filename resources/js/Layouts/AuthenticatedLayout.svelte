@@ -7,6 +7,10 @@
     import { inertia, page } from '@inertiajs/svelte';
     import MixesFilters from './LayoutParts/MixesFilters.svelte';
 
+    //   import { Button } from 'flowbite-svelte';
+    //   https://flowbite-svelte.com/docs/components/buttons
+    
+    import Button from '@/Components/Button.svelte';
     let { children, header, cuisines, selectedCuisineId, showFilter = false } = $props();
 
     let showingNavigationDropdown = $state(false);
@@ -31,18 +35,19 @@
 
                     <!-- Navigation Links -->
                     <div class="z-40 hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <!-- <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
-                        </NavLink>
-                        <NavLink href={route('mixes')} active={route().current('mixes.index')}>
+                        </NavLink> -->
+                        <!-- <NavLink href={route('mixes')} active={route().current('mixes.index')}>
                             Mixes
-                        </NavLink>
+                        </NavLink> -->
                     </div>
                 </div>
 
                 <div class="hidden sm:ms-6 sm:flex sm:items-center">
                     <!-- Settings Dropdown -->
                     <div class="relative ms-3">
+                        {#if $page.props.auth.user}
                         <Dropdown align="right" width="48">
                             {#snippet trigger()}
                                 <span class="inline-flex rounded-md">
@@ -66,6 +71,7 @@
                                     </button>
                                 </span>
                             {/snippet}
+                       
 
                             {#snippet content()}
                                 <DropdownLink href={route('profile.edit')}>Profile</DropdownLink>
@@ -74,6 +80,33 @@
                                 >
                             {/snippet}
                         </Dropdown>
+                             {:else}
+                            
+                              <NavLink
+                               
+                                href="/register"
+            
+                            > 
+                            <Button 
+                          
+                                class="!bg-uiDark-600 border-3 !text-uiGray-100 !font-bold border border-primary-600">
+                                register
+                            </Button>
+                        </NavLink>
+                        
+                             
+                              <NavLink
+                               
+                                href="/login"
+                               
+                            >
+                               <Button class='!bg-primary-600 !text-white'>
+                                Log in
+                            </Button>
+                        </NavLink>
+                            
+                          
+                            {/if}
                     </div>
                 </div>
 
@@ -108,14 +141,15 @@
         <!-- Responsive Navigation Menu -->
         <div class={`${showingNavigationDropdown ? 'block' : 'hidden'} sm:hidden`}>
             <div class="space-y-1 pb-3 pt-2">
-                <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                <!-- <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                     Dashboard
-                </ResponsiveNavLink>
+                </ResponsiveNavLink> -->
                 <ResponsiveNavLink href={route('mixes')} active={route().current('mixes.index')}>
                     Mixes
                 </ResponsiveNavLink>
             </div>
 
+              {#if $page.props.auth.user}
             <!-- Responsive Settings Options -->
             <div class="border-t border-uiGray-200 pb-1 pt-4 dark:border-uiGray-600">
                 <div class="px-4">
@@ -127,6 +161,7 @@
                     </div>
                 </div>
 
+         
                 <div class="mt-3 space-y-1">
                     <ResponsiveNavLink
                         href={route('profile.edit')}
@@ -137,6 +172,7 @@
                     >
                 </div>
             </div>
+            {/if}
         </div>
     </nav>
 

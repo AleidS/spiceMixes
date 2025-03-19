@@ -9,8 +9,8 @@ use Inertia\Inertia;
 use App\Http\Resources\CuisineResource;
 use App\Http\Resources\MeasureResource;
 use App\Http\Resources\MixesResource;
-use App\models\Cuisine;
-use App\models\Measure;
+use App\Models\Cuisine; 
+use App\Models\Measure; 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,14 +19,61 @@ class MixesController extends Controller
     /**
      * Display a listing of the mixes.
      */
-    public function index(Request $request)
+
+    public function home(Request $request)
     {
+        if (Auth::check()) {
+            return $this->allMixes($request);
+        } else {
+            return $this->publicMixes($request);
+        }
+    }
+
+
+    public function allMixes(Request $request)
+    {
+        
         $userId = Auth::id();
 
          $mixesQuery = Mixes::with('cuisine')
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId)
                       ->orWhereNull('user_id');
+            });
+
+        if ($request->has('cuisine_id') && $request->cuisine_id) {
+            $mixesQuery->where('cuisine_id', $request->cuisine_id);
+        }
+
+        if ($request->selectAll) {
+            return MixesResource::collection(
+                $mixesQuery->get()
+            );
+        }
+
+        $mixes = $mixesQuery->paginate($request->pageSize ?? 10);
+
+        $cuisines = CuisineResource::collection(Cuisine::all());
+        $measures = MeasureResource::collection(Measure::all());
+
+        // Transform the pagination result using MixesResource
+        $mixes = MixesResource::collection($mixes);
+
+        return Inertia::render('Mixes/Index', [
+            'mixes' => $mixes,
+            'cuisines' => $cuisines,
+            'measures'=> $measures,
+            'selectedCuisineId' => $request->cuisine_id,
+        ]);
+    }
+    public function publicMixes(Request $request)
+    {
+        
+       
+
+         $mixesQuery = Mixes::with('cuisine')
+            ->where(function ($query) {
+                $query->whereNull('user_id');
             });
 
         if ($request->has('cuisine_id') && $request->cuisine_id) {
@@ -89,19 +136,32 @@ class MixesController extends Controller
             'cuisine_id' => 'required|integer',
              'avatar' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Make avatar nullable and validate file type
         ]);
-
-        $mix = Mixes::create($validatedData);
-
-        if ($request->hasFile('avatar')) {
-            $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
+       
+        $totalCreatedMixes = $request->user()->mixes->count();
+        // Limit the number of images a user can upload to one per minute
+        if (RateLimiter::tooManyAttempts('medialibrary-uploads:'.$user->id, $perMinute = 1)) {
+            return response()->json("You are uploading a lot of images, please try again later", 400);
         }
+         if (RateLimiter::tooManyAttempts('medialibrary-uploads:'.$user->id, $perDay = 30)) {
+            return response()->json("You can edit/upload max 30 images a day, please try again tomorrow", 400);
+        }
+ 
+        if ($totalCreatedMixes< 30) {
+            $mix = Mixes::create($validatedData);
 
+            if ($request->hasFile('avatar')) {
+                $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
+            }
+              return redirect()->route('mixes.index')
+            ->with('message', 'Mix created successfully');
+        } else {
+        return response()->json("You cant add more then 30 mixes", 400);
+        }
         //Debugging
         // $avatarUrl = $mix->getFirstMediaUrl('avatars');
         // dd($avatarUrl);  // This will dump the URL of the avatar to check if it's stored correctly
 
-        return redirect()->route('mixes.index')
-        ->with('message', 'Mix created successfully');
+      
 
         // return redirect()->route('mixes.index')
         //     ->with('message', 'Mix created successfully');
@@ -177,7 +237,7 @@ class MixesController extends Controller
         $mix->update($validatedData);
         $mixResource = new MixesResource($mix);
 
-         $cuisines = CuisineResource::collection(Cuisine::all());
+        $cuisines = CuisineResource::collection(Cuisine::all());
         $measures = MeasureResource::collection(Measure::all());
 
 

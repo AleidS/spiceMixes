@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,13 @@ class AppServiceProvider extends ServiceProvider
             \App\Console\Kernel::class
         );
     }
-
+    public function rateLimitMediaLibrary(): void {
+        RateLimiter::for('medialibrary-uploads', function (Request $request) {
+            return [
+                Limit::perMinute(1)->by($request->ip()),
+            ];
+        });
+    }
     /**
      * Bootstrap any application services.
      */

@@ -22,6 +22,7 @@ class Mixes extends Model implements HasMedia
         'cuisine_id',
         'avatar'
     ];
+   
     // Define the relationship with the Cuisine model
     public function cuisine()
     {
