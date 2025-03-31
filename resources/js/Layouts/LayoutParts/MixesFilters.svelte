@@ -11,27 +11,28 @@
     let showFilters=false
 
     function applyFilter(cuisine_id) {
-        router.get('/mixes', { cuisine_id });
+        router.get('/', { cuisine_id });
     }
 </script>
 
 <!-- <select class="bg-red-400" id="cuisine" bind:value={cuisine_id} on:change={applyFilter}>
         <option value="">All Cuisines</option> -->
       <div  use:autoAnimate
-      class='!z-99  w-full md:w-96 backdrop-blur-lg flex flex-col py-5 justify-end h-full {showFilters?'h-full':'h-fit pointer-events-none !w-fit backdrop-blur-none '}'>
+      class='!z-999  w-full md:w-96 backdrop-blur-lg flex flex-col py-5 justify-end h-full {showFilters?'h-full':'h-fit pointer-events-none !w-fit backdrop-blur-none '}'>
           
      
            
         {#if showFilters}
+        <!-- {#if true} -->
         <div
         
-            class="items-between backdrop-blur-lg flex flex-1 flex-col justify-between overflow-auto pb-2 pt-10 w-full md:w-96"
+            class="items-between backdrop-blur-sm flex flex-1 flex-col justify-end overflow-auto pb-2 pt-10 w-fit gap-y-2 sm:gap-y-1 flex-wrap"
         >
       
             {#each cuisines.data as cuisine}
                 <Button
                
-                    class="h-16 max-h-full !text-lg origin-left rounded-l-none !bg-primary-600 !text-white transition-transform duration-200 ease-in-out
+                    class="hover:pl-6 h-fit w-fit max-h-full !text-lg origin-left rounded-l-none rounded-r-full !bg-primary-600 !text-white transition-all duration-150 ease-in-out
                                 {cuisine.id == selectedCuisineId
                         ? 'scale-x-99 left-5 border border-l-0 border-white'
                         : 'hover:scale-x-99 scale-x-95'}"
@@ -45,7 +46,7 @@
             {/each}
         </div>
         {/if}
-         <div class='pointer-events-auto !z-99 bg-primary-600 !cursor-pointer w-fit rounded-r-full p-2 pl-1 shadow-lg shadow-uiDark-500 flex items-center gap-2'>
+         <div class='pointer-events-auto !z-999 bg-primary-600 !cursor-pointer w-fit rounded-r-full p-2 pl-1 shadow-lg shadow-uiDark-500 flex items-center gap-2'>
           <button onclick={()=>{showFilters=!showFilters}} class=''>
                     <Icon icon='mdi:filter' class='size-10'/>
                      

@@ -1,0 +1,2 @@
+Please note there is a maximum number of user registrations per day to prevent DDOS attacks (and a maximum number of file uploads etc.),
+in case you want to allow more than 100 users to register a day, change this in registeredUserController.

@@ -152,7 +152,7 @@ class MixesController extends Controller
             if ($request->hasFile('avatar')) {
                 $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
             }
-              return redirect()->route('mixes.index')
+              return redirect()->route('home')
             ->with('message', 'Mix created successfully');
         } else {
         return response()->json("You cant add more then 30 mixes", 400);
@@ -175,7 +175,7 @@ class MixesController extends Controller
     {
         $mix = Mixes::with('cuisine')->find($id);
         if (!$mix) {
-            return redirect()->route('mixes.index')->with('error', 'Mix not found.');
+            return redirect()->route('home')->with('error', 'Mix not found.');
         }
 
         $cuisines = CuisineResource::collection(Cuisine::all());
@@ -195,7 +195,7 @@ class MixesController extends Controller
     {
         $mix = Mixes::with('cuisine')->find($id);
         if (!$mix) {
-            return redirect()->route('mixes.index')->with('error', 'Mix not found.');
+            return redirect()->route('home')->with('error', 'Mix not found.');
         }
 
         $cuisines = CuisineResource::collection(Cuisine::all());
@@ -258,6 +258,6 @@ class MixesController extends Controller
     {
         $mix = Mixes::find($id);
         $mix->delete();
-        return redirect()->route('mixes.index');
+        return redirect()->route('home');
     }
 }

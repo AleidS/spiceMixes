@@ -9,7 +9,7 @@
 
     //   import { Button } from 'flowbite-svelte';
     //   https://flowbite-svelte.com/docs/components/buttons
-    
+
     import Button from '@/Components/Button.svelte';
     let { children, header, cuisines, selectedCuisineId, showFilter = false } = $props();
 
@@ -22,11 +22,11 @@
     >
         <!-- Primary Navigation Menu -->
         <div class="mx-auto w-full px-4 sm:px-16 lg:px-16">
-            <div class="flex h-16 justify-between">
+            <div class="flex h-16 items-center justify-between">
                 <div class="flex">
                     <!-- Logo -->
                     <div class="flex shrink-0 items-center">
-                        <a use:inertia href={route('mixes')}>
+                        <a use:inertia href={route('home')}>
                             <ApplicationLogo
                                 class="block h-9 w-auto fill-current text-uiGray-800 dark:text-uiGray-200"
                             />
@@ -35,78 +35,65 @@
 
                     <!-- Navigation Links -->
                     <div class="z-40 hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <!-- <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </NavLink> -->
+                        <NavLink href="/about" active={route().current('dashboard')}>About</NavLink>
                         <!-- <NavLink href={route('mixes')} active={route().current('mixes.index')}>
                             Mixes
                         </NavLink> -->
                     </div>
                 </div>
+                <!-- <ResponsiveNavLink href="/login" class="block sm:hidden">
+                    <Button class="!bg-primary-600 !text-white">Log in</Button>
+                </ResponsiveNavLink> -->
 
                 <div class="hidden sm:ms-6 sm:flex sm:items-center">
                     <!-- Settings Dropdown -->
                     <div class="relative ms-3">
                         {#if $page.props.auth.user}
-                        <Dropdown align="right" width="48">
-                            {#snippet trigger()}
-                                <span class="inline-flex rounded-md">
-                                    <button
-                                        type="button"
-                                        class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 font-secondary text-sm font-medium leading-4 text-uiGray-500 transition duration-150 ease-in-out hover:text-uiGray-700 focus:outline-none dark:bg-uiDark-500 dark:text-uiGray-200 dark:hover:text-uiGray-100"
-                                    >
-                                        {$page.props.auth.user.name}
-                                        <svg
-                                            class="-me-0.5 ms-2 h-4 w-4"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
+                            <Dropdown align="right" width="48">
+                                {#snippet trigger()}
+                                    <span class="inline-flex rounded-md">
+                                        <button
+                                            type="button"
+                                            class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 font-secondary text-sm font-medium leading-4 text-uiGray-500 transition duration-150 ease-in-out hover:text-uiGray-700 focus:outline-none dark:bg-uiDark-500 dark:text-uiGray-200 dark:hover:text-uiGray-100"
                                         >
-                                            <path
-                                                fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd"
-                                            />
-                                        </svg>
-                                    </button>
-                                </span>
-                            {/snippet}
-                       
+                                            {$page.props.auth.user.name}
+                                            <svg
+                                                class="-me-0.5 ms-2 h-4 w-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                {/snippet}
 
-                            {#snippet content()}
-                                <DropdownLink href={route('profile.edit')}>Profile</DropdownLink>
-                                <DropdownLink href={route('logout')} method="post" as="button"
-                                    >Log Out</DropdownLink
+                                {#snippet content()}
+                                    <DropdownLink href={route('profile.edit')}>Profile</DropdownLink
+                                    >
+                                    <DropdownLink href={route('logout')} method="post" as="button"
+                                        >Log Out</DropdownLink
+                                    >
+                                {/snippet}
+                            </Dropdown>
+                        {:else}
+                            <NavLink href="/register">
+                                <Button
+                                    class="border-3 border border-primary-600 !bg-uiDark-600 !font-bold !text-uiGray-100"
                                 >
-                            {/snippet}
-                        </Dropdown>
-                             {:else}
-                            
-                              <NavLink
-                               
-                                href="/register"
-            
-                            > 
-                            <Button 
-                          
-                                class="!bg-uiDark-600 border-3 !text-uiGray-100 !font-bold border border-primary-600">
-                                register
-                            </Button>
-                        </NavLink>
-                        
-                             
-                              <NavLink
-                               
-                                href="/login"
-                               
-                            >
-                               <Button class='!bg-primary-600 !text-white'>
-                                Log in
-                            </Button>
-                        </NavLink>
-                            
-                          
-                            {/if}
+                                    register
+                                </Button>
+                            </NavLink>
+
+                            <NavLink href="/login">
+                                <Button class="!bg-primary-600 !text-white">Log in</Button>
+                            </NavLink>
+                        {/if}
                     </div>
                 </div>
 
@@ -141,37 +128,38 @@
         <!-- Responsive Navigation Menu -->
         <div class={`${showingNavigationDropdown ? 'block' : 'hidden'} sm:hidden`}>
             <div class="space-y-1 pb-3 pt-2">
-                <!-- <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                    Dashboard
-                </ResponsiveNavLink> -->
-                <ResponsiveNavLink href={route('mixes')} active={route().current('mixes.index')}>
-                    Mixes
+                <ResponsiveNavLink href="/about" active={route().current('dashboard')}>
+                    About
                 </ResponsiveNavLink>
+                <!-- <ResponsiveNavLink href={route('mixes')} active={route().current('mixes.index')}>
+                    Mixes
+                </ResponsiveNavLink> -->
             </div>
 
-              {#if $page.props.auth.user}
-            <!-- Responsive Settings Options -->
-            <div class="border-t border-uiGray-200 pb-1 pt-4 dark:border-uiGray-600">
-                <div class="px-4">
-                    <div class="text-base font-medium text-uiGray-800 dark:text-uiGray-200">
-                        {$page.props.auth.user.name}
+            {#if $page.props.auth.user}
+                <!-- Responsive Settings Options -->
+                <div class="border-t border-uiGray-200 pb-1 pt-4 dark:border-uiGray-600">
+                    <div class="px-4">
+                        <div class="text-base font-medium text-uiGray-800 dark:text-uiGray-200">
+                            {$page.props.auth.user.name}
+                        </div>
+                        <div class="text-sm font-medium text-uiGray-500">
+                            {$page.props.auth.user.email}
+                        </div>
                     </div>
-                    <div class="text-sm font-medium text-uiGray-500">
-                        {$page.props.auth.user.email}
-                    </div>
-                </div>
 
-         
-                <div class="mt-3 space-y-1">
-                    <ResponsiveNavLink
-                        href={route('profile.edit')}
-                        active={route().current('profile.edit')}>Profile</ResponsiveNavLink
-                    >
-                    <ResponsiveNavLink href={route('logout')} method="post" as="button"
-                        >Log Out</ResponsiveNavLink
-                    >
+                    <div class="mt-3 space-y-1">
+                        <ResponsiveNavLink
+                            href={route('profile.edit')}
+                            active={route().current('profile.edit')}>Profile</ResponsiveNavLink
+                        >
+                        <ResponsiveNavLink href={route('logout')} method="post" as="button"
+                            >Log Out</ResponsiveNavLink
+                        >
+                    </div>
                 </div>
-            </div>
+            {:else}
+                <ResponsiveNavLink href="/register">register</ResponsiveNavLink>
             {/if}
         </div>
     </nav>

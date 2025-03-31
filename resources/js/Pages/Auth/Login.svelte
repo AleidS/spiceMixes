@@ -84,6 +84,14 @@
                     Forgot your password?
                 </a>
             {/if}
+                &nbsp;
+              <a
+                    use:inertia
+                    href='/register'
+                    class="rounded-md text-sm text-uiGray-600 underline hover:text-uiGray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-uiGray-400 dark:hover:text-uiGray-100 dark:focus:ring-offset-uiGray-800"
+                >
+                    Register
+                </a>
 
             <PrimaryButton
                 class="ms-4 {$form.processing && 'opacity-25'}"

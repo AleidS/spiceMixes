@@ -26,7 +26,7 @@ class MixesResource extends JsonResource
             'user_id' => $this->user_id,
             'cuisine_id' => $this->cuisine_id,
             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),
-            'editable' => $this->user_id === $currentUserId,
+            'editable' => $this->user_id === $currentUserId && $this->user_id!==null,
             // $this->cuisine->name : null, // Include the cuisine name
             'avatar' => $this?->getFirstMediaUrl('avatars'),
         ];

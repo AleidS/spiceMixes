@@ -59,3 +59,24 @@ ul {
 .inputClass{
     @apply placeholder-uiGray-200 inline-flex w-40 max-w-full flex-1 items-center rounded-md border border-transparent bg-uiGray-800 px-4 py-2 text-xs font-semibold tracking-widest text-white transition duration-150 ease-in-out hover:bg-uiGray-700 focus:bg-uiGray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-uiGray-900 dark:bg-uiDark-800 dark:text-uiGray-50 dark:hover:bg-uiDark-700 dark:focus:bg-uiDark-700 dark:focus:ring-offset-uiGray-800 dark:active:bg-uiGray-700 
 }
+
+/* scrollbar appereance */
+::-webkit-scrollbar {
+    width:10px;
+  @apply w-[5px] sm:w-[10px];
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-uiDark-500;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-uiDark-200 rounded-md;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-uiDark-100;
+}

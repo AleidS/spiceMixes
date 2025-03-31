@@ -32,16 +32,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('cuisines', CuisineController::class);
 });
 
+// About (no controller)
+Route::get('about', function () {
+        return Inertia::render('About/Index');
+    });
+
 Route::get('/', [MixesController::class, 'home'])->name('home');
+Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('/', [MixesController::class, 'index'])->name('mixes');
     Route::resource('mixes', MixesController::class);
+    // Route::get('mixes', [MixesController::class, 'home'])->name('mixes');
     Route::get('mixes/create', [MixesController::class, 'create'], function () {
         return Inertia::render('Mixes/Add');
-    })->middleware(['auth', 'verified'])->name('mixes.create');
+    })->name('mixes.create');
     Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
-    Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
     Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
 });
 Route::middleware('auth')->group(function () {

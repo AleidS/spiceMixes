@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $countUsersToday = User::whereDate('followup', date('Y-m-d'))->get()->count();
-        if ($countUsersToday>20){
+        if ($countUsersToday>100){
          return response()->json("To prevent DDOS attacks the maximum number of new users a day is limited. Please try again later", 400);
         }
         else{
