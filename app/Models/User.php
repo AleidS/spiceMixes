@@ -24,7 +24,7 @@ class User extends Authenticatable
     ];
     public function mixes()
     {
-        return $this->hasMany('App\Project', 'id', 'user_id');
+       return $this->hasMany('App\Models\Mixes', 'user_id', 'id');
     }
 
     /**

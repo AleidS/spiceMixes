@@ -37,8 +37,11 @@
 
     let image;
     const reader = new FileReader();
+
     reader.addEventListener('load', function () {
-        image.setAttribute('src', reader.result);
+        if (image) {
+            image.setAttribute('src', reader.result);
+        }
     });
 
     let preventEffect = false;

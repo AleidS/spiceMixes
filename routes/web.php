@@ -37,11 +37,10 @@ Route::get('about', function () {
         return Inertia::render('About/Index');
     });
 
-Route::get('/', [MixesController::class, 'home'])->name('home');
-Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
+Route::get('/', [MixesController::class, 'index'])->name('home');
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Route::get('/', [MixesController::class, 'index'])->name('mixes');
     Route::resource('mixes', MixesController::class);
     // Route::get('mixes', [MixesController::class, 'home'])->name('mixes');
     Route::get('mixes/create', [MixesController::class, 'create'], function () {
@@ -50,6 +49,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
     Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
 });
+// Make sure /{id} is after anything else, otherwise, e.g. mixes/create might be interpreted as an id parameter
+Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -16,6 +16,7 @@
         "laravel/telescope": "*",
         "laravel/tinker": "^2.9",
         "spatie/laravel-medialibrary": "^11.12",
+        "spatie/laravel-query-builder": "^6.3",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {

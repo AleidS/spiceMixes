@@ -30,8 +30,12 @@
             <div
                 class=" sm: h-[250px] w-full overflow-hidden object-cover sm:max-w-[300px] md:max-w-[300px]"
             >
-                {#if mix.avatar}
-                    <img src={mix.data.avatar} alt={mix.data.name} />
+                {#if mix.data.avatar}
+                    <img
+                        src={mix.data.avatar}
+                        alt={mix.data.name}
+                        class="max-h-full min-h-full min-w-full max-w-full rounded-md border border-uiGray-400 object-cover object-center"
+                    />
                 {:else}
                     <img
                         src="/storage/pexels-martabranco-1340116.jpg"
@@ -42,7 +46,7 @@
             </div>
 
             <div class="box flex-1">
-                <h2>Ingredients:</h2>
+                <h4>Ingredients:</h4>
                 <ul>
                     {#each mix.data.ingredients as ingredient}
                         <li>
@@ -56,7 +60,7 @@
             </div>
         </div>
         <div class="box">
-            <h2>Description</h2>
+            <h4>Description</h4>
             <p>{mix.data.description}</p>
         </div>
 

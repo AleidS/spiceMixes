@@ -23,9 +23,9 @@
 
 <section class={className}>
     <header>
-        <h2 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">
+        <h4 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">
             Profile Information
-        </h2>
+        </h4>
 
         <p class="mt-1 text-sm text-uiGray-600 dark:text-uiGray-400">
             Update your account's profile information and email address.

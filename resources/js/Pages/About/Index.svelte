@@ -14,9 +14,9 @@
     <!-- <MixesFilters {cuisines} {selectedCuisineId} /> -->
     <!-- User ID: {$page.props.auth.user.id} -->
     <div class="page m-auto mt-10 !max-w-[700px]">
-        <h1 class="font-primary text-3xl font-medium">About</h1>
+        <h1>About</h1>
         <div class="box flex-1">
-            <!-- <h2>Ingredients:</h2> -->
+            <!-- <h4>Ingredients:</h4> -->
             <p>
                 This website was made to try out Svelte/Laravel/Inertia, with Breeze for login
                 functionality. I started with an empty setup and looked at
@@ -40,13 +40,22 @@
                 be a challenge.
             </p>
 
-            <h2 class="mt-4">Image sources</h2>
+            <h4 class="mt-4">Code sources:</h4>
             <p>
-                <strong>Fallback image:</strong>
+                Pagination & some code reference: <br />
+                <a
+                    class="underline"
+                    href="https://github.com/tapan288/inertia-svelte-students-management/blob/master/resources/js/Components/Pagination.svelte"
+                    >Tapan288 Github project/tutorial</a
+                >
+            </p>
+            <h4 class="mt-4">Image sources:</h4>
+            <p>
+                Fallback image:
                 <img
                     src="/storage/pexels-martabranco-1340116.jpg"
                     alt="3 spoons with various spices"
-                    class="!-z-2 h-auto w-32 rounded-md object-cover object-center transition-transform duration-200 group-hover:scale-x-105 group-hover:scale-y-105"
+                    class="!-z-2 my-1 h-auto w-32 rounded-md object-cover object-center transition-transform duration-200 group-hover:scale-x-105 group-hover:scale-y-105"
                 />
                 <a
                     class="underline"

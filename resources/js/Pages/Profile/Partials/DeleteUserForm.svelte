@@ -41,7 +41,7 @@
 
 <section class="space-y-6 {className}">
     <header>
-        <h2 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">Delete Account</h2>
+        <h4 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">Delete Account</h4>
         <p class="mt-1 text-sm text-uiGray-600 dark:text-uiGray-400">
             Once your account is deleted, all of its resources and data will be permanently deleted.
             Before deleting your account, please download any data or information that you wish to
@@ -53,9 +53,9 @@
 
     <Modal onclose={closeModal} show={confirmingUserDeletion}>
         <div class="p-6">
-            <h2 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">
+            <h4 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">
                 Are you sure you want to delete your account?
-            </h2>
+            </h4>
 
             <p class="mt-1 text-sm text-uiGray-600 dark:text-uiGray-400">
                 Once your account is deleted, all of its resources and data will be permanently

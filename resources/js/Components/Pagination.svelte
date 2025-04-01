@@ -9,9 +9,9 @@
 
 <div class="bottom-0 m-auto w-full">
     <div
-        class="m-auto flex w-fit items-center justify-between gap-x-2 rounded-md bg-uiDark-600 px-4 py-3 sm:px-6"
+        class="m-auto flex w-fit max-w-[70vw] items-center justify-between gap-x-2 rounded-md bg-uiDark-600 px-4 py-3 sm:px-6"
     >
-        <div class=" flex flex-1 flex-wrap items-center justify-between gap-x-3">
+        <div class=" flex flex-1 flex-wrap items-center justify-center gap-x-3 gap-y-2">
             <div>
                 <p class="text-sm text-uiGray-100">
                     <!-- space -->
@@ -36,8 +36,8 @@
                 {#each data.meta.links as link}
                     <a
                         href={link.url}
-                        class="flex w-4 items-center justify-center rounded-sm text-sm text-uiGray-200 {link.active
-                            ? ''
+                        class="flex w-5 items-center justify-center rounded-sm pt-1 text-sm text-uiGray-100 {link.active
+                            ? 'bg-uiDark-300 font-bold'
                             : ''}"
                     >
                         {#if link.label == '&laquo; Previous'}

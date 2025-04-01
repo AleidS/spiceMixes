@@ -8,9 +8,9 @@
 
 <AuthenticatedLayout>
     {#snippet header()}
-        <h2 class="text-xl font-semibold leading-tight text-uiGray-800 dark:text-uiGray-200">
+        <h4 class="text-xl font-semibold leading-tight text-uiGray-800 dark:text-uiGray-200">
             Dashboard
-        </h2>
+        </h4>
     {/snippet}
 
     <div class="py-12">
