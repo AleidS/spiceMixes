@@ -9,6 +9,7 @@
 
     import { FileUpload } from 'melt/components';
     import { writable } from 'svelte/store';
+    import { Tooltip } from '@svelte-plugins/tooltips';
 
     // let fileUpload;
 
@@ -23,6 +24,7 @@
         avatar: null
     });
 
+    let termsAccepted = $state(false)
     $effect(() => {
         console.log(mix?.data);
         if (mix?.data) {
@@ -123,6 +125,7 @@
                     <Button
                         type="submit"
                         primary
+                         disabled={!termsAccepted}
                         class="h-auto w-fit text-nowrap !text-white"
                     >
                         <Icon icon="mdi:floppy" class="mb-1 size-5" />
@@ -304,28 +307,24 @@
                         error={errors.cuisine_id}
                     />
                 </div>
-
-                <!-- <ImageInput bind:files={$form.avatar} onchange={console.log($form.avatar)} /> -->
-                <!-- <input
-                type="file"
-                id="avatar"
-                bind:files={$form.avatar}
-                {...fileUpload.input}
-                class="border-uiGray-300 mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            />
-    
-            <div
-                class="flex h-40 w-40 items-center justify-center border border-dashed border-white text-center text-white"
-                {...fileUpload.dropzone}
-            >
-                {$form.avatar?.name}
-                <img src={form.avatar} alt="" />
-                {#if fileUpload.isDragging}
-                    Drop files here
-                {:else}
-                    Click to upload or drag and drop
-                {/if}
-            </div> -->
+                <div>
+                    <input type='checkbox' bind:checked={termsAccepted} class=''/>
+                    By uploading my content I agree to the 
+                    <a
+                        href="/uploadTerms"
+                        target="_blank"
+                        class="tab-link-class underline" 
+                    >
+                        upload terms and conditions
+                    </a> and 
+                    <a
+                        href="/generalTerms"
+                        target="_blank"
+                        class="tab-link-class underline" 
+                    >
+                        general terms and conditions
+                    </a>
+                </div>
 
                  <div class='flex justify-between'>
                      <Button class=" !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 w-fit">
@@ -334,14 +333,17 @@
                             Back to Mixes
                         </Link>
                     </Button>
-                    <Button
-                        type="submit"
-                        primary
-                        class="h-auto w-fit text-nowrap !text-white"
-                    >
-                        <Icon icon="mdi:floppy" class="mb-1 size-5" />
-                        {mix ? 'Save mix' : 'Add Mix'}
-                    </Button>
+                    <Tooltip content={termsAccepted===false?'Please accept the terms':''}>
+                        <Button
+                            type="submit"
+                            disabled={!termsAccepted}
+                            primary
+                            class="h-auto w-fit text-nowrap !text-white"
+                        >
+                            <Icon icon="mdi:floppy" class="mb-1 size-5" />
+                            {mix ? 'Save mix' : 'Add Mix'}
+                        </Button>
+                    </Tooltip>
                  </div>
             </form>
         </div>

@@ -6,6 +6,8 @@
     import InputError from '@/Components/InputError.svelte';
     import PrimaryButton from '@/Components/PrimaryButton.svelte';
 
+    import {Link} from '@inertiajs/svelte';
+    import Button from '@/Components/Button.svelte';
     const form = useForm({
         name: '',
         email: '',
@@ -13,6 +15,8 @@
         password_confirmation: '',
         terms: false
     });
+
+    let termsAccepted = $state(false)
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -87,7 +91,20 @@
             <InputError message={$form.errors.password} class="mt-2" />
         </div>
 
-        <div class="mt-4 flex items-center justify-end">
+        <div class='text-md my-4 font-light'>
+            <input type='checkbox' bind:checked={termsAccepted} class=''/>
+            By registering on this platform I confirm that I have read and agree to the 
+            
+            <a
+                href="/generalTerms"
+                target="_blank"
+                class="tab-link-class underline" 
+            >
+                terms and conditions
+            </a>
+        </div>
+
+        <div class="mt-4 flex items-center justify-end gap-4">
             <a
                 use:inertia
                 href={route('login')}
@@ -96,8 +113,8 @@
                 Already Registered?
             </a>
 
-            <PrimaryButton type="submit" class="ms-4" processing={$form.processing}
-                >Register</PrimaryButton
+            <Button primary disabled={!termsAccepted} type="submit" class="ms-4" processing={$form.processing}
+                >Register</Button
             >
         </div>
     </form>

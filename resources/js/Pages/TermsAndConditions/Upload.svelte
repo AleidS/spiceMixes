@@ -1,0 +1,38 @@
+<script>
+    import GuestLayout from "@/Layouts/GuestLayout.svelte";
+
+    // import { page, useForm } from '@inertiajs/svelte';
+</script>
+
+<svelte:head>
+    <title>Terms and conditions - Content</title>
+</svelte:head>
+    <!-- <MixesFilters {cuisines} {selectedCuisineId} /> -->
+    <!-- User ID: {$page.props.auth.user.id} -->
+ <GuestLayout>
+        <div class="page m-auto mt-10 w-[1200px]">
+            <h3>Terms and conditions - upload of content and images</h3>
+            <p>
+                <strong>By uploading content (including but not limited to images) to this platform, you understand that:</strong>
+                <br/><br/>
+                1. **Privacy**: 
+                - There is no guarantee that content will remain private. Only upload content you are comfortable with potentially becoming public.
+                <br/><br/>
+                2. **Data Retention**: 
+                - There is no guarantee that your data will be retained. You are responsible for keeping your own backups.
+                <br/><br/>
+                3. **Prohibited Content**: 
+                - You are strictly prohibited from uploading content that is illegal, violate copyright laws, or are unrelated to the purpose of this website. Violations may result in the removal of your account and, where applicable, reporting to authorities.
+                <br/><br/>
+                4. **Account Misuse**: 
+                - Creating multiple accounts to bypass upload limits is not allowed and may result in account suspension or removal.
+                <br/><br/>
+                5. **Copyright Compliance**: 
+                - You are solely responsible for ensuring that the content you upload comply with copyright laws. The platform is not liable for any copyright violations.
+                <br/><br/>
+                6. **Liability**: 
+                - The platform is not responsible for any loss, damage, or misuse of your uploaded content. Use the service at your own risk.
+                </p>
+            </div>
+ </GuestLayout>
+

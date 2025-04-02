@@ -20,12 +20,11 @@ use Inertia\Inertia;
 //     return Inertia::render('Mixes/Index');
 // })->middleware(['auth', 'verified'])->name('mixes');
 
-
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+})
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Cuisines
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -34,11 +33,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // About (no controller)
 Route::get('about', function () {
-        return Inertia::render('About/Index');
-    });
+    return Inertia::render('About/Index');
+});
+
+Route::get('uploadTerms', function () {
+    return Inertia::render('TermsAndConditions/Upload');
+});
+Route::get('generalTerms', function () {
+    return Inertia::render('TermsAndConditions/General');
+});
 
 Route::get('/', [MixesController::class, 'index'])->name('home');
-
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('mixes', MixesController::class);
@@ -58,4 +63,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
