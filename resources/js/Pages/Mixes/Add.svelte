@@ -1,7 +1,7 @@
 <script>
     // import { page, useForm } from '@inertiajs/svelte';
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte';
-    import { router, page, useForm } from '@inertiajs/svelte';
+    import { router, page, useForm, Link } from '@inertiajs/svelte';
     import autoAnimate from '@formkit/auto-animate';
     import Button from '@/Components/Button.svelte';
     import Input from '@/Components/Input.svelte';
@@ -96,16 +96,26 @@
             <!-- <h1>{mix?'Edit mix':'Add Mix'}</h1> -->
 
             <form onsubmit={addMix} class="flex flex-col gap-y-6">
-                <div
-                    class="flex flex-1 flex-row-reverse flex-wrap items-center justify-start gap-3 md:justify-between"
-                >
+           <div class='flex justify-between'>
+                     <Button class=" !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 w-fit">
+                        <Link href={route('home')} class="flex items-center gap-1 ">
+                            <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
+                            Back to Mixes
+                        </Link>
+                    </Button>
                     <Button
                         type="submit"
-                        class="h-auto w-fit text-nowrap !bg-primary-500 !text-white"
+                        primary
+                        class="h-auto w-fit text-nowrap !text-white"
                     >
                         <Icon icon="mdi:floppy" class="mb-1 size-5" />
                         {mix ? 'Save mix' : 'Add Mix'}
                     </Button>
+                 </div>     
+                <div
+                    class="flex flex-1 flex-row flex-wrap items-center justify-start gap-3 md:justify-between"
+                >
+
                     <Input
                         type="text"
                         bind:value={$form.name}
@@ -213,12 +223,17 @@
                             <Button
                                 type="button"
                                 onclick={() => {
+                                    if ($form.ingredients.length<40){
                                     $form.ingredients.push({
                                         quantity: '',
                                         measure_id: '',
                                         name: ''
                                     }),
                                         ($form.ingredients = $form.ingredients);
+                                    }
+                                    else{
+                                        alert('too many ingredients!')
+                                    }
                                 }}
                                 class="w-fit !bg-success-400 !bg-opacity-50 !text-white"
                             >
@@ -279,9 +294,22 @@
                 {/if}
             </div> -->
 
-                <Button type="submit" class="w-fit !bg-primary-500 !text-white"
-                    >{mix ? 'Save mix' : 'Add Mix'}</Button
-                >
+                 <div class='flex justify-between'>
+                     <Button class=" !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 w-fit">
+                        <Link href={route('home')} class="flex items-center gap-1 ">
+                            <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
+                            Back to Mixes
+                        </Link>
+                    </Button>
+                    <Button
+                        type="submit"
+                        primary
+                        class="h-auto w-fit text-nowrap !text-white"
+                    >
+                        <Icon icon="mdi:floppy" class="mb-1 size-5" />
+                        {mix ? 'Save mix' : 'Add Mix'}
+                    </Button>
+                 </div>
             </form>
         </div>
     {:else}

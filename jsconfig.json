@@ -7,6 +7,6 @@
             "@images/*":["resources/images/*"]
         }
     },
-    "include": ["resources/js/**/*.js", "resources/js/**/*.svelte"],
+    "include": ["resources/js/**/*.js", "resources/js/**/*.svelte", "resources/js/filterMixes.js"],
     "exclude": ["node_modules", "public", "vendor"]
 }

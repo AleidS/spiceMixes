@@ -49,6 +49,14 @@
                     >Tapan288 Github project/tutorial</a
                 >
             </p>
+            <p>
+                Switch
+                <a
+                    class="underline"
+                    href="https://svelte.dev/playground/35d77f2ab11e4197a19ffd8e7c4ac74e?version=5.25.6"
+                    >Svelte playground</a
+                >
+            </p>
             <h4 class="mt-4">Image sources:</h4>
             <p>
                 Fallback image:

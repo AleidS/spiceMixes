@@ -14,11 +14,12 @@ class CuisineResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-         return [
+        return [
             'id' => $this->id,
             'name' => $this->name,
-            'color'=>$this->color,
-            'continent'=> $this->continent,
+            'color' => $this->color,
+            'continent' => $this->continent,
+            'mixes_count' => $this->mixes_count, // Include the count of mixes
         ];
     }
 }

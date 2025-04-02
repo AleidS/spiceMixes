@@ -6,13 +6,31 @@
     export let mixes;
     export let cuisines;
     export let selectedCuisineId;
+    export let is_own;
+    export let search;
+    export let pageNumber;
     import autoAnimate from '@formkit/auto-animate';
 
     let showFilters = false;
 
-    function applyFilter(cuisine_id) {
-        router.get('/', { cuisine_id });
+    // const url = new URL($page.url, window.location.origin); // Create a URL object
+    let cuisine_id = selectedCuisineId
+    // let is_own = url.searchParams.get('is_own') =='true';
+    // let search = url.searchParams.get('filter[name]') || '';
+    // let pageNumber = parseInt(url.searchParams.get('page')) || 1;
+    
+
+    function applyFilter(cuisineId) {
+        cuisine_id=cuisineId
+        router.get(
+            '/',
+            { page: pageNumber, cuisine_id: cuisineId, is_own: is_own, filter: { name: search } },
+            // { preserveState: true, preserveScroll: true }
+        );
     }
+
+   
+    console.log(cuisines);
 </script>
 
 <!-- <select class="bg-red-400" id="cuisine" bind:value={cuisine_id} on:change={applyFilter}>
@@ -29,18 +47,21 @@
             class="items-between flex w-fit flex-1 flex-col flex-wrap justify-end gap-y-2 overflow-auto pb-2 pt-10 backdrop-blur-sm sm:gap-y-1"
         >
             {#each cuisines.data as cuisine}
-                <Button
-                    class="h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full !bg-primary-600 !text-lg !text-white transition-all duration-150 ease-in-out hover:pl-6
-                                {cuisine.id == selectedCuisineId
-                        ? 'scale-x-99 left-5 border border-l-0 border-white'
-                        : 'hover:scale-x-99 scale-x-95'}"
-                    style="background-color: {cuisine.color ?? ''}!important;"
-                    onclick={() => {
-                        showFilters = false;
-                        applyFilter(cuisine.id);
-                    }}
-                    >{cuisine.name}
-                </Button>
+                {#if cuisine.mixes_count > 0}
+                    <Button
+                        class="h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full !bg-primary-600 !text-lg !text-white transition-all duration-150 ease-in-out hover:pl-6
+                                    {cuisine.id == selectedCuisineId
+                            ? 'scale-x-99 left-5 border border-l-0 border-white'
+                            : 'hover:scale-x-99 scale-x-95'}"
+                        style="background-color: {cuisine.color ?? ''}!important;"
+                        onclick={() => {
+                            showFilters = false;
+                            applyFilter(cuisine.id);
+                        }}
+                        >{cuisine.name}
+                        <span class="text-xs">({cuisine.mixes_count})</span>
+                    </Button>
+                {/if}
             {/each}
         </div>
     {/if}
@@ -56,7 +77,7 @@
             <Icon icon="mdi:filter" class="size-10" />
         </button>
         {#if selectedCuisineId}
-            {cuisines.data[selectedCuisineId].name} mixes
+            {cuisines.data.find((mix) => mix.id == selectedCuisineId).name} mixes
             <button
                 class="px-3"
                 onclick={() => {

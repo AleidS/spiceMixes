@@ -9,6 +9,11 @@ class Cuisine extends Model
 {
     use HasFactory;
 
+    public function mixes()
+    {
+        return $this->hasMany(Mixes::class, 'cuisine_id', 'id');
+    }
+
     protected $fillable = [
         'name',
         'continent',
