@@ -164,11 +164,11 @@ class MixesController extends Controller
         if (
             RateLimiter::tooManyAttempts(
                 'medialibrary-uploads:' . $request->user()->id,
-                $perDay = 30
+                $perDay = 10
             )
         ) {
             return response()->json(
-                'You can edit/upload max 30 images a day, please try again tomorrow',
+                'Sorry, at the moment you can edit/upload max 10 images a day, please try again tomorrow or upload without an image',
                 400
             );
         }
@@ -178,12 +178,10 @@ class MixesController extends Controller
 
             if ($request->hasFile('avatar')) {
                 $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
-            } else {
-                return response()->json($request, 400);
             }
             return redirect()->route('home')->with('message', 'Mix created successfully');
         } else {
-            return response()->json('You cant add more then 30 mixes', 400);
+            return response()->json("Sorry, at the moment you can't add more than 30 mixes", 400);
         }
         //Debugging
         // $avatarUrl = $mix->getFirstMediaUrl('avatars');

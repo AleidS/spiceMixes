@@ -44,6 +44,15 @@
         }
     });
 
+
+    function handleFileUpload(files) {
+        console.log(files)
+        if (files.length > 0) {
+            $form.avatar = files[0];
+            reader.readAsDataURL(files[0]);
+        }
+    }
+
     let preventEffect = false;
 
     $effect(() => {
@@ -60,6 +69,14 @@
 
     function handleImage(event) {
         const files = event.target.files;
+        if (files.length > 0) {
+            $form.avatar = files[0];
+            reader.readAsDataURL(files[0]);
+        }
+        console.log($form.avatar);
+    }
+    function handleDrop(event){
+        const files = event.dataTransfer.files;
         if (files.length > 0) {
             $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
@@ -129,15 +146,21 @@
 
                 <div class="flex min-h-56 flex-wrap items-stretch justify-stretch gap-6">
                     <div
+                        ondrop={handleDrop}
+                        ondragover={(e) => e.preventDefault()}
+                        ondragenter={(e) => e.preventDefault()}
+                        aria-label="File upload dropzone"
+                        role='region'
                         class="flex h-fit w-full flex-col items-center justify-start rounded-md bg-uiDark-600 md:h-auto md:w-fit"
                     >
-                        <FileUpload class="h-auto w-96" onSelectedChange={handleImage}>
+                        <FileUpload class="h-auto w-96" >
                             {#snippet children(fileUpload)}
                                 <input
                                     accept="image/*"
                                     {...fileUpload.input}
                                     type="file"
                                     onchange={handleImage}
+                                    
                                 />
                                 <div
                                     {...fileUpload.dropzone}
@@ -159,7 +182,7 @@
                                             class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
                                         /> -->
                                     {:else}
-                                    no image selected
+                                   <div class='absolute bottom-4 font-light h-fit w-fit text-sm'> no image selected</div>
                                     {/if}
                                     
                                     <div
@@ -168,7 +191,7 @@
                                         {#if fileUpload.isDragging}
                                             Drop files here
                                         {:else}
-                                            Click to upload 
+                                            Click <span class='hidden sm:inline'>or drag</span> to upload 
                                         {/if}
                                     </div>
                                 </div>
