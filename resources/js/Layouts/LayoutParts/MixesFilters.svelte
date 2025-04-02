@@ -10,7 +10,9 @@
     export let search;
     export let pageNumber;
     import autoAnimate from '@formkit/auto-animate';
-
+    // import { Tooltip } from '@svelte-plugins/tooltips';
+  import { Tooltip, Button as FlowButton } from 'flowbite-svelte';
+    
     let showFilters = false;
 
     // const url = new URL($page.url, window.location.origin); // Create a URL object
@@ -68,14 +70,19 @@
     <div
         class="!z-999 pointer-events-auto flex w-fit !cursor-pointer items-center gap-2 rounded-r-full bg-primary-600 p-2 pl-1 shadow-lg shadow-uiDark-500"
     >
-        <button
-            onclick={() => {
-                showFilters = !showFilters;
-            }}
-            class=""
-        >
-            <Icon icon="mdi:filter" class="size-10" />
-        </button>
+           
+            <FlowButton
+                onclick={() => {
+                    showFilters = !showFilters;
+                }}
+                class=""
+            >
+                <Icon icon="mdi:filter" class="size-10" />
+            </FlowButton>
+             <Tooltip class='bg-uiDark-500 !z-[999]'>
+                Filter mixes by cuisine
+            </Tooltip>
+        
         {#if selectedCuisineId}
             {cuisines.data.find((mix) => mix.id == selectedCuisineId).name} mixes
             <button

@@ -17,30 +17,18 @@
     export let search;
     export let pageNumber;
     import Switch from '@/Components/Switch.svelte';
-    import { onMount } from 'svelte';
-
-    let pageSize = '10',
-        sections = [],
-        checked = [],
-        
-        class_id = '',
-        section_id = '',
-        selectPage = false,
-        selectAll = false;
 
     console.log(mixes);
     const updatedPageNumber = (page) => {
         pageNumber = page;
+        applyFilter();
     };
 
-    // const url = new URL($page.url, window.location.origin); // Create a URL object
     let cuisine_id = selectedCuisineId;
     let isOwn = is_own ==='true'?true:false
     let searchTerm =search!=false?search:''
-    // let is_own = url.searchParams.get('is_own') === true;
-    // let search = url.searchParams.get('filter[name]') || '';
-    // let pageNumber = parseInt(url.searchParams.get('page')) || 1;
     
+     import { Tooltip } from "@svelte-plugins/tooltips";
 
     function applyFilter() {
         router.get(
@@ -64,6 +52,7 @@
             class="z-1 relative m-auto mt-10 flex h-fit max-w-[950px] flex-1 flex-wrap items-start justify-start gap-2 gap-y-10"
         >
         <div class='w-full'>
+         
             <div class='w-full min-h-6 text-uiDark-100'>  
                 {cuisines.data.find((cuisine)=>cuisine.id==cuisine_id)?.name}
             </div>
@@ -83,13 +72,27 @@
                     />
                     <Button primary onclick={applyFilter}><Icon icon="mdi:magnify" /></Button>
                 </div>
-                <Switch text='Your mixes' bind:checked={isOwn} click={()=>{setTimeout(applyFilter,100)}}></Switch>
+                 {#if $page.props.auth.user}
+                <Tooltip content={isOwn===false?'Show your mixes only':'Show all mixes'}>                      
+                    <Switch  text='Your mixes' bind:checked={isOwn} click={()=>{setTimeout(applyFilter,100)}}>
+
+                    </Switch>
+                </Tooltip>
                 <Link href={route('mixes.create')} class="ml-auto w-fit text-white sm:ml-0">
                     <Button class="w-fit text-nowrap !bg-primary-600 !text-white">
                         <Icon icon="mdi:plus-circle" class="mb-[3px] inline size-5" />
                         Add New Mix
                     </Button>
                 </Link>
+                {:else}
+                 <Link href={route('mixes.create')} class="ml-auto w-fit text-white sm:ml-0">
+                    <Button class="w-fit text-nowrap !bg-primary-600 !text-white">
+                       
+                        Login to add your own!
+                    </Button>
+                </Link>
+                {/if}
+
             </div>
         </div>
          {#if mixes.data.length>0}
@@ -103,7 +106,7 @@
         {:else}
             <span class='w-full text-center'>Sorry! No mixes found.</span>
             {/if}
-        <Pagination data={mixes} {updatedPageNumber} />
+        <Pagination data={mixes} {updatedPageNumber}  />
     </div>
 </AuthenticatedLayout>
 

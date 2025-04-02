@@ -5,6 +5,8 @@
     import Icon from '@iconify/svelte';
     import { router, page, Link } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
+
+    let multiplier = $state(1)
 </script>
 
 <svelte:head>
@@ -45,18 +47,29 @@
                 {/if}
             </div>
 
-            <div class="box flex-1">
-                <h4>Ingredients:</h4>
-                <ul>
-                    {#each mix.data.ingredients as ingredient}
-                        <li>
-                            {ingredient?.quantity}
-                            {measures.data.find((measure) => measure.id == ingredient.measure_id)
-                                ?.name}
-                            {ingredient?.name}
-                        </li>
-                    {/each}
-                </ul>
+            <div class="box flex-1 flex flex-col justify-between gap-y-4">
+               
+               <div>
+                    <h4>Ingredients:</h4>
+                    <ul>
+                        {#each mix.data.ingredients as ingredient}
+                            <li>
+                            <input type='checkbox' class='mb-2 focus:ring-primary-500 text-primary-500 active:bg-primary-500 checked:bg-primary-500'/>
+                             <span class='font-medium'> {ingredient?.quantity*multiplier}</span>
+                                {measures.data.find((measure) => measure.id == ingredient.measure_id)
+                                    ?.name}
+                                {ingredient?.name}
+                              
+                            </li>
+                        {/each}
+                    </ul>
+               </div>
+                <div class='flex items-center gap-2'>
+                    <Button class='!rounded-full !px-2 !py-1 !bg-primary-600 !text-white' onclick={()=>{multiplier=multiplier/2}}>Give me half</Button>
+                    <div class='min-w-16 text-center'> {multiplier==1?'original':`* ${multiplier}`}</div>
+                      <Button class='!rounded-full !px-1 !py-1 !bg-primary-600 !text-white' onclick={()=>{multiplier=multiplier*2}}>Double</Button>
+                    <Button class='!rounded-full !p-1 !bg-primary-600 !text-white' onclick={()=>{multiplier=1}}><Icon icon='mdi:arrow-u-left-top'/></Button>
+               </div>
             </div>
         </div>
         <div class="box">

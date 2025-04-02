@@ -3,7 +3,7 @@
     import { Link } from '@inertiajs/svelte';
 
     export let data,
-        updatedPageNumber = () => {};
+    updatedPageNumber = () => {};
     console.log(data.meta);
 </script>
 
@@ -34,20 +34,25 @@
                 aria-label="Pagination"
             >
                 {#each data.meta.links as link}
-                    <a
-                        href={link.url}
-                        class="flex w-5 items-center justify-center rounded-sm pt-1 text-sm text-uiGray-100 {link.active
-                            ? 'bg-uiDark-300 font-bold'
-                            : ''}"
-                    >
-                        {#if link.label == '&laquo; Previous'}
-                            <Icon icon="mdi:chevron-left" class="mb-1 size-4" />
-                        {:else if link.label != 'Next &raquo;'}
-                            {@html link.label}
-                        {:else}
-                            <Icon icon="mdi:chevron-right" class="mb-1 size-4" />
-                        {/if}
-                    </a>
+                        <button  on:click|preventDefault={() =>
+                                updatedPageNumber(
+                                link.url.split("=")[1]
+                            )}>
+                        <a
+                            href={link.url}
+                            class="flex w-5 items-center justify-center rounded-sm pt-1 text-sm text-uiGray-100 {link.active
+                                ? 'bg-uiDark-300 font-bold'
+                                : ''}"
+                        >
+                            {#if link.label == '&laquo; Previous'}
+                                <Icon icon="mdi:chevron-left" class="mb-1 size-4" />
+                            {:else if link.label != 'Next &raquo;'}
+                                {@html link.label}
+                            {:else}
+                                <Icon icon="mdi:chevron-right" class="mb-1 size-4" />
+                            {/if}
+                        </a>
+                   </button>
                 {/each}
             </nav>
         </div>

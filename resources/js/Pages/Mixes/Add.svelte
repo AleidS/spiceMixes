@@ -35,7 +35,7 @@
         }
     });
 
-    let image;
+    let image=$state();
     const reader = new FileReader();
 
     reader.addEventListener('load', function () {
@@ -61,12 +61,13 @@
     function handleImage(event) {
         const files = event.target.files;
         if (files.length > 0) {
-            form.avatar = files[0];
+            $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
         }
-        console.log(form.avatar);
+        console.log($form.avatar);
     }
     async function addMix(event) {
+        console.log($form.avatar)
         preventEffect = true;
         event.preventDefault();
         // This means that the avatar has not been updated (in which case it would be a file)
@@ -75,7 +76,6 @@
         }
         let formData = { ...$form };
         formData.ingredients = JSON.stringify(formData.ingredients); // Convert ingredients to JSON string
-
         // Send a put request with the modified form data if we are editing
         if (mix?.data) {
             formData.put(`/mixes/${mix.data.id}`, mix.data.id);
@@ -147,18 +147,28 @@
                                         <img
                                             ref="image"
                                             bind:this={image}
+                                            alt=""
+                                             src={typeof $form.avatar === 'string' ? $form.avatar : undefined}
+                                            class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
+                                        />
+                                    <!-- {:else if $form.avatar}
+                                      <img
+                                            ref="image"
                                             src={$form.avatar}
                                             alt=""
                                             class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
-                                        />
+                                        /> -->
+                                    {:else}
+                                    no image selected
                                     {/if}
+                                    
                                     <div
                                         class="z-2 relative h-fit w-fit rounded-md p-4 backdrop-blur-md"
                                     >
                                         {#if fileUpload.isDragging}
                                             Drop files here
                                         {:else}
-                                            Click to upload or drag and drop
+                                            Click to upload 
                                         {/if}
                                     </div>
                                 </div>

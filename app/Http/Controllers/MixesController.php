@@ -83,14 +83,10 @@ class MixesController extends Controller
                 AllowedFilter::partial('name'), // Allows partial matching for the 'name' field
             ])
             ->with('cuisine')
-            ->where(function ($query) use ($userId) {
-                $query->where('user_id', $userId)->orWhereNull('user_id');
-            });
+            ->whereNull('user_id');
+
         if ($request->has('cuisine_id') && $request->cuisine_id) {
             $mixesQuery->where('cuisine_id', $request->cuisine_id);
-        }
-        if ($request->has('is_own') && $request->is_own === 'true') {
-            $mixesQuery->where('user_id', Auth::id());
         }
 
         if ($request->selectAll) {
@@ -182,6 +178,8 @@ class MixesController extends Controller
 
             if ($request->hasFile('avatar')) {
                 $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
+            } else {
+                return response()->json($request, 400);
             }
             return redirect()->route('home')->with('message', 'Mix created successfully');
         } else {
