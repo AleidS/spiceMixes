@@ -11,27 +11,25 @@
     export let pageNumber;
     import autoAnimate from '@formkit/auto-animate';
     // import { Tooltip } from '@svelte-plugins/tooltips';
-  import { Tooltip, Button as FlowButton } from 'flowbite-svelte';
-    
+    import { Tooltip, Button as FlowButton } from 'flowbite-svelte';
+
     let showFilters = false;
 
     // const url = new URL($page.url, window.location.origin); // Create a URL object
-    let cuisine_id = selectedCuisineId
+    let cuisine_id = selectedCuisineId;
     // let is_own = url.searchParams.get('is_own') =='true';
     // let search = url.searchParams.get('filter[name]') || '';
     // let pageNumber = parseInt(url.searchParams.get('page')) || 1;
-    
 
     function applyFilter(cuisineId) {
-        cuisine_id=cuisineId
+        cuisine_id = cuisineId;
         router.get(
             '/',
-            { page: pageNumber, cuisine_id: cuisineId, is_own: is_own, filter: { name: search } },
+            { page: pageNumber, cuisine_id: cuisineId, is_own: is_own, filter: { name: search } }
             // { preserveState: true, preserveScroll: true }
         );
     }
 
-   
     console.log(cuisines);
 </script>
 
@@ -70,21 +68,18 @@
     <div
         class="!z-999 pointer-events-auto flex w-fit !cursor-pointer items-center gap-2 rounded-r-full bg-primary-600 p-2 pl-1 shadow-lg shadow-uiDark-500"
     >
-           
-            <FlowButton
-                onclick={() => {
-                    showFilters = !showFilters;
-                }}
-                class=""
-            >
-                <Icon icon="mdi:filter" class="size-10" />
-            </FlowButton>
-             <Tooltip class='bg-uiDark-500 !z-[999]'>
-                Filter mixes by cuisine
-            </Tooltip>
-        
+        <FlowButton
+            onclick={() => {
+                showFilters = !showFilters;
+            }}
+            class="w-fit px-1"
+        >
+            <Icon icon="mdi:filter" class="size-10" />
+        </FlowButton>
+        <Tooltip class="!z-[999] bg-uiDark-500">Filter mixes by cuisine</Tooltip>
+
         {#if selectedCuisineId}
-            {cuisines.data.find((mix) => mix.id == selectedCuisineId).name} mixes
+            {cuisines.data.find((mix) => mix.id == selectedCuisineId).name}
             <button
                 class="px-3"
                 onclick={() => {
@@ -94,6 +89,8 @@
             >
                 X
             </button>
+        {:else}
+            <span> Cuisines &nbsp; &nbsp;</span>
         {/if}
     </div>
 </div>

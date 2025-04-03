@@ -54,6 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('mixes.create');
     Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
     Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
+    Route::delete('mixes/delete/{id}', [MixesController::class, 'destroy']);
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/favorite', FavoriteController::class);

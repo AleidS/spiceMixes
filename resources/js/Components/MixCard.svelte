@@ -4,25 +4,6 @@
     import FavoriteStar from './FavoriteStar.svelte';
 
     let { children, class: className, mix, ...attrs } = $props();
-    let mixFaved = $state(false);
-
-    const form = {
-        user_id: $page.props?.auth?.user?.id ?? null,
-        mix_id: mix.id
-    };
-
-    console.log(mix);
-    function fave(e) {
-        e.preventDefault();
-        if (mix.favorite) {
-            console.log(form);
-            router.delete(`/favorite`, { data: form });
-            mixFaved = false;
-        } else {
-            router.post(`/favorite`, form);
-            mixFaved = true;
-        }
-    }
 </script>
 
 <div
@@ -53,11 +34,7 @@
     <div
         class="absolute bottom-0 left-0 z-0 w-full rounded-b-lg bg-primary-900 bg-opacity-10 p-4 text-center font-secondary text-3xl font-light text-white backdrop-blur-md backdrop-brightness-50"
     >
-        {#if $page?.props?.auth?.user}
-            <button onclick={fave} class="absolute left-8 my-auto hover:scale-110">
-                <Icon icon={mixFaved || mix.favorite ? 'mdi:star' : 'mdi-light:star'} />
-            </button>
-        {/if}
+        <div class="absolute left-8 my-auto"><FavoriteStar {mix} /></div>
         {mix.name}
     </div>
 </div>

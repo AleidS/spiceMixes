@@ -17,7 +17,10 @@ class FavoriteController extends Controller
         ]);
         $user = Auth::user();
         $user->favoriteMixes()->syncWithoutDetaching($validatedData['mix_id']);
-        return redirect()->route('home')->with('message', 'Added to favorites successfully');
+        return back()->with([
+            'message' => 'Added to favorites successfully',
+            'favorite' => true, // Indicate that the mix is now favorited
+        ]);
     }
 
     /**
@@ -30,6 +33,9 @@ class FavoriteController extends Controller
         ]);
         $user = Auth::user();
         $user->favoriteMixes()->detach($validatedData['mix_id']);
-        return redirect()->route('home')->with('message', 'Removed from favorites successfully');
+        return back()->with([
+            'message' => 'Removed from favorites successfully',
+            'favorite' => false, // Indicate that the mix is no longer favorited
+        ]);
     }
 }

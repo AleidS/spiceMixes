@@ -15,7 +15,7 @@
     <!-- User ID: {$page.props.auth.user.id} -->
     <div class="page m-auto mt-10 !max-w-[700px]">
         <h1>About</h1>
-        <div class="box flex-1">
+        <div class="flex-1">
             <!-- <h4>Ingredients:</h4> -->
             <p>
                 This website was made to try out Svelte/Laravel/Inertia, with Breeze for login

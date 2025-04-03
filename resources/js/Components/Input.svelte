@@ -6,7 +6,7 @@
         children,
         wrapperClass,
         labelClass,
-        labelMobileOnly=false,
+        labelMobileOnly = false,
         class: className,
         label,
         error,
@@ -21,20 +21,16 @@
 </script>
 
 <div
-    class="label flex w-full max-w-full lg:max-w-80 flex-wrap items-center gap-3
-<!-- {wrapperClass}  -->
-    {type == 'textArea'? 'flex-col !items-start !justify-start  text-left' : ''}"
+    class="label flex w-full max-w-full flex-wrap items-center gap-3
+        lg:max-w-80 {wrapperClass}"
 >
-    
-{#if label}
-    <div class="text-white {labelClass} {labelMobileOnly? 'block lg:hidden':''}">{label}</div>
-{/if}
+    {#if label}
+        <div class="text-white {labelClass} {labelMobileOnly ? 'block lg:hidden' : ''}">
+            {label}
+        </div>
+    {/if}
     {#if type == 'select'}
-        <select
-            {...attrs}
-            bind:value
-            class="inputClass {className}"
-        >
+        <select {...attrs} bind:value class="inputClass {className}">
             {#each options as option}
                 <option value={option.id}> {option.name}</option>
             {/each}
@@ -43,16 +39,12 @@
         <textarea
             bind:value
             {...attrs}
-            class="inputClass w-full min-w-full {className}"
+            class="inputClass w-full min-w-full h-fit{className}"
+            rows="5"
         >
         </textarea>
     {:else}
-        <input
-            {type}
-            bind:value
-            {...attrs}
-            class="inputClass {className}"
-        />
+        <input {type} bind:value {...attrs} class="inputClass {className}" />
     {/if}
 </div>
 {#if error}

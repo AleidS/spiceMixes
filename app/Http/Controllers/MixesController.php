@@ -53,6 +53,11 @@ class MixesController extends Controller
         if ($request->has('is_own') && $request->is_own === 'true') {
             $mixesQuery->where('user_id', Auth::id());
         }
+        if ($request->has('show_favorites') && $request->show_favorites === 'true') {
+            $mixesQuery->whereHas('favoritedBy', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            });
+        }
 
         if ($request->selectAll) {
             return MixesResource::collection($mixesQuery->get());
@@ -74,6 +79,7 @@ class MixesController extends Controller
             'pageNumber' => $request->page_number,
             'search' => data_get($request, 'filters.search', false),
             'is_own' => $request->is_own,
+            'show_favorites' => $request->show_favorites,
         ]);
     }
     public function publicMixes(Request $request)
@@ -271,6 +277,7 @@ class MixesController extends Controller
      */
     public function destroy($id)
     {
+        // dd($id);
         $mix = Mixes::find($id);
         $mix->delete();
         return redirect()->route('home');

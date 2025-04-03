@@ -5,8 +5,9 @@
     import Icon from '@iconify/svelte';
     import { router, page, Link } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
+    import FavoriteStar from '@/Components/FavoriteStar.svelte';
 
-    let multiplier = $state(1)
+    let multiplier = $state(1);
 </script>
 
 <svelte:head>
@@ -16,12 +17,14 @@
 <AuthenticatedLayout>
     <div class="page flex flex-col gap-6">
         <div class="flex w-full justify-between">
-            <h1 class="font-primary text-3xl font-medium">
+            <h1 class="flex items-center gap-2 font-primary text-3xl font-medium">
                 {mix.data.name}
+                <FavoriteStar mix={mix.data} class="inline" />
             </h1>
+
             <Link href={route('mixes.edit', mix.data.id)}>
                 {#if mix.data.editable}
-                    <Button primary >
+                    <Button primary>
                         <Icon icon="mdi:pencil" class="mb-1" />
                         Edit
                     </Button>
@@ -47,29 +50,50 @@
                 {/if}
             </div>
 
-            <div class="box flex-1 flex flex-col justify-between gap-y-4">
-               
-               <div>
+            <div class="box flex flex-1 flex-col justify-between gap-y-4">
+                <div>
                     <h4>Ingredients:</h4>
                     <ul>
                         {#each mix.data.ingredients as ingredient}
                             <li>
-                            <input type='checkbox' class='mb-2 focus:ring-primary-500 text-primary-500 active:bg-primary-500 checked:bg-primary-500'/>
-                             <span class='font-medium'> {ingredient?.quantity*multiplier}</span>
-                                {measures.data.find((measure) => measure.id == ingredient.measure_id)
-                                    ?.name}
+                                <input
+                                    type="checkbox"
+                                    class="mb-2 text-primary-500 checked:bg-primary-500 focus:ring-primary-500 active:bg-primary-500"
+                                />
+                                <span class="font-medium">
+                                    {ingredient?.quantity * multiplier}</span
+                                >
+                                {measures.data.find(
+                                    (measure) => measure.id == ingredient.measure_id
+                                )?.name}
                                 {ingredient?.name}
-                              
                             </li>
                         {/each}
                     </ul>
-               </div>
-                <div class='flex items-center gap-2'>
-                    <Button class='!rounded-full !px-2 !py-1 !bg-primary-600 !text-white' onclick={()=>{multiplier=multiplier/2}}>Give me half</Button>
-                    <div class='min-w-16 text-center'> {multiplier==1?'original':`* ${multiplier}`}</div>
-                      <Button class='!rounded-full !px-1 !py-1 !bg-primary-600 !text-white' onclick={()=>{multiplier=multiplier*2}}>Double</Button>
-                    <Button class='!rounded-full !p-1 !bg-primary-600 !text-white' onclick={()=>{multiplier=1}}><Icon icon='mdi:arrow-u-left-top'/></Button>
-               </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <Button
+                        class="!rounded-full !bg-primary-600 !px-2 !py-1 !text-white"
+                        onclick={() => {
+                            multiplier = multiplier / 2;
+                        }}>Give me half</Button
+                    >
+                    <div class="min-w-16 text-center">
+                        {multiplier == 1 ? 'original' : `* ${multiplier}`}
+                    </div>
+                    <Button
+                        class="!rounded-full !bg-primary-600 !px-1 !py-1 !text-white"
+                        onclick={() => {
+                            multiplier = multiplier * 2;
+                        }}>Double</Button
+                    >
+                    <Button
+                        class="!rounded-full !bg-primary-600 !p-1 !text-white"
+                        onclick={() => {
+                            multiplier = 1;
+                        }}><Icon icon="mdi:arrow-u-left-top" /></Button
+                    >
+                </div>
             </div>
         </div>
         <div class="box">

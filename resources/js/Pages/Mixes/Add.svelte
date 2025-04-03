@@ -10,26 +10,33 @@
     import { FileUpload } from 'melt/components';
     import { writable } from 'svelte/store';
     // import { Tooltip } from '@svelte-plugins/tooltips';
-      import { Tooltip, Button as FlowButton } from 'flowbite-svelte';
+    import { Tooltip, Button as FlowButton } from 'flowbite-svelte';
+    import DangerButton from '@/Components/DangerButton.svelte';
 
     // let fileUpload;
 
     let { mix, errors, measures, cuisines } = $props();
 
-    $effect: if (Object.keys(errors)[0]){
-        open=true}
-    
+    $effect: if (Object.keys(errors)[0]) {
+        open = true;
+    }
 
     const form = useForm({
         name: '',
-        ingredients: [{ quantity: null, measure_id: null, name: null }],
+        ingredients: [
+            { quantity: null, measure_id: null, name: null },
+            { quantity: null, measure_id: null, name: null },
+            { quantity: null, measure_id: null, name: null },
+            { quantity: null, measure_id: null, name: null },
+            { quantity: null, measure_id: null, name: null }
+        ],
         description: '',
         user_id: $page.props.auth.user.id,
         cuisine_id: null,
         avatar: null
     });
 
-    let termsAccepted = $state(false)
+    let termsAccepted = $state(false);
     $effect(() => {
         console.log(mix?.data);
         if (mix?.data) {
@@ -42,7 +49,7 @@
         }
     });
 
-    let image=$state();
+    let image = $state();
     const reader = new FileReader();
 
     reader.addEventListener('load', function () {
@@ -50,15 +57,6 @@
             image.setAttribute('src', reader.result);
         }
     });
-
-
-    function handleFileUpload(files) {
-        console.log(files)
-        if (files.length > 0) {
-            $form.avatar = files[0];
-            reader.readAsDataURL(files[0]);
-        }
-    }
 
     let preventEffect = false;
 
@@ -77,21 +75,21 @@
     function handleImage(event) {
         const files = event.target.files;
         if (files.length > 0) {
-            if (files[0].size>2028000){
-                alert('max file size is 2mb')
-                return
+            if (files[0].size > 2028000) {
+                alert('max file size is 2mb');
+                return;
             }
             $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
         }
         console.log($form.avatar);
     }
-    function handleDrop(event){
+    function handleDrop(event) {
         const files = event.dataTransfer.files;
         if (files.length > 0) {
-            if (files[0].size>2028000){
-                alert('max file size is 2mb')
-                return
+            if (files[0].size > 2028000) {
+                alert('max file size is 2mb');
+                return;
             }
             $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
@@ -99,7 +97,7 @@
         console.log($form.avatar);
     }
     async function addMix(event) {
-        console.log($form.avatar)
+        console.log($form.avatar);
         preventEffect = true;
         event.preventDefault();
         // This means that the avatar has not been updated (in which case it would be a file)
@@ -117,6 +115,11 @@
             formData.post('/mixes');
         }
     }
+    async function removeMix(event) {
+        console.log('deleting');
+        let formData = { ...$form };
+        router.delete(`/mixes/delete/${mix.data.id}`);
+    }
 </script>
 
 <svelte:head>
@@ -125,51 +128,61 @@
 <AuthenticatedLayout>
     {#if mix?.data?.editable != false}
         <div class="page">
-            {#if (Object.keys(errors)[0])}
-            <dialog open>
-               <form method="dialog">
-                there were one or multiple errors:
-                <br/><br/>
-                {#each Object.keys(errors) as error,index}
-                {index+1}. {errors[error]}
-                <br/>
-                {/each}
-                <br/>
-                    <Button type='submit'>OK</Button>
-                </form>
-            </dialog>
+            {#if Object.keys(errors)[0]}
+                <dialog open>
+                    <form method="dialog">
+                        there were one or multiple errors:
+                        <br /><br />
+                        {#each Object.keys(errors) as error, index}
+                            {index + 1}. {errors[error]}
+                            <br />
+                        {/each}
+                        <br />
+                        <Button type="submit">OK</Button>
+                    </form>
+                </dialog>
             {/if}
             <!-- <h1>{mix?'Edit mix':'Add Mix'}</h1> -->
 
             <form onsubmit={addMix} class="flex flex-col gap-y-6">
-           <div class='flex justify-between'>
-                     <Button class=" !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 w-fit">
+                <div class="flex justify-between">
+                    <Button class=" w-fit !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400">
                         <Link href={route('home')} class="flex items-center gap-1 ">
                             <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
                             Back to Mixes
                         </Link>
                     </Button>
-                    
+
                     <Button
                         type="submit"
-                        id='submitbutton'
+                        id="submitbutton"
                         primary
-                         disabled={!termsAccepted}
+                        disabled={!termsAccepted}
                         class="h-auto w-fit text-nowrap !text-white"
                     >
                         <Icon icon="mdi:floppy" class="mb-1 size-5" />
                         {mix ? 'Save mix' : 'Add Mix'}
                     </Button>
-                 </div>     
+                </div>
+                {#if mix?.data?.id}
+                    <Button
+                        onclick={(e) => {
+                            e.preventDefault(), removeMix();
+                        }}
+                        class="h-auto w-fit text-nowrap !bg-danger-500 !text-white"
+                    >
+                        <Icon icon="mdi:trash" class="mb-1 size-5" />
+                        Delete mix
+                    </Button>
+                {/if}
                 <div
-                    class="flex flex-1 flex-row flex-wrap items-center justify-start gap-3 md:justify-start w-fit"
+                    class="flex w-fit flex-1 flex-row flex-wrap items-center justify-start gap-3 md:justify-start"
                 >
-
                     <Input
                         type="text"
                         bind:value={$form.name}
                         placeholder="Title"
-                        class="!min-w-64 flex-1 border !border-uiGray-400 !py-1 font-primary !text-2xl !font-bold text-black w-fit"
+                        class="w-fit !min-w-64 flex-1 border !border-uiGray-400 !py-1 font-primary !text-2xl !font-bold text-black"
                         wrapperClass="!justify-start !w-[300px] "
                         label={mix ? null : 'Title'}
                         error={errors?.name}
@@ -182,17 +195,16 @@
                         ondragover={(e) => e.preventDefault()}
                         ondragenter={(e) => e.preventDefault()}
                         aria-label="File upload dropzone"
-                        role='region'
+                        role="region"
                         class="flex h-fit w-full flex-col items-center justify-start rounded-md bg-uiDark-600 md:h-auto md:w-fit"
                     >
-                        <FileUpload class="h-auto w-96" >
+                        <FileUpload class="h-auto w-96">
                             {#snippet children(fileUpload)}
                                 <input
                                     accept="image/*"
                                     {...fileUpload.input}
                                     type="file"
                                     onchange={handleImage}
-                                    
                                 />
                                 <div
                                     {...fileUpload.dropzone}
@@ -203,10 +215,12 @@
                                             ref="image"
                                             bind:this={image}
                                             alt=""
-                                             src={typeof $form.avatar === 'string' ? $form.avatar : undefined}
+                                            src={typeof $form.avatar === 'string'
+                                                ? $form.avatar
+                                                : undefined}
                                             class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
                                         />
-                                    <!-- {:else if $form.avatar}
+                                        <!-- {:else if $form.avatar}
                                       <img
                                             ref="image"
                                             src={$form.avatar}
@@ -214,30 +228,41 @@
                                             class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
                                         /> -->
                                     {:else}
-                                   <div class='absolute bottom-4 font-light h-fit w-fit text-sm'> no image selected, will use a fallback</div>
+                                        <div
+                                            class="absolute bottom-4 h-fit w-fit text-sm font-light"
+                                        >
+                                            no image selected, will use a fallback
+                                        </div>
                                     {/if}
-                                    
+
                                     <div
                                         class="z-2 relative h-fit w-fit rounded-md p-4 backdrop-blur-md"
                                     >
                                         {#if fileUpload.isDragging}
                                             Drop files here
                                         {:else}
-                                            Click <span class='hidden sm:inline'>or drag</span> to upload 
-                                           <br/> <span class='font-light text-sm'>(max 2mb, allowed types: jpeg,png,jpg,svg)</span>
+                                            Click <span class="hidden sm:inline">or drag</span> to
+                                            upload
+                                            <br />
+                                            <span class="text-sm font-light"
+                                                >(max 2mb, allowed types: jpeg,png,jpg,svg)</span
+                                            >
                                         {/if}
                                     </div>
                                 </div>
                             {/snippet}
                         </FileUpload>
-                            {#if errors?.avatar}
-                            <div class="error text-danger-300 px-4 py-2 text-wrap h-fit max-w-48">
-                                <Icon icon="tabler:exclamation-circle-filled" class="mb-[4px] inline size-4" />
+                        {#if errors?.avatar}
+                            <div class="error h-fit max-w-48 text-wrap px-4 py-2 text-danger-300">
+                                <Icon
+                                    icon="tabler:exclamation-circle-filled"
+                                    class="mb-[4px] inline size-4"
+                                />
                                 {errors?.avatar}
                             </div>
-                            {/if}
+                        {/if}
                     </div>
-                
+
                     <div class="flex w-[300px] max-w-full flex-1 flex-col gap-4">
                         <div class="box flex h-full flex-col gap-4">
                             <h3 class="">Ingredients</h3>
@@ -296,16 +321,15 @@
                             <Button
                                 type="button"
                                 onclick={() => {
-                                    if ($form.ingredients.length<40){
-                                    $form.ingredients.push({
-                                        quantity: '',
-                                        measure_id: '',
-                                        name: ''
-                                    }),
-                                        ($form.ingredients = $form.ingredients);
-                                    }
-                                    else{
-                                        alert('too many ingredients!')
+                                    if ($form.ingredients.length < 40) {
+                                        $form.ingredients.push({
+                                            quantity: '',
+                                            measure_id: '',
+                                            name: ''
+                                        }),
+                                            ($form.ingredients = $form.ingredients);
+                                    } else {
+                                        alert('too many ingredients!');
                                     }
                                 }}
                                 class="w-fit !bg-success-400 !bg-opacity-50 !text-white"
@@ -321,14 +345,14 @@
                     </div>
                 </div>
 
-                <div class="box">
+                <div class="box !h-fit">
                     <Input
                         label="Description"
                         type="textArea"
                         bind:value={$form.description}
                         placeholder="Description"
                         wrapperClass="!max-w-full"
-                        class="!p-4 text-black"
+                        class="h-fit !p-4 text-black"
                         error={errors.description}
                     />
                 </div>
@@ -344,47 +368,40 @@
                         error={errors.cuisine_id}
                     />
                 </div>
-                <div class='font-light'>
-                    <input type='checkbox' bind:checked={termsAccepted} class=''/>
-                    By uploading my content I agree to the 
-                    <a
-                        href="/uploadTerms"
-                        target="_blank"
-                        class="tab-link-class underline" 
-                    >
+                <div class="font-light">
+                    <input type="checkbox" bind:checked={termsAccepted} class="" />
+                    By uploading my content I agree to the
+                    <a href="/uploadTerms" target="_blank" class="tab-link-class underline">
                         upload terms and conditions
-                    </a> and 
-                    <a
-                        href="/generalTerms"
-                        target="_blank"
-                        class="tab-link-class underline" 
-                    >
+                    </a>
+                    and
+                    <a href="/generalTerms" target="_blank" class="tab-link-class underline">
                         general terms and conditions
                     </a>
                 </div>
 
-                 <div class='flex justify-between'>
-                     <Button class=" !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 w-fit">
+                <div class="flex justify-between">
+                    <Button class=" w-fit !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400">
                         <Link href={route('home')} class="flex items-center gap-1 ">
                             <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
                             Back to Mixes
                         </Link>
                     </Button>
                     <Tooltip triggeredBy="#submitbutton">
-                        {termsAccepted===false?'Please accept the terms':''}</Tooltip>
+                        {termsAccepted === false ? 'Please accept the terms' : ''}</Tooltip
+                    >
 
-                        <Button
-                            id='submitbutton'
-                            type="submit"
-                            disabled={!termsAccepted}
-                            primary
-                            class="h-auto w-fit text-nowrap !text-white"
-                        >
-                            <Icon icon="mdi:floppy" class="mb-1 size-5" />
-                            {mix ? 'Save mix' : 'Add Mix'}
-                        </Button>
-                 
-                 </div>
+                    <Button
+                        id="submitbutton"
+                        type="submit"
+                        disabled={!termsAccepted}
+                        primary
+                        class="h-auto w-fit text-nowrap !text-white"
+                    >
+                        <Icon icon="mdi:floppy" class="mb-1 size-5" />
+                        {mix ? 'Save mix' : 'Add Mix'}
+                    </Button>
+                </div>
             </form>
         </div>
     {:else}
