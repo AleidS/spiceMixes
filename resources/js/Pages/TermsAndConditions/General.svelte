@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-    <title>Terms and conditions - Content</title>
+    <title>Terms and conditions - General</title>
 </svelte:head>
     <!-- <MixesFilters {cuisines} {selectedCuisineId} /> -->
     <!-- User ID: {$page.props.auth.user.id} -->

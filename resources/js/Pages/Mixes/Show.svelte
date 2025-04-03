@@ -21,7 +21,7 @@
             </h1>
             <Link href={route('mixes.edit', mix.data.id)}>
                 {#if mix.data.editable}
-                    <Button class="rounded-xl !bg-primary-400">
+                    <Button primary >
                         <Icon icon="mdi:pencil" class="mb-1" />
                         Edit
                     </Button>

@@ -14,20 +14,26 @@ class MixesResource extends JsonResource
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
-
-  
     {
         $currentUserId = Auth::id();
-        return  [
+        $isFavorite = $this->whenLoaded(
+            'favorites',
+            function () use ($currentUserId) {
+                return $this->favorites->contains('id', $currentUserId);
+            },
+            false
+        );
+        return [
             'id' => $this->id,
             'name' => $this->name,
-            'description'=>$this->description,
-            'ingredients'=>json_decode($this->ingredients, true),
+            'description' => $this->description,
+            'ingredients' => json_decode($this->ingredients, true),
             'user_id' => $this->user_id,
             'cuisine_id' => $this->cuisine_id,
             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),
-            'editable' => $this->user_id === $currentUserId && $this->user_id!==null,
-            'is_own'=> $this->user_id === $currentUserId && $this->user_id!==null,
+            'favorite' => $this->isFavoritedByCurrentUser(),
+            'editable' => $this->user_id === $currentUserId && $this->user_id !== null,
+            'is_own' => $this->user_id === $currentUserId && $this->user_id !== null,
             // $this->cuisine->name : null, // Include the cuisine name
             'avatar' => $this?->getFirstMediaUrl('avatars'),
         ];

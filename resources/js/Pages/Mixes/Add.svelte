@@ -9,11 +9,16 @@
 
     import { FileUpload } from 'melt/components';
     import { writable } from 'svelte/store';
-    import { Tooltip } from '@svelte-plugins/tooltips';
+    // import { Tooltip } from '@svelte-plugins/tooltips';
+      import { Tooltip, Button as FlowButton } from 'flowbite-svelte';
 
     // let fileUpload;
 
     let { mix, errors, measures, cuisines } = $props();
+
+    $effect: if (Object.keys(errors)[0]){
+        open=true}
+    
 
     const form = useForm({
         name: '',
@@ -72,6 +77,10 @@
     function handleImage(event) {
         const files = event.target.files;
         if (files.length > 0) {
+            if (files[0].size>2028000){
+                alert('max file size is 2mb')
+                return
+            }
             $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
         }
@@ -80,6 +89,10 @@
     function handleDrop(event){
         const files = event.dataTransfer.files;
         if (files.length > 0) {
+            if (files[0].size>2028000){
+                alert('max file size is 2mb')
+                return
+            }
             $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
         }
@@ -112,6 +125,20 @@
 <AuthenticatedLayout>
     {#if mix?.data?.editable != false}
         <div class="page">
+            {#if (Object.keys(errors)[0])}
+            <dialog open>
+               <form method="dialog">
+                there were one or multiple errors:
+                <br/><br/>
+                {#each Object.keys(errors) as error,index}
+                {index+1}. {errors[error]}
+                <br/>
+                {/each}
+                <br/>
+                    <Button type='submit'>OK</Button>
+                </form>
+            </dialog>
+            {/if}
             <!-- <h1>{mix?'Edit mix':'Add Mix'}</h1> -->
 
             <form onsubmit={addMix} class="flex flex-col gap-y-6">
@@ -122,8 +149,10 @@
                             Back to Mixes
                         </Link>
                     </Button>
+                    
                     <Button
                         type="submit"
+                        id='submitbutton'
                         primary
                          disabled={!termsAccepted}
                         class="h-auto w-fit text-nowrap !text-white"
@@ -133,15 +162,15 @@
                     </Button>
                  </div>     
                 <div
-                    class="flex flex-1 flex-row flex-wrap items-center justify-start gap-3 md:justify-between"
+                    class="flex flex-1 flex-row flex-wrap items-center justify-start gap-3 md:justify-start w-fit"
                 >
 
                     <Input
                         type="text"
                         bind:value={$form.name}
                         placeholder="Title"
-                        class="!min-w-64 flex-1 border !border-uiGray-400 !py-1 font-primary !text-2xl !font-bold text-black"
-                        wrapperClass="!justify-start !w-[300px]"
+                        class="!min-w-64 flex-1 border !border-uiGray-400 !py-1 font-primary !text-2xl !font-bold text-black w-fit"
+                        wrapperClass="!justify-start !w-[300px] "
                         label={mix ? null : 'Title'}
                         error={errors?.name}
                     />
@@ -185,7 +214,7 @@
                                             class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
                                         /> -->
                                     {:else}
-                                   <div class='absolute bottom-4 font-light h-fit w-fit text-sm'> no image selected</div>
+                                   <div class='absolute bottom-4 font-light h-fit w-fit text-sm'> no image selected, will use a fallback</div>
                                     {/if}
                                     
                                     <div
@@ -195,12 +224,20 @@
                                             Drop files here
                                         {:else}
                                             Click <span class='hidden sm:inline'>or drag</span> to upload 
+                                           <br/> <span class='font-light text-sm'>(max 2mb, allowed types: jpeg,png,jpg,svg)</span>
                                         {/if}
                                     </div>
                                 </div>
                             {/snippet}
                         </FileUpload>
+                            {#if errors?.avatar}
+                            <div class="error text-danger-300 px-4 py-2 text-wrap h-fit max-w-48">
+                                <Icon icon="tabler:exclamation-circle-filled" class="mb-[4px] inline size-4" />
+                                {errors?.avatar}
+                            </div>
+                            {/if}
                     </div>
+                
                     <div class="flex w-[300px] max-w-full flex-1 flex-col gap-4">
                         <div class="box flex h-full flex-col gap-4">
                             <h3 class="">Ingredients</h3>
@@ -307,7 +344,7 @@
                         error={errors.cuisine_id}
                     />
                 </div>
-                <div>
+                <div class='font-light'>
                     <input type='checkbox' bind:checked={termsAccepted} class=''/>
                     By uploading my content I agree to the 
                     <a
@@ -333,8 +370,11 @@
                             Back to Mixes
                         </Link>
                     </Button>
-                    <Tooltip content={termsAccepted===false?'Please accept the terms':''}>
+                    <Tooltip triggeredBy="#submitbutton">
+                        {termsAccepted===false?'Please accept the terms':''}</Tooltip>
+
                         <Button
+                            id='submitbutton'
                             type="submit"
                             disabled={!termsAccepted}
                             primary
@@ -343,7 +383,7 @@
                             <Icon icon="mdi:floppy" class="mb-1 size-5" />
                             {mix ? 'Save mix' : 'Add Mix'}
                         </Button>
-                    </Tooltip>
+                 
                  </div>
             </form>
         </div>

@@ -39,6 +39,12 @@ div {
 .background {
     @apply bg-uiDark-800;
 }
+dialog:is([open]){
+    @apply flex fixed w-full h-full z-[9999] top-0 left-0 backdrop-blur-lg bg-transparent;
+}
+dialog form{
+    @apply p-8 rounded-lg bg-uiDark-500 max-w-[600px] text-white m-auto my-auto;
+}
 .page {
     @apply flex flex-col gap-6 rounded-lg bg-uiDark-700 p-4 md:p-8;
 }

@@ -88,7 +88,7 @@
                  <Link href={route('mixes.create')} class="ml-auto w-fit text-white sm:ml-0">
                     <Button class="w-fit text-nowrap !bg-primary-600 !text-white">
                        
-                        Login to add your own!
+                        Login or register to add your own!
                     </Button>
                 </Link>
                 {/if}

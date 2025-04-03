@@ -17,14 +17,14 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'email', 'password'];
     public function mixes()
     {
-       return $this->hasMany('App\Models\Mixes', 'user_id', 'id');
+        return $this->hasMany('App\Models\Mixes', 'user_id', 'id');
+    }
+    public function favoriteMixes()
+    {
+        return $this->belongsToMany('App\Models\Mixes', 'mix_user', 'user_id', 'mix_id');
     }
 
     /**
@@ -32,10 +32,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Get the attributes that should be cast.

@@ -47,6 +47,7 @@
                 bind:value={$form.email}
                 required
                 autocomplete="username"
+                 clearable={false}
             />
             <InputError message={$form.errors.email} class="mt-2" />
         </div>
@@ -62,6 +63,7 @@
                 bind:value={$form.password}
                 required
                 autocomplete="current-password"
+                clearable={false}
             />
             <InputError message={$form.errors.password} class="mt-2" />
         </div>
@@ -90,7 +92,7 @@
                     href='/register'
                     class="rounded-md text-sm text-uiGray-600 underline hover:text-uiGray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-uiGray-400 dark:hover:text-uiGray-100 dark:focus:ring-offset-uiGray-800"
                 >
-                    Register
+                    or click here to Register
                 </a>
 
             <PrimaryButton

@@ -41,7 +41,7 @@ class MixesController extends Controller
             ->allowedFilters([
                 AllowedFilter::partial('name'), // Allows partial matching for the 'name' field
             ])
-            ->with('cuisine')
+            ->with(['favoritedBy', 'cuisine'])
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId)->orWhereNull('user_id');
             });
@@ -82,7 +82,7 @@ class MixesController extends Controller
             ->allowedFilters([
                 AllowedFilter::partial('name'), // Allows partial matching for the 'name' field
             ])
-            ->with('cuisine')
+            ->with(['favoritedBy', 'cuisine'])
             ->whereNull('user_id');
 
         if ($request->has('cuisine_id') && $request->cuisine_id) {
@@ -142,10 +142,8 @@ class MixesController extends Controller
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
+            'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Validate file type and size
             // 'avatar' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Make avatar nullable and validate file type
-        ]);
-        $request->validate([
-            'avatar' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate file type and size
         ]);
 
         $totalCreatedMixes = $request->user()->mixes->count();
@@ -196,7 +194,7 @@ class MixesController extends Controller
      */
     public function show($id)
     {
-        $mix = Mixes::with('cuisine')->find($id);
+        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
         if (!$mix) {
             return redirect()->route('home')->with('error', 'Mix not found.');
         }
@@ -215,7 +213,7 @@ class MixesController extends Controller
      */
     public function edit($id)
     {
-        $mix = Mixes::with('cuisine')->find($id);
+        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
         if (!$mix) {
             return redirect()->route('home')->with('error', 'Mix not found.');
         }
@@ -245,14 +243,14 @@ class MixesController extends Controller
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
-            'avatar' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Make avatar nullable and validate file type
+            'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Make avatar nullable and validate file type
         ]);
 
         if ($request->hasFile('avatar')) {
             $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
         }
 
-        $mix = Mixes::with('cuisine')->find($id);
+        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
         $mix->update($validatedData);
         $mixResource = new MixesResource($mix);
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MixesController;
 use App\Http\Controllers\CuisineController;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,6 +54,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('mixes.create');
     Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
     Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
+});
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('/favorite', FavoriteController::class);
+    Route::delete('/favorite', [FavoriteController::class, 'destroy']);
 });
 // Make sure /{id} is after anything else, otherwise, e.g. mixes/create might be interpreted as an id parameter
 Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');

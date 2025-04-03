@@ -10,7 +10,7 @@
     <!-- <MixesFilters {cuisines} {selectedCuisineId} /> -->
     <!-- User ID: {$page.props.auth.user.id} -->
  <GuestLayout>
-        <div class="page m-auto mt-10 w-[1200px]">
+        <div class="page m-auto mt-10 max-w-[1200px]">
             <h3>Terms and conditions - upload of content and images</h3>
             <p>
                 <strong>By uploading content (including but not limited to images) to this platform, you understand that:</strong>
