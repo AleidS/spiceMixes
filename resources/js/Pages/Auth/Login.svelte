@@ -34,6 +34,12 @@
             {status}
         </div>
     {/if}
+    <a
+        href={route('auth.google.redirect')}
+        class="btn rounded-md border bg-blue-100 p-3 text-blue-900 shadow-sm"
+    >
+        Login with Google
+    </a>
 
     <form onsubmit={submit}>
         <!-- Email Address -->
@@ -47,7 +53,7 @@
                 bind:value={$form.email}
                 required
                 autocomplete="username"
-                 clearable={false}
+                clearable={false}
             />
             <InputError message={$form.errors.email} class="mt-2" />
         </div>
@@ -86,14 +92,14 @@
                     Forgot your password?
                 </a>
             {/if}
-                &nbsp;
-              <a
-                    use:inertia
-                    href='/register'
-                    class="rounded-md text-sm text-uiGray-600 underline hover:text-uiGray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-uiGray-400 dark:hover:text-uiGray-100 dark:focus:ring-offset-uiGray-800"
-                >
-                    or click here to Register
-                </a>
+            &nbsp;
+            <a
+                use:inertia
+                href="/register"
+                class="rounded-md text-sm text-uiGray-600 underline hover:text-uiGray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-uiGray-400 dark:hover:text-uiGray-100 dark:focus:ring-offset-uiGray-800"
+            >
+                or click here to Register
+            </a>
 
             <PrimaryButton
                 class="ms-4 {$form.processing && 'opacity-25'}"

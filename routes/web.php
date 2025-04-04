@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MixesController;
 use App\Http\Controllers\CuisineController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -62,6 +63,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 // Make sure /{id} is after anything else, otherwise, e.g. mixes/create might be interpreted as an id parameter
 Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
+
+// Route to redirect to Google's OAuth page
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name(
+    'auth.google.redirect'
+);
+// Route to handle the callback from Google
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name(
+    'auth.google.callback'
+);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
