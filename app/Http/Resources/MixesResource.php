@@ -36,6 +36,9 @@ class MixesResource extends JsonResource
             'is_own' => $this->user_id === $currentUserId && $this->user_id !== null,
             // $this->cuisine->name : null, // Include the cuisine name
             'avatar' => $this?->getFirstMediaUrl('avatars'),
+            'source_url' => $this->source_url,
+            'source_name' => $this->source_name,
+            'show_alternatives' => $this->show_alternatives,
         ];
     }
 }

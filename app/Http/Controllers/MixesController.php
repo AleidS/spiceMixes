@@ -147,7 +147,9 @@ class MixesController extends Controller
         // }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'source_url' => 'nullable|string|max:255',
+            'source_name' => 'nullable|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Validate file type and size
@@ -155,7 +157,7 @@ class MixesController extends Controller
         $validatedIngredients = $request->validate([
             'ingredients' => 'required|json',
         ]);
-        dd($validatedData);
+        // dd($validatedData);
         $totalCreatedMixes = $request->user()->mixes->count();
         // Limit the number of images a user can upload to one per minute
         if (
@@ -275,7 +277,9 @@ class MixesController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'source_url' => 'nullable|string|max:255',
+            'source_name' => 'nullable|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Make avatar nullable and validate file type

@@ -31,6 +31,8 @@
             { quantity: null, measure_id: null, name: null }
         ],
         description: '',
+        source_url: '',
+        source_name: '',
         user_id: $page.props.auth.user.id,
         cuisine_id: null,
         avatar: null
@@ -367,6 +369,24 @@
                         placeholder="Cuisine"
                         class="text-black"
                         error={errors.cuisine_id}
+                    />
+                </div>
+                <div class="box flex flex-wrap gap-2">
+                    <Input
+                        label="Source url (link, optional)"
+                        type="text"
+                        bind:value={$form.source_url}
+                        placeholder="Source url"
+                        class="text-black"
+                        error={errors.source_url}
+                    />
+                    <Input
+                        label="Source name (optional)"
+                        type="text"
+                        bind:value={$form.source_name}
+                        placeholder="Source name"
+                        class="text-black"
+                        error={errors.source_name}
                     />
                 </div>
                 <div class="font-light">

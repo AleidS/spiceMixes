@@ -147,10 +147,19 @@
         </div>
         <div class="box">
             <h4>Description</h4>
-            <p>{mix.data.description}</p>
+            <p>{mix.data?.description}</p>
         </div>
 
         <p><strong>Cuisine:</strong> {mix.data.cuisine.name}</p>
+        {#if mix.data?.source_url}
+            <p>
+                <strong>Source(s):</strong>
+                <a href={mix.data.source_url} class="underline">{mix.data?.source_name ?? 'link'}</a
+                >
+            </p>
+        {:else if mix.data?.source_name}
+            <strong>Source:</strong>{mix.data?.source_name}
+        {/if}
     </div>
 
     <Button class="mt-3 !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 ">

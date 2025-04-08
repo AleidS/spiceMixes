@@ -17,7 +17,15 @@ class Mixes extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
 
-    protected $fillable = ['name', 'ingredients', 'description', 'user_id', 'cuisine_id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'user_id',
+        'cuisine_id',
+        'source_url',
+        'source_name',
+        'show_alternatives',
+    ];
 
     // Define the relationship with the Cuisine model
     public function cuisine()

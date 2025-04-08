@@ -13,9 +13,12 @@ return new class extends Migration {
         Schema::create('mixes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('user_id')->nullable();
             $table->integer('cuisine_id')->default(1);
+            $table->string('source_url')->nullable();
+            $table->string('source_name')->nullable();
+            $table->boolean('show_alternatives')->default(true);
             $table->timestamps();
         });
 
