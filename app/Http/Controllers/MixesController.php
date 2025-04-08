@@ -227,11 +227,17 @@ class MixesController extends Controller
     public function show($id)
     {
         if (Auth::check()) {
-            // If the user is authenticated, show their mixes
-            $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
+            // Authenticated users can view their own mixes or public mixes
+            $mix = Mixes::with(['favoritedBy', 'cuisine'])
+                ->where(function ($query) {
+                    $query->where('user_id', Auth::id())->orWhereNull('user_id');
+                })
+                ->find($id);
         } else {
-            // If the user is not authenticated, show public mixes
-            $mix = Mixes::with(['cuisine'])->find($id);
+            // Unauthenticated users can only view public mixes
+            $mix = Mixes::with(['cuisine'])
+                ->whereNull('user_id')
+                ->find($id);
         }
         if (!$mix) {
             return redirect()->route('home')->with('error', 'Mix not found.');

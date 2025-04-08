@@ -26,6 +26,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Mixes', 'mix_user', 'user_id', 'mix_id');
     }
+    public function shares()
+    {
+        return $this->hasMany('App\Models\Shares', 'target_user', 'id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

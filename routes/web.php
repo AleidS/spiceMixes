@@ -5,6 +5,7 @@ use App\Http\Controllers\MixesController;
 use App\Http\Controllers\CuisineController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\SharesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -58,6 +59,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
     Route::post('mixes/{id}', [MixesController::class, 'update'])->name('mixes.update');
     Route::delete('mixes/delete/{id}', [MixesController::class, 'destroy']);
+    Route::post('shares/accept/{id}', [SharesController::class, 'accept'])->name('shares.accept');
+    Route::post('shares/decline/{id}', [SharesController::class, 'decline'])->name(
+        'shares.decline'
+    );
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/favorite', FavoriteController::class);

@@ -11,7 +11,10 @@
     //   https://flowbite-svelte.com/docs/components/buttons
 
     import Button from '@/Components/Button.svelte';
+    import Shares from './LayoutParts/Shares.svelte';
     let { children, header, cuisines, selectedCuisineId, showFilter = false } = $props();
+
+    console.log($page.props);
 
     let showingNavigationDropdown = $state(false);
 </script>
@@ -47,6 +50,9 @@
 
                 <div class="hidden sm:ms-6 sm:flex sm:items-center">
                     <!-- Settings Dropdown -->
+                    {#if $page.props.auth.user}
+                        <Shares />
+                    {/if}
                     <div class="relative ms-3">
                         {#if $page.props.auth.user}
                             <Dropdown align="right" width="48">
@@ -97,30 +103,40 @@
                     </div>
                 </div>
 
-                <!-- Hamburger -->
-                <div class="-me-2 flex items-center sm:hidden">
-                    <!-- svelte-ignore a11y_consider_explicit_label -->
-                    <button
-                        onclick={() => (showingNavigationDropdown = !showingNavigationDropdown)}
-                        class="inline-flex items-center justify-center rounded-md p-2 text-uiGray-400 transition duration-150 ease-in-out hover:bg-uiGray-100 hover:text-uiGray-500 focus:bg-uiGray-100 focus:text-uiGray-500 focus:outline-none dark:text-uiGray-500 dark:hover:bg-uiGray-900 dark:hover:text-uiGray-400 dark:focus:bg-uiGray-900 dark:focus:text-uiGray-400"
-                    >
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path
-                                class={showingNavigationDropdown ? 'hidden' : 'inline-flex'}
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
-                            <path
-                                class={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
+                <div class="flex items-center gap-3 sm:hidden">
+                    {#if $page.props.auth.user}
+                        <Shares />
+                    {/if}
+                    <!-- Hamburger -->
+                    <div class="-me-2 flex items-center">
+                        <!-- svelte-ignore a11y_consider_explicit_label -->
+                        <button
+                            onclick={() => (showingNavigationDropdown = !showingNavigationDropdown)}
+                            class="inline-flex items-center justify-center rounded-md p-2 text-uiGray-400 transition duration-150 ease-in-out hover:bg-uiGray-100 hover:text-uiGray-500 focus:bg-uiGray-100 focus:text-uiGray-500 focus:outline-none dark:text-uiGray-500 dark:hover:bg-uiGray-900 dark:hover:text-uiGray-400 dark:focus:bg-uiGray-900 dark:focus:text-uiGray-400"
+                        >
+                            <svg
+                                class="h-6 w-6"
+                                stroke="currentColor"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    class={showingNavigationDropdown ? 'hidden' : 'inline-flex'}
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                                <path
+                                    class={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
