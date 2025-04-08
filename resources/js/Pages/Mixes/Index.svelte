@@ -42,8 +42,8 @@
                 is_own: isOwn,
                 show_favorites: showFavorites,
                 filter: { name: searchTerm }
-            }
-            // { preserveState: true, preserveScroll: true }
+            },
+            { preserveState: true, preserveScroll: true }
         );
     }
 </script>
@@ -84,6 +84,7 @@
                                 applyFilter();
                             }
                         }}
+                        on:clear={applyFilter}
                         type="text"
                         bind:value={searchTerm}
                         placeholder="Search by name"
@@ -130,7 +131,7 @@
         </div>
         {#if mixes.data.length > 0}
             <div class="z-1 grid w-full grid-cols-1 gap-8 md:grid-cols-3" use:autoAnimate>
-                {#each mixes.data as mix}
+                {#each mixes.data as mix (mix.id)}
                     <Link href={route('mixes.show', mix.id)}>
                         <MixCard {mix} />
                     </Link>

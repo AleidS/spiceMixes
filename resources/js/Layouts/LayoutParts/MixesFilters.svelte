@@ -75,22 +75,26 @@
             class="w-fit px-1"
         >
             <Icon icon="mdi:filter" class="size-10" />
+            <span class="text-base">
+                {#if selectedCuisineId}
+                    {cuisines.data.find((mix) => mix.id == selectedCuisineId).name}
+                {:else}
+                    Cuisines &nbsp; &nbsp;
+                {/if}
+            </span>
         </FlowButton>
         <Tooltip class="!z-[999] bg-uiDark-500">Filter mixes by cuisine</Tooltip>
-
         {#if selectedCuisineId}
-            {cuisines.data.find((mix) => mix.id == selectedCuisineId).name}
             <button
-                class="px-3"
-                onclick={() => {
+                onclick={(event) => {
+                    event.preventDefault();
                     showFilters = false;
                     applyFilter(null);
                 }}
+                class=" flex aspect-square h-8 w-8 items-center justify-center rounded-full text-center"
             >
-                X
+                <Icon icon="mdi:cross-circle" class="text-2xl" />
             </button>
-        {:else}
-            <span> Cuisines &nbsp; &nbsp;</span>
         {/if}
     </div>
 </div>

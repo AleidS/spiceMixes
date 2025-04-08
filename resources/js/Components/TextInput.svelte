@@ -3,6 +3,8 @@
     let { class: className, value = $bindable(), clearable = true, ...attrs } = $props();
 
     let input;
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 
     export function focus() {
         input?.focus();
@@ -27,6 +29,7 @@
             class="text-primary-20 absolute right-3 my-auto bg-uiDark-900 text-lg"
             onclick={() => {
                 value = '';
+                dispatch('clear');
             }}>x</button
         >
     {/if}

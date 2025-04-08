@@ -6,8 +6,9 @@
     import InputError from '@/Components/InputError.svelte';
     import PrimaryButton from '@/Components/PrimaryButton.svelte';
 
-    import {Link} from '@inertiajs/svelte';
+    import { Link } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
+    import Icon from '@iconify/svelte';
     const form = useForm({
         name: '',
         email: '',
@@ -16,7 +17,7 @@
         terms: false
     });
 
-    let termsAccepted = $state(false)
+    let termsAccepted = $state(false);
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -31,6 +32,16 @@
 </svelte:head>
 
 <GuestLayout>
+    <div class="m-auto flex w-full items-center justify-center">
+        <a
+            href={route('auth.google.redirect')}
+            class="btn mb-4 block rounded-md bg-uiDark-400 p-3 text-uiGray-100 shadow-sm"
+        >
+            <Icon icon="flat-color-icons:google" class="text-3x1 mb-1 inline" /> Login/Register with
+            Google
+        </a>
+    </div>
+    <div class="my-4 w-full text-center">Or register with email:</div>
     <form onsubmit={onSubmit}>
         <!-- Name -->
         <div>
@@ -91,15 +102,11 @@
             <InputError message={$form.errors.password} class="mt-2" />
         </div>
 
-        <div class='text-md my-4 font-light'>
-            <input type='checkbox' bind:checked={termsAccepted} class=''/>
-            By registering on this platform I confirm that I have read and agree to the 
-            
-            <a
-                href="/generalTerms"
-                target="_blank"
-                class="tab-link-class underline" 
-            >
+        <div class="text-md my-4 font-light">
+            <input type="checkbox" bind:checked={termsAccepted} class="" />
+            By registering on this platform I confirm that I have read and agree to the
+
+            <a href="/generalTerms" target="_blank" class="tab-link-class underline">
                 terms and conditions
             </a>
         </div>
@@ -113,8 +120,12 @@
                 Already Registered?
             </a>
 
-            <Button primary disabled={!termsAccepted} type="submit" class="ms-4" processing={$form.processing}
-                >Register</Button
+            <Button
+                primary
+                disabled={!termsAccepted}
+                type="submit"
+                class="ms-4"
+                processing={$form.processing}>Register</Button
             >
         </div>
     </form>

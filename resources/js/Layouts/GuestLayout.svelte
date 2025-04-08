@@ -15,7 +15,7 @@
     </div>
 
     <div
-        class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-xl sm:rounded-lg dark:bg-uiGray-800"
+        class="mt-6 w-full overflow-hidden bg-white px-6 py-8 shadow-md sm:max-w-xl sm:rounded-lg dark:bg-uiGray-800"
     >
         {@render children()}
     </div>

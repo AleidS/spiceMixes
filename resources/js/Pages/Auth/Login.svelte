@@ -6,6 +6,7 @@
     import Checkbox from '@/Components/Checkbox.svelte';
     import { inertia, useForm } from '@inertiajs/svelte';
     import PrimaryButton from '@/Components/PrimaryButton.svelte';
+    import Icon from '@iconify/svelte';
 
     let { canResetPassword, status } = $props();
 
@@ -34,13 +35,16 @@
             {status}
         </div>
     {/if}
-    <a
-        href={route('auth.google.redirect')}
-        class="btn rounded-md border bg-blue-100 p-3 text-blue-900 shadow-sm"
-    >
-        Login with Google
-    </a>
-
+    <div class="m-auto flex w-full items-center justify-center">
+        <a
+            href={route('auth.google.redirect')}
+            class="btn mb-4 block rounded-md bg-uiDark-400 p-3 text-uiGray-100 shadow-sm"
+        >
+            <Icon icon="flat-color-icons:google" class="text-3x1 mb-1 inline" /> Login/Register with
+            Google
+        </a>
+    </div>
+    <div class="my-4 w-full text-center">Or login with email:</div>
     <form onsubmit={submit}>
         <!-- Email Address -->
         <div>

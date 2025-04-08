@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Http\Resources\IngredientResource;
 
 // tutorial: https://www.youtube.com/watch?v=iTiC-fpj3gs&ab_channel=TapanSharma
 
@@ -21,6 +23,10 @@ class Mixes extends Model implements HasMedia
     public function cuisine()
     {
         return $this->belongsTo(Cuisine::class, 'cuisine_id');
+    }
+    public function allIngredients()
+    {
+        return $this->hasMany(Ingredient::class);
     }
     public function favoritedBy()
     {

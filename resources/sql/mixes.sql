@@ -43,12 +43,12 @@
 --
 
 
-INSERT INTO `mixes` (`id`, `name`, `ingredients`, `description`, `user_id`, `cuisine_id`, `created_at`, `updated_at`) VALUES
-(2, 'Curry', '[{\"quantity\":1, \"measure_id\":3, \"name\":\"Black pepper\"}]', '1', 1, 2, '2025-02-08 19:55:31', '2025-02-08 19:55:31'),
-(3, 'Taco Spices', '[{\"quantity\":1, \"measure_id\":3, \"name\":\"Black pepper\"},{\"quantity\":2, \"measure_id\":1, \"name\":\"Ground cinnamon\"}]', '123', 1, 2, '2025-02-08 19:59:05', '2025-02-08 19:59:05'),
-(4, 'Chicken', '{\"name\":\"John\", \"age\":30, \"car\":null}', '123', 1, 2, '2025-02-08 20:38:11', '2025-02-08 20:38:11'),
-(5, 'GrillKryder', '{\"name\":\"John\", \"age\":30, \"car\":null}', '123', 1, 2, '2025-02-09 11:11:01', '2025-02-09 11:11:01'),
-(6, 'List', '[{\"name\":\"John\", \"age\":30, \"car\":null}]', '123', 1, 2, '2025-02-09 16:50:39', '2025-02-09 16:50:39');
+INSERT INTO `mixes` (`id`, `name`, `description`, `user_id`, `cuisine_id`, `created_at`, `updated_at`) VALUES
+(2, 'Curry', '1', null, 2, '2025-02-08 19:55:31', '2025-02-08 19:55:31'),
+(3, 'Taco Spices', '123', 1, 2, '2025-02-08 19:59:05', '2025-02-08 19:59:05'),
+(4, 'Chicken', '123', null, 2, '2025-02-08 20:38:11', '2025-02-08 20:38:11'),
+(5, 'GrillKryder', '123', null, 2, '2025-02-09 11:11:01', '2025-02-09 11:11:01'),
+(6, 'List', '123', null, 2, '2025-02-09 16:50:39', '2025-02-09 16:50:39');
 --
 -- Indexes for dumped tables
 --

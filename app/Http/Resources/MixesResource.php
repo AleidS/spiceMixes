@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Mixes;
+use App\Http\Resources\IngredientResource;
 
 class MixesResource extends JsonResource
 {
@@ -16,18 +18,16 @@ class MixesResource extends JsonResource
     public function toArray(Request $request): array
     {
         $currentUserId = Auth::id();
-        $isFavorite = $this->whenLoaded(
-            'favorites',
-            function () use ($currentUserId) {
-                return $this->favorites->contains('id', $currentUserId);
-            },
-            false
-        );
+        $mix = Mixes::find($this->id);
+        // dd($mix->allIngredients);
+        // $ingredients2 = Mixes::find(1)->ingredients;
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'ingredients' => json_decode($this->ingredients, true),
+
+            'ingredients' => IngredientResource::collection($this->allIngredients),
+
             'user_id' => $this->user_id,
             'cuisine_id' => $this->cuisine_id,
             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),

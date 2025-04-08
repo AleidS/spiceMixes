@@ -10,12 +10,14 @@ use App\Http\Resources\MeasureResource;
 use App\Http\Resources\MixesResource;
 use App\Models\Cuisine;
 use App\Models\Measure;
+use App\Models\Ingredient;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 // https://spatie.be/docs/laravel-query-builder/v6/introduction
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\RateLimiter;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Support\Facades\Validator;
 
 class MixesController extends Controller
 {
@@ -134,6 +136,7 @@ class MixesController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         // {
         // // Temporarily disable validation and CSRF protection for testing
         //     $data = $request->all();
@@ -144,14 +147,15 @@ class MixesController extends Controller
         // }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'ingredients' => 'required|json',
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Validate file type and size
-            // 'avatar' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // Make avatar nullable and validate file type
         ]);
-
+        $validatedIngredients = $request->validate([
+            'ingredients' => 'required|json',
+        ]);
+        dd($validatedData);
         $totalCreatedMixes = $request->user()->mixes->count();
         // Limit the number of images a user can upload to one per minute
         if (
@@ -179,6 +183,26 @@ class MixesController extends Controller
 
         if ($totalCreatedMixes < 30) {
             $mix = Mixes::create($validatedData);
+            $ingredients = json_decode($request->ingredients, true);
+            foreach ($ingredients as $ingredient) {
+                $ingredient['mixes_id'] = $mix->id;
+                // dd(gettype($ingredient), gettype($request));
+                if (is_null($ingredient['name'])) {
+                } else {
+                    $object = new \stdClass();
+                    foreach ($ingredient as $key => $value) {
+                        $object->$key = $value;
+                    }
+                    $validatedIngredient = Validator::make($ingredient, [
+                        'name' => 'required|string|max:255',
+                        'quantity' => 'required|integer',
+                        'measure_id' => 'required|integer',
+                        'show_alternatives' => 'boolean',
+                        'mixes_id' => 'required|integer',
+                    ])->validate();
+                    $ingredientCreated = Ingredient::create($validatedIngredient);
+                }
+            }
 
             if ($request->hasFile('avatar')) {
                 $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
@@ -200,7 +224,13 @@ class MixesController extends Controller
      */
     public function show($id)
     {
-        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
+        if (Auth::check()) {
+            // If the user is authenticated, show their mixes
+            $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
+        } else {
+            // If the user is not authenticated, show public mixes
+            $mix = Mixes::with(['cuisine'])->find($id);
+        }
         if (!$mix) {
             return redirect()->route('home')->with('error', 'Mix not found.');
         }
@@ -245,19 +275,60 @@ class MixesController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'ingredients' => 'required|json',
             'description' => 'required|string|max:255',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Make avatar nullable and validate file type
         ]);
+        // dd($validatedData);
+        $validatedIngredients = $request->validate([
+            'ingredients' => 'required|json',
+        ]);
+
+        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
 
         if ($request->hasFile('avatar')) {
             $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
         }
 
-        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
         $mix->update($validatedData);
+
+        $ingredients = json_decode($request->ingredients, true);
+        foreach ($ingredients as $ingredient) {
+            $ingredient['mixes_id'] = $mix->id;
+            // dd(gettype($ingredient), gettype($request));
+            if (is_null($ingredient['name'])) {
+            } else {
+                $object = new \stdClass();
+                foreach ($ingredient as $key => $value) {
+                    $object->$key = $value;
+                }
+                $validatedIngredient = Validator::make($ingredient, [
+                    'id' => 'sometimes|exists:ingredients,id',
+                    'name' => 'required|string|max:255',
+                    'quantity' => 'required|integer',
+                    'measure_id' => 'required|integer',
+                    'show_alternatives' => 'boolean',
+                    'mixes_id' => 'required|integer',
+                ])->validate();
+                if (isset($validatedIngredient['id'])) {
+                    // Update the existing ingredient using its ID
+                    Ingredient::find($validatedIngredient['id'])->update($validatedIngredient);
+                } else {
+                    // Create a new ingredient
+                    Ingredient::create($validatedIngredient);
+                }
+                // dont duplicate the existing ingredients
+                // $ingredientCreated = IngredientIngredient::updateOrCreate(
+                //     [
+                //         'name' => $validatedIngredient['name'],
+                //         'mixes_id' => $validatedIngredient['mixes_id'],
+                //     ],
+                //     $validatedIngredient
+                // );
+            }
+        }
+
         $mixResource = new MixesResource($mix);
 
         $cuisines = CuisineResource::collection(Cuisine::all());

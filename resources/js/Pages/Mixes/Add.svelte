@@ -82,7 +82,6 @@
             $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
         }
-        console.log($form.avatar);
     }
     function handleDrop(event) {
         const files = event.dataTransfer.files;
@@ -94,10 +93,8 @@
             $form.avatar = files[0];
             reader.readAsDataURL(files[0]);
         }
-        console.log($form.avatar);
     }
     async function addMix(event) {
-        console.log($form.avatar);
         preventEffect = true;
         event.preventDefault();
         // This means that the avatar has not been updated (in which case it would be a file)
@@ -105,10 +102,14 @@
             delete $form.avatar;
         }
         let formData = { ...$form };
+        console.log(formData);
         formData.ingredients = JSON.stringify(formData.ingredients); // Convert ingredients to JSON string
         // Send a put request with the modified form data if we are editing
         if (mix?.data) {
-            formData.put(`/mixes/${mix.data.id}`, mix.data.id);
+            // formData.avatar = 'lalala';
+            router.post(`/mixes/${mix.data.id}`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
         }
         //Else send the entire thing as a post request for a new row
         else {

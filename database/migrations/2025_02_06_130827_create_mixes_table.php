@@ -13,20 +13,12 @@ return new class extends Migration {
         Schema::create('mixes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('ingredients');
             $table->string('description');
             $table->integer('user_id')->nullable();
             $table->integer('cuisine_id')->default(1);
             $table->timestamps();
         });
-        Schema::create('ingredients', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('measure_id');
-            $table->integer('quantity');
-            $table->boolean('show_alternatives');
-            $table->timestamps();
-        });
+
         Schema::create('measures', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -41,5 +33,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('mixes');
+        Schema::dropIfExists('measures');
     }
 };

@@ -54,7 +54,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Mixes/Add');
     })->name('mixes.create');
     Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
+
     Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
+    Route::post('mixes/{id}', [MixesController::class, 'update'])->name('mixes.update');
     Route::delete('mixes/delete/{id}', [MixesController::class, 'destroy']);
 });
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -62,7 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/favorite', [FavoriteController::class, 'destroy']);
 });
 // Make sure /{id} is after anything else, otherwise, e.g. mixes/create might be interpreted as an id parameter
-Route::get('mixes/{id}', [MixesController::class, 'show'])->name('mixes.show');
+Route::get('mixes/show/{id}', [MixesController::class, 'show'])->name('mixes.show');
 
 // Route to redirect to Google's OAuth page
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name(
