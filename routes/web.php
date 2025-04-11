@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('shares/decline/{id}', [SharesController::class, 'decline'])->name(
         'shares.decline'
     );
+    Route::post('shares/send', [SharesController::class, 'send'])->name('shares.send');
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/favorite', FavoriteController::class);

@@ -7,6 +7,7 @@
     import Button from '@/Components/Button.svelte';
     import FavoriteStar from '@/Components/FavoriteStar.svelte';
 
+    import ShareMix from '@/Components/ShareMix.svelte';
     let multiplier = $state(1);
 
     console.log(mix.data);
@@ -22,6 +23,9 @@
             <h1 class="flex items-center gap-2 font-primary text-3xl font-medium">
                 {mix.data.name}
                 <FavoriteStar mix={mix.data} class="inline" />
+                {#if mix.data.editable}
+                    <ShareMix {mix} />
+                {/if}
             </h1>
 
             <Link href={route('mixes.edit', mix.data.id)}>
@@ -121,27 +125,31 @@
                     </ul>
                 </div>
                 <div class="flex items-center gap-2">
-                    <Button
-                        class="!rounded-full !bg-primary-600 !px-2 !py-1 !text-white"
-                        onclick={() => {
-                            multiplier = multiplier / 2;
-                        }}>Give me half</Button
-                    >
-                    <div class="min-w-16 text-center">
-                        {multiplier == 1 ? 'original' : `* ${multiplier}`}
-                    </div>
-                    <Button
-                        class="!rounded-full !bg-primary-600 !px-1 !py-1 !text-white"
-                        onclick={() => {
-                            multiplier = multiplier * 2;
-                        }}>Double</Button
-                    >
-                    <Button
-                        class="!rounded-full !bg-primary-600 !p-1 !text-white"
-                        onclick={() => {
-                            multiplier = 1;
-                        }}><Icon icon="mdi:arrow-u-left-top" /></Button
-                    >
+                    {#if mix.data.ingredients.length > 0}
+                        <Button
+                            class="!rounded-full !bg-primary-600 !px-2 !py-1 !text-white"
+                            onclick={() => {
+                                multiplier = multiplier / 2;
+                            }}>Give me half</Button
+                        >
+                        <div class="min-w-16 text-center">
+                            {multiplier == 1 ? 'original' : `* ${multiplier}`}
+                        </div>
+                        <Button
+                            class="!rounded-full !bg-primary-600 !px-1 !py-1 !text-white"
+                            onclick={() => {
+                                multiplier = multiplier * 2;
+                            }}>Double</Button
+                        >
+                        {#if multiplier != 1}
+                            <Button
+                                class="!rounded-full !bg-primary-600 !p-1 !text-white"
+                                onclick={() => {
+                                    multiplier = 1;
+                                }}><Icon icon="mdi:arrow-u-left-top" /></Button
+                            >
+                        {/if}
+                    {/if}
                 </div>
             </div>
         </div>

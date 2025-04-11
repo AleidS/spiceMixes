@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('mix_id');
             $table->foreign('mix_id')->references('id')->on('mixes')->onDelete('cascade');
-            $table->boolean('responded')->default(false);
-            $table->boolean('accepted')->nullable();
+            $table->boolean('responded')->nullable()->default(null);
+            $table->boolean('accepted')->nullable()->default(null);
             $table->unsignedBigInteger('target_user');
             $table->string('message')->nullable();
             $table->string('name')->nullable();

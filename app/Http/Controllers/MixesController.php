@@ -136,7 +136,8 @@ class MixesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
+
         // {
         // // Temporarily disable validation and CSRF protection for testing
         //     $data = $request->all();
@@ -155,7 +156,7 @@ class MixesController extends Controller
             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Validate file type and size
         ]);
         $validatedIngredients = $request->validate([
-            'ingredients' => 'required|json',
+            'ingredients' => 'nullable|json',
         ]);
         // dd($validatedData);
         $totalCreatedMixes = $request->user()->mixes->count();
@@ -186,23 +187,25 @@ class MixesController extends Controller
         if ($totalCreatedMixes < 30) {
             $mix = Mixes::create($validatedData);
             $ingredients = json_decode($request->ingredients, true);
-            foreach ($ingredients as $ingredient) {
-                $ingredient['mixes_id'] = $mix->id;
-                // dd(gettype($ingredient), gettype($request));
-                if (is_null($ingredient['name'])) {
-                } else {
-                    $object = new \stdClass();
-                    foreach ($ingredient as $key => $value) {
-                        $object->$key = $value;
+            if ($ingredients) {
+                foreach ($ingredients as $ingredient) {
+                    $ingredient['mixes_id'] = $mix->id;
+                    // dd(gettype($ingredient), gettype($request));
+                    if (is_null($ingredient['name'])) {
+                    } else {
+                        $object = new \stdClass();
+                        foreach ($ingredient as $key => $value) {
+                            $object->$key = $value;
+                        }
+                        $validatedIngredient = Validator::make($ingredient, [
+                            'name' => 'required|string|max:255',
+                            'quantity' => 'required|integer',
+                            'measure_id' => 'required|integer',
+                            'show_alternatives' => 'boolean',
+                            'mixes_id' => 'required|integer',
+                        ])->validate();
+                        $ingredientCreated = Ingredient::create($validatedIngredient);
                     }
-                    $validatedIngredient = Validator::make($ingredient, [
-                        'name' => 'required|string|max:255',
-                        'quantity' => 'required|integer',
-                        'measure_id' => 'required|integer',
-                        'show_alternatives' => 'boolean',
-                        'mixes_id' => 'required|integer',
-                    ])->validate();
-                    $ingredientCreated = Ingredient::create($validatedIngredient);
                 }
             }
 

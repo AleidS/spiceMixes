@@ -159,9 +159,9 @@
                     <Button
                         type="submit"
                         id="submitbutton"
-                        primary
+                        success
                         disabled={!termsAccepted}
-                        class="h-auto w-fit text-nowrap !text-white"
+                        class="h-auto w-fit text-nowrap !bg-success-600 !text-white !saturate-[120%]"
                     >
                         <Icon icon="mdi:floppy" class="mb-1 size-5" />
                         {mix ? 'Save mix' : 'Add Mix'}
@@ -314,7 +314,7 @@
                                             $form.ingredients.splice(index, 1);
                                             $form.ingredients = $form.ingredients;
                                         }}
-                                        class="col-span-1 w-fit !bg-transparent !text-danger-100 lg:col-span-2"
+                                        class="col-span-1 w-fit !bg-transparent !text-danger-200 lg:col-span-2"
                                     >
                                         <Icon icon="mdi:trash" class="mb-[2px] size-3" />
                                         Remove
@@ -335,10 +335,13 @@
                                         alert('too many ingredients!');
                                     }
                                 }}
-                                class="w-fit !bg-success-400 !bg-opacity-50 !text-white"
+                                class="w-fit !bg-transparent !bg-opacity-100 px-0 !text-white outline-2 !outline-uiDark-200"
                             >
-                                <Icon icon="mdi:plus-circle" class="mb-[2px] size-3" />
-                                Add
+                                <Icon
+                                    icon="mdi:plus-circle"
+                                    class="mb-[2px]  !text-lg text-success-400"
+                                />
+                                Add new Ingredient
                             </Button>
 
                             {#if errors?.ingredients}
@@ -417,7 +420,7 @@
                         type="submit"
                         disabled={!termsAccepted}
                         primary
-                        class="h-auto w-fit text-nowrap !text-white"
+                        class="h-auto w-fit text-nowrap !bg-success-600 !text-white !saturate-[120%]"
                     >
                         <Icon icon="mdi:floppy" class="mb-1 size-5" />
                         {mix ? 'Save mix' : 'Add Mix'}

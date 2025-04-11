@@ -28,7 +28,7 @@ class User extends Authenticatable
     }
     public function shares()
     {
-        return $this->hasMany('App\Models\Shares', 'target_user', 'id');
+        return $this->hasMany('App\Models\Shares', 'target_user', 'id')->whereNull('responded');
     }
 
     /**

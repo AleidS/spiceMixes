@@ -17,15 +17,15 @@
     let showMessage = $state(false);
 
     function accept() {
-        router.post(`shares/accept/${showMessage.id}`);
+        router.post(`/shares/accept/${showMessage.id}`);
     }
 
     function decline() {
-        router.post(`shares/accept/${showMessage.id}`);
+        router.post(`/shares/accept/${showMessage.id}`);
     }
 </script>
 
-{#if shares}
+{#if shares.length > 0}
     <div class="relative flex">
         <Dropdown align="right" width="64">
             {#snippet trigger()}
