@@ -19,5 +19,5 @@ class Cuisine extends Model
         });
     }
 
-    protected $fillable = ['name', 'continent', 'color'];
+    protected $fillable = ['name', 'continent', 'color', 'user_id'];
 }

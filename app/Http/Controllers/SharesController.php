@@ -35,8 +35,9 @@ class SharesController extends Controller
         $targetMixOwner = $targetMix->user_id;
         $currentUserId = Auth::id();
         if ($targetMixOwner != $currentUserId) {
-            dd(
-                'Sorry, it seems like you are trying to share a mix that is not yours, this is not possible'
+            return response()->json(
+                'Sorry, it seems like you are trying to share a mix that is not yours, this is not possible',
+                400
             );
         }
 
@@ -45,7 +46,6 @@ class SharesController extends Controller
             $target_id = $targetUser->id;
             $shareData = array_merge($validatedData, [
                 'target_user' => $target_id,
-                'shared_mix' => $targetMix,
             ]);
             Shares::create($shareData);
         }

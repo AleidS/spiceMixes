@@ -16,6 +16,7 @@ class CuisineResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'name' => $this->name,
             'color' => $this->color,
             'continent' => $this->continent,

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
+            $table->string('img_source')->nullable()->default(null);
             $table->integer('user_id')->nullable();
             $table->integer('cuisine_id')->default(1);
             $table->string('source_url')->nullable();

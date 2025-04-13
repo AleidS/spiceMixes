@@ -27,7 +27,7 @@ class MixesResource extends JsonResource
             'description' => $this->description,
 
             'ingredients' => IngredientResource::collection($this->allIngredients),
-
+            'img_source' => $this->img_source,
             'user_id' => $this->user_id,
             'cuisine_id' => $this->cuisine_id,
             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),

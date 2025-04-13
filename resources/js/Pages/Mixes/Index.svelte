@@ -60,7 +60,7 @@
     >
         <div class="w-full">
             <div class="min-h-6 w-full text-uiDark-100">
-                {cuisines.data.find((cuisine) => cuisine.id == cuisine_id)?.name}
+                {cuisines.data?.find((cuisine) => cuisine.id == cuisine_id)?.name}
             </div>
             <div
                 class="flex h-fit w-full flex-1 flex-wrap items-center justify-between gap-2 gap-y-6 px-2"

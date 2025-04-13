@@ -24,8 +24,31 @@ class MixesController extends Controller
     /**
      * Display a listing of the mixes.
      */
+
+    protected $cuisines;
+    protected $measures;
+
+    public function __construct()
+    {
+        if (Auth::check()) {
+            $userId = Auth::id();
+            $this->cuisines = CuisineResource::collection(
+                Cuisine::where('user_id', $userId)
+                    ->orWhereNull('user_id')
+                    ->withCount('mixes')
+                    ->get()
+            );
+        } else {
+            $this->cuisines = CuisineResource::collection(
+                Cuisine::whereNull('user_id')->withCount('mixes')->get()
+            );
+        }
+        $this->measures = MeasureResource::collection(Measure::all());
+    }
+
     public function index(Request $request)
     {
+        // dd($this->cuisines);
         if (Auth::check()) {
             // If the user is authenticated, show their mixes
             return $this->allMixes($request);
@@ -67,16 +90,16 @@ class MixesController extends Controller
 
         $mixes = $mixesQuery->paginate($request->pageSize ?? 9);
 
-        $cuisines = CuisineResource::collection(Cuisine::withCount('mixes')->get());
-        $measures = MeasureResource::collection(Measure::all());
+        // $this->cuisines = CuisineResource::collection(Cuisine::withCount('mixes')->get());
+        // $this->measures = MeasureResource::collection(Measure::all());
 
         // Transform the pagination result using MixesResource
         $mixes = MixesResource::collection($mixes);
 
         return Inertia::render('Mixes/Index', [
             'mixes' => $mixes,
-            'cuisines' => $cuisines,
-            'measures' => $measures,
+            'cuisines' => $this->cuisines,
+            'measures' => $this->measures,
             'selectedCuisineId' => $request->cuisine_id,
             'pageNumber' => $request->page_number,
             'search' => data_get($request, 'filters.search', false),
@@ -103,16 +126,16 @@ class MixesController extends Controller
 
         $mixes = $mixesQuery->paginate($request->pageSize ?? 9);
 
-        $cuisines = CuisineResource::collection(Cuisine::withCount('mixes')->get());
-        $measures = MeasureResource::collection(Measure::all());
+        // $this->cuisines = CuisineResource::collection(Cuisine::withCount('mixes')->get());
+        // $this->measures = MeasureResource::collection(Measure::all());
 
         // Transform the pagination result using MixesResource
         $mixes = MixesResource::collection($mixes);
 
         return Inertia::render('Mixes/Index', [
             'mixes' => $mixes,
-            'cuisines' => $cuisines,
-            'measures' => $measures,
+            'cuisines' => $this->cuisines,
+            'measures' => $this->measures,
             'selectedCuisineId' => $request->cuisine_id,
             'pageNumber' => $request->page_number,
             'search' => data_get($request, 'filters.search', false),
@@ -122,12 +145,12 @@ class MixesController extends Controller
 
     public function create()
     {
-        $cuisines = CuisineResource::collection(Cuisine::all());
-        $measures = MeasureResource::collection(Measure::all());
+        // $this->cuisines = CuisineResource::collection(Cuisine::all());
+        $this->measures = MeasureResource::collection(Measure::all());
 
         return Inertia::render('Mixes/Add', [
-            'measures' => $measures,
-            'cuisines' => $cuisines,
+            'measures' => $this->measures,
+            'cuisines' => $this->cuisines,
         ]);
     }
 
@@ -246,14 +269,17 @@ class MixesController extends Controller
             return redirect()->route('home')->with('error', 'Mix not found.');
         }
 
-        $cuisines = CuisineResource::collection(Cuisine::all());
-        $measures = MeasureResource::collection(Measure::all());
+        // $this->cuisines = CuisineResource::collection(Cuisine::all());
+        // $this->measures = MeasureResource::collection(Measure::all());
 
         // Transform the pagination result using MixesResource
 
         $mixResource = new MixesResource($mix);
 
-        return Inertia::render('Mixes/Show', ['mix' => $mixResource, 'measures' => $measures]);
+        return Inertia::render('Mixes/Show', [
+            'mix' => $mixResource,
+            'measures' => $this->measures,
+        ]);
     }
     /**
      * Display the specified mix.
@@ -265,8 +291,8 @@ class MixesController extends Controller
             return redirect()->route('home')->with('error', 'Mix not found.');
         }
 
-        $cuisines = CuisineResource::collection(Cuisine::all());
-        $measures = MeasureResource::collection(Measure::all());
+        // $this->cuisines = CuisineResource::collection(Cuisine::all());
+        // $this->measures = MeasureResource::collection(Measure::all());
 
         // Transform the pagination result using MixesResource
 
@@ -275,7 +301,7 @@ class MixesController extends Controller
         return Inertia::render(
             'Mixes/Add',
 
-            ['mix' => $mixResource, 'measures' => $measures, 'cuisines' => $cuisines]
+            ['mix' => $mixResource, 'measures' => $this->measures, 'cuisines' => $this->cuisines]
         );
     }
 
@@ -344,15 +370,15 @@ class MixesController extends Controller
 
         $mixResource = new MixesResource($mix);
 
-        $cuisines = CuisineResource::collection(Cuisine::all());
-        $measures = MeasureResource::collection(Measure::all());
+        // $this->cuisines = CuisineResource::collection(Cuisine::all());
+        // $this->measures = MeasureResource::collection(Measure::all());
 
         $this->show($id);
 
         return Inertia::render(
             'Mixes/Show',
 
-            ['mix' => $mixResource, 'measures' => $measures, 'cuisines' => $cuisines]
+            ['mix' => $mixResource, 'measures' => $this->measures, 'cuisines' => $this->cuisines]
         );
     }
 

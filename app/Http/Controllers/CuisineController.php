@@ -3,19 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cuisine;
+use App\Http\Resources\CuisineResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class CuisineController extends Controller
 {
     /**
      * Display a listing of the cuisines.
      */
-    public function index()
+    protected $cuisines;
+
+    public function __construct()
     {
-        $cuisines = Cuisine::all();
+        if (Auth::check()) {
+            $userId = Auth::id();
+            $this->cuisines = CuisineResource::collection(
+                Cuisine::where('user_id', $userId)
+                    ->orWhereNull('user_id')
+                    ->withCount('mixes')
+                    ->get()
+            );
+        } else {
+            $this->cuisines = CuisineResource::collection(
+                Cuisine::whereNull('user_id')->withCount('mixes')->get()
+            );
+        }
+    }
+
+    public function index(Request $request)
+    {
+        $totalCreatedCuisines = $request->user()->cuisines->count();
+
         return Inertia::render('Cuisines/Index', [
-            'cuisines' => $cuisines,
+            'cuisines' => $this->cuisines,
+            'totalCreatedCuisines' => $totalCreatedCuisines,
         ]);
     }
 
@@ -32,14 +55,36 @@ class CuisineController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $userId = Auth::id();
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'continent' => 'required|string|max:255',
+            'continent' => 'nullable|string|max:255',
+            'color' => ['required', 'hex_color'],
+            'id' => 'nullable|integer',
+        ]);
+        $validatedData = array_merge($validatedData, [
+            'user_id' => $userId,
         ]);
 
-        Cuisine::create($request->all());
+        $totalCreatedCuisines = $request->user()->cuisines->count();
 
-        return redirect()->route('cuisines.index')->with('success', 'Cuisine created successfully.');
+        if ($request->id != null) {
+            $cuisine = Cuisine::find($request->id);
+            $cuisine->update($validatedData);
+        } elseif ($totalCreatedCuisines < 100) {
+            Cuisine::create($validatedData);
+        } else {
+            return response()->json(
+                'sorry, the total number of custom cuisines is 100, please contact me if you really need more!',
+                400
+            );
+        }
+        $this->__construct();
+
+        return Inertia::render('Cuisines/Index', [
+            'cuisines' => $this->cuisines,
+            'totalCreatedCuisines' => $totalCreatedCuisines,
+        ]);
     }
 
     /**
@@ -74,16 +119,24 @@ class CuisineController extends Controller
 
         $cuisine->update($request->all());
 
-        return redirect()->route('cuisines.index')->with('success', 'Cuisine updated successfully.');
+        return redirect()
+            ->route('cuisines.index')
+            ->with('success', 'Cuisine updated successfully.');
     }
 
     /**
      * Remove the specified cuisine from storage.
      */
-    public function destroy(Cuisine $cuisine)
+    public function destroy($id)
     {
-        $cuisine->delete();
+        $userId = Auth::id();
+        $cuisine = Cuisine::find($id);
+        if ($cuisine->user_id == $userId) {
+            $cuisine->delete();
+        } else {
+            dd('please dont delete someone elses mixes!');
+        }
 
-        return redirect()->route('cuisines.index')->with('success', 'Cuisine deleted successfully.');
+        return redirect()->route('cuisines')->with('success', 'Cuisine deleted successfully.');
     }
 }

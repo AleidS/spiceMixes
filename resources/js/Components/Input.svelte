@@ -43,6 +43,14 @@
             rows="5"
         >
         </textarea>
+    {:else if type == 'color'}
+        <input
+            {type}
+            bind:value
+            {...attrs}
+            class="aspect-square h-7 w-7 !appearance-none rounded-none border border-white !p-0 !outline-none"
+            style="background-color: {value ?? ''}!important;"
+        />
     {:else}
         <input {type} bind:value {...attrs} class="inputClass {className}" />
     {/if}

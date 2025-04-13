@@ -46,6 +46,15 @@
         <div
             class="items-between flex w-fit flex-1 flex-col flex-wrap justify-end gap-y-2 overflow-auto pb-2 pt-10 backdrop-blur-sm sm:gap-y-1"
         >
+            <Button
+                class="border-1 mb-4 h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full border-l-0 border-primary-500 !bg-transparent !text-lg !font-light !text-white transition-all duration-150 ease-in-out hover:pl-6
+                                   "
+                onclick={() => {
+                    router.visit('/cuisines');
+                }}
+            >
+                <Icon icon="mdi:pencil" />&nbsp; Manage cuisines
+            </Button>
             {#each cuisines.data as cuisine}
                 {#if cuisine.mixes_count > 0}
                     <Button

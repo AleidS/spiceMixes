@@ -22,6 +22,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Mixes', 'user_id', 'id');
     }
+    public function cuisines()
+    {
+        return $this->hasMany('App\Models\Cuisine', 'user_id', 'id');
+    }
     public function favoriteMixes()
     {
         return $this->belongsToMany('App\Models\Mixes', 'mix_user', 'user_id', 'mix_id');

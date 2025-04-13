@@ -64,6 +64,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'shares.decline'
     );
     Route::post('shares/send', [SharesController::class, 'send'])->name('shares.send');
+    Route::get('cuisines', [CuisineController::class, 'index'])->name('cuisines');
+    Route::put('cuisines/edit/{id}', [CuisineController::class, 'edit'], function () {
+        return Inertia::render('Cuisines/Index');
+    });
+    Route::post('cuisines', [CuisineController::class, 'store']);
+    Route::delete('cuisines/delete/{id}', [CuisineController::class, 'destroy'], function () {
+        return Inertia::render('Cuisines/Index');
+    });
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/favorite', FavoriteController::class);
