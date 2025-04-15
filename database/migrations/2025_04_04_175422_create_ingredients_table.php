@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreign('mixes_id')->references('id')->on('mixes');
             $table->unsignedBigInteger('measure_id');
             $table->foreign('measure_id')->references('id')->on('measures');
+            $table->boolean('optional')->default(false);
             $table->integer('quantity');
             $table->boolean('show_alternatives')->default(true);
             $table->timestamps();

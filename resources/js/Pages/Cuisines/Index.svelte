@@ -7,6 +7,7 @@
     import Switch from '@/Components/Switch.svelte';
     import Button from '@/Components/Button.svelte';
     export let cuisines;
+    export let totalCreatedCuisines;
     let showDialog = false;
     let cuisineObj = null;
 </script>
@@ -25,7 +26,7 @@
             <div
                 class=" h-fit w-full flex-1 flex-wrap items-center justify-between gap-2 gap-y-6 px-2"
             >
-                <h1 class="mb-4 w-fit text-left">Manage your cuisines!</h1>
+                <h1 class="mb-4 w-fit text-left">Manage your cuisines</h1>
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {#if $page.props.auth.user}
                         <div class="box">
@@ -44,8 +45,8 @@
                             </div>
                         </div>
                         <div class="box">
-                            <h3>Your cuisines</h3>
-                            <div class="items-between flex h-full flex-col justify-between pb-4">
+                            <h3>Your cuisines ({totalCreatedCuisines} out of max 10)</h3>
+                            <div class="items-between flex h-full flex-col justify-between pb-8">
                                 <div class="flex-col flex-wrap gap-2">
                                     {#each cuisines.data.filter((cuisine) => cuisine.user_id != null) as cuisine}
                                         <div class="flex items-center gap-2">
@@ -88,9 +89,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <!-- <Switch /> -->
-                            <div class="">
-                                Note: Only cuisines with recipes are shown on homepage
-                            </div>
+                            <div class="">Note: Only cuisines with mixes are shown on homepage</div>
                         </div>
                     {/if}
                 </div>

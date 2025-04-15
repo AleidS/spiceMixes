@@ -12,6 +12,7 @@
 
     import Button from '@/Components/Button.svelte';
     import Shares from './LayoutParts/Shares.svelte';
+    import Icon from '@iconify/svelte';
     let { children, header, cuisines, selectedCuisineId, showFilter = false } = $props();
 
     console.log($page.props);
@@ -26,7 +27,7 @@
         <!-- Primary Navigation Menu -->
         <div class="mx-auto w-full px-4 sm:px-16 lg:px-16">
             <div class="flex h-16 items-center justify-between">
-                <div class="flex">
+                <div class="flex h-full items-stretch">
                     <!-- Logo -->
                     <div class="flex shrink-0 items-center">
                         <a use:inertia href={route('home')}>
@@ -37,11 +38,23 @@
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="z-40 hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink href="/about" active={route().current('dashboard')}>About</NavLink>
-                        <!-- <NavLink href={route('mixes')} active={route().current('mixes.index')}>
-                            Mixes
-                        </NavLink> -->
+                    <div class="top-0 z-40 hidden h-auto space-x-8 sm:ml-10 sm:flex">
+                        <NavLink href="/" active={route().current('home')}
+                            ><Icon icon="mdi:home" /></NavLink
+                        >
+
+                        {#if $page.props.auth.user}
+                            <NavLink href="/cuisines" active={route().current('cuisines')}
+                                >Cuisines</NavLink
+                            >
+                        {/if}
+                        <NavLink href="/about" active={route().current('about')}>About</NavLink>
+                        <NavLink href="/sources" active={route().current('sources')}
+                            >Sources</NavLink
+                        >
+                        <NavLink href="/contact" active={route().current('contact')}
+                            >Contact</NavLink
+                        >
                     </div>
                 </div>
                 <!-- <ResponsiveNavLink href="/login" class="block sm:hidden">

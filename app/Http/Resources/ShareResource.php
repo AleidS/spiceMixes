@@ -24,6 +24,7 @@ class ShareResource extends JsonResource
         // $ingredients2 = Mixes::find(1)->ingredients;
         return [
             'id' => $this->id,
+            'mix' => $this->json_decode($this->mix, true),
             'mix_id' => $this->mix_id,
             'mix_name' => $mix_name,
             'responded' => $this->responded,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Shares;
 use App\Models\Mixes;
 use App\Models\User;
+use App\Models\Cuisine;
 use Illuminate\Http\Request;
 use App\Http\Resources\ShareResource;
 use App\Http\Resources\MixesResource;
@@ -17,10 +18,14 @@ class SharesController extends Controller
      */
     public function send(Request $request)
     {
+        // dd(gettype($request->mix));
+        // $request->mix = json_encode($request->mix);
+
         $validatedData = $request->validate([
             'name' => 'nullable|string|max:255',
             'message' => 'nullable|string|max:500',
             'mix_id' => 'required|integer',
+            'mix' => 'required|json',
         ]);
         $request->validate([
             'email' => 'required|string|max:255',
@@ -42,6 +47,7 @@ class SharesController extends Controller
         }
 
         $share = $validatedData;
+
         if ($targetUser != null) {
             $target_id = $targetUser->id;
             $shareData = array_merge($validatedData, [
@@ -91,14 +97,34 @@ class SharesController extends Controller
             'responded' => true, // this will update cost for the current supplier
         ]);
         // Retrieve the mix associated with the share
-        $mix = Mixes::findOrFail($share->mix_id);
+        $mix = json_decode($share->mix);
 
-        $mix->user_id = $share->target_user;
+        $mix->user_id = Auth::id();
         $mix->id = null;
-        $mixData = $mix->toArray();
+        $mix->avatar = null;
+        $mix->ingredients = json_encode($mix->ingredients);
+        $cuisine = Cuisine::findOrFail($mix->cuisine_id);
 
-        $mixData['ingredients'] = $mix->ingredients; // Include ingredients if needed
-        $mixData['user_id'] = Auth::id();
+        // check if the shared mix has a custom cuisine that the other user might not see;
+        if ($cuisine->user_id != null && $cuisine->user_id != Auth::id()) {
+            //If user already has a cuisine with this name, don't make a new one, add it to that collection
+            $sameCuisine = Cuisine::where('user_id', '=', Auth::id())
+                ->where('name', '=', $cuisine->name)
+                ->first();
+            // dd($sameCuisine);
+            if ($sameCuisine != null) {
+                $mix->cuisine_id = $sameCuisine->id;
+            }
+            // Otherwise, make a new cuisine with the new name
+            else {
+                $newCuisine = $cuisine->replicate();
+                $newCuisine->user_id = Auth::id();
+                $newCuisine->save();
+                $mix->cuisine_id = $newCuisine->id;
+            }
+        }
+
+        $mixData = json_decode((string) json_encode($mix), true);
         // Create a new Request object with the mix data
         $mixRequest = Request::create('/mixes', 'POST', $mixData);
         $mixRequest->setUserResolver(function () {

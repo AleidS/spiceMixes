@@ -14,5 +14,13 @@ class Shares extends Model
      *
      * @var list<string>
      */
-    protected $fillable = ['mix_id', 'accepted', 'responded', 'target_user', 'message', 'name'];
+    protected $fillable = [
+        'mix_id',
+        'accepted',
+        'responded',
+        'target_user',
+        'message',
+        'name',
+        'mix',
+    ];
 }

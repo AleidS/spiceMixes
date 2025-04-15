@@ -37,7 +37,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // About (no controller)
 Route::get('about', function () {
     return Inertia::render('About/Index');
-});
+})->name('about');
+Route::get('contact', function () {
+    return Inertia::render('Contact/Index');
+})->name('contact');
+Route::get('sources', function () {
+    return Inertia::render('Sources/Index');
+})->name('sources');
 
 Route::get('uploadTerms', function () {
     return Inertia::render('TermsAndConditions/Upload');
@@ -57,6 +63,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('mixes', [MixesController::class, 'store'])->name('mixes');
 
     Route::get('mixes/edit/{id}', [MixesController::class, 'edit'])->name('mixes.edit');
+    Route::get('mixes/duplicate/{id}', [MixesController::class, 'duplicate'])->name(
+        'mixes.duplicate'
+    );
     Route::post('mixes/{id}', [MixesController::class, 'update'])->name('mixes.update');
     Route::delete('mixes/delete/{id}', [MixesController::class, 'destroy']);
     Route::post('shares/accept/{id}', [SharesController::class, 'accept'])->name('shares.accept');

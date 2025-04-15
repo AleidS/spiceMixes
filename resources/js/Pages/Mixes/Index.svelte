@@ -56,7 +56,7 @@
     <!-- User ID: {$page.props.auth.user.id} -->
 
     <div
-        class="z-1 relative m-auto mt-10 flex h-fit max-w-[950px] flex-1 flex-wrap items-start justify-start gap-2 gap-y-10"
+        class="z-1 relative m-auto mt-10 flex h-fit max-w-[950px] flex-1 flex-wrap items-start justify-start gap-2 gap-y-10 pb-16"
     >
         <div class="w-full">
             <div class="min-h-6 w-full text-uiDark-100">
@@ -130,7 +130,10 @@
             </div>
         </div>
         {#if mixes.data.length > 0}
-            <div class="z-1 grid w-full grid-cols-1 gap-8 md:grid-cols-3" use:autoAnimate>
+            <div
+                class="z-1 grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+                use:autoAnimate
+            >
                 {#each mixes.data as mix (mix.id)}
                     <Link href={route('mixes.show', mix.id)}>
                         <MixCard {mix} />

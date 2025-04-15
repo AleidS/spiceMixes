@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('shares', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('mix_id');
+            $table->json('mix');
             $table->foreign('mix_id')->references('id')->on('mixes')->onDelete('cascade');
             $table->boolean('responded')->nullable()->default(null);
             $table->boolean('accepted')->nullable()->default(null);

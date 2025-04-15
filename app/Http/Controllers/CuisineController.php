@@ -71,14 +71,15 @@ class CuisineController extends Controller
         if ($request->id != null) {
             $cuisine = Cuisine::find($request->id);
             $cuisine->update($validatedData);
-        } elseif ($totalCreatedCuisines < 100) {
+        } elseif ($totalCreatedCuisines < 10) {
             Cuisine::create($validatedData);
         } else {
             return response()->json(
-                'sorry, the total number of custom cuisines is 100, please contact me if you really need more!',
+                'sorry, the total number of custom cuisines is 10, please contact me if you really need more!',
                 400
             );
         }
+        $totalCreatedCuisines = $request->user()->cuisines->count();
         $this->__construct();
 
         return Inertia::render('Cuisines/Index', [

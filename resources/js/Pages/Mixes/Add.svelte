@@ -35,7 +35,8 @@
         source_name: '',
         user_id: $page.props.auth.user.id,
         cuisine_id: null,
-        avatar: null
+        avatar: null,
+        img_source: ''
     });
 
     let termsAccepted = $state(false);
@@ -48,6 +49,7 @@
             $form.user_id = mix.data.user_id;
             $form.cuisine_id = mix.data.cuisine_id;
             $form.avatar = mix.data.avatar;
+            $form.img_source = mix.data.img_source;
         }
     });
 
@@ -152,11 +154,11 @@
                     <Button class=" w-fit !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400">
                         <Link href={route('home')} class="flex items-center gap-1 ">
                             <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
-                            Back to Mixes
+                            Back to Mixes / Cancel
                         </Link>
                     </Button>
 
-                    <Button
+                    <!-- <Button
                         type="submit"
                         id="submitbutton"
                         success
@@ -165,19 +167,9 @@
                     >
                         <Icon icon="mdi:floppy" class="mb-1 size-5" />
                         {mix ? 'Save mix' : 'Add Mix'}
-                    </Button>
+                    </Button> -->
                 </div>
-                {#if mix?.data?.id}
-                    <Button
-                        onclick={(e) => {
-                            e.preventDefault(), removeMix();
-                        }}
-                        class="h-auto w-fit text-nowrap !bg-danger-500 !text-white"
-                    >
-                        <Icon icon="mdi:trash" class="mb-1 size-5" />
-                        Delete mix
-                    </Button>
-                {/if}
+
                 <div
                     class="flex w-fit flex-1 flex-row flex-wrap items-center justify-start gap-3 md:justify-start"
                 >
@@ -186,8 +178,8 @@
                         bind:value={$form.name}
                         placeholder="Title"
                         class="w-fit !min-w-64 flex-1 border !border-uiGray-400 !py-1 font-primary !text-2xl !font-bold text-black"
-                        wrapperClass="!justify-start !w-[300px] "
-                        label={mix ? null : 'Title'}
+                        wrapperClass="!justify-start !w-[320px] "
+                        label={'*Title'}
                         error={errors?.name}
                     />
                 </div>
@@ -255,6 +247,15 @@
                                 </div>
                             {/snippet}
                         </FileUpload>
+                        <Input
+                            label="&nbsp; Imgage source link (optional)"
+                            type="text"
+                            bind:value={$form.img_source}
+                            placeholder="http://www.imagesource.com"
+                            wrapperClass="!p-2 w-full gap-y-1 mt-4 flex-row col-span-1 lg:col-span-2"
+                            class=" text-black"
+                            min="0"
+                        />
                         {#if errors?.avatar}
                             <div class="error h-fit max-w-48 text-wrap px-4 py-2 text-danger-300">
                                 <Icon
@@ -276,8 +277,8 @@
                             >
                                 <div class="col-span-1 hidden lg:col-span-2 lg:block">Quantity</div>
                                 <div class="col-span-1 hidden lg:col-span-3 lg:block">Measure</div>
-                                <div class="col-span-1 hidden lg:col-span-5 lg:block">Name</div>
-                                <div class="col-span-1 hidden lg:col-span-2 lg:block"></div>
+                                <div class="col-span-1 hidden lg:col-span-4 lg:block">Name</div>
+                                <div class="col-span-1 hidden lg:col-span-2 lg:block">Optional</div>
                                 {#each $form.ingredients as ingredient, index}
                                     <Input
                                         label="Quantity"
@@ -304,10 +305,17 @@
                                         labelMobileOnly
                                         type="text"
                                         bind:value={ingredient.name}
-                                        wrapperClass="col-span-1 lg:col-span-5"
+                                        wrapperClass="col-span-1 lg:col-span-4"
                                         placeholder="Name"
                                         class="w-64 flex-1 text-black"
                                     />
+                                    <div class="flex items-center">
+                                        <span class="block sm:hidden">optional </span><input
+                                            type="checkbox"
+                                            bind:checked={ingredient.optional}
+                                            class="checkbox mb-2 ml-2"
+                                        />
+                                    </div>
                                     <Button
                                         type="button"
                                         onclick={() => {
@@ -363,9 +371,9 @@
                     />
                 </div>
 
-                <div class="box">
+                <div class="box flex items-center gap-2">
                     <Input
-                        label="Cuisine"
+                        label="*Cuisine"
                         type="select"
                         options={cuisines.data}
                         bind:value={$form.cuisine_id}
@@ -373,10 +381,11 @@
                         class="text-black"
                         error={errors.cuisine_id}
                     />
+                    <a href="/cuisines" target="_blank" class="underline">Manage cuisines</a>
                 </div>
                 <div class="box flex flex-wrap gap-2">
                     <Input
-                        label="Source url (link, optional)"
+                        label="Source link (optional)"
                         type="text"
                         bind:value={$form.source_url}
                         placeholder="Source url"
@@ -392,8 +401,7 @@
                         error={errors.source_name}
                     />
                 </div>
-                <div class="font-light">
-                    <input type="checkbox" bind:checked={termsAccepted} class="" />
+                <div class="w-full p-2 text-right font-light">
                     By uploading my content I agree to the
                     <a href="/uploadTerms" target="_blank" class="tab-link-class underline">
                         upload terms and conditions
@@ -402,18 +410,30 @@
                     <a href="/generalTerms" target="_blank" class="tab-link-class underline">
                         general terms and conditions
                     </a>
+                    <input type="checkbox" bind:checked={termsAccepted} class="checkbox ml-2" />
                 </div>
 
-                <div class="flex justify-between">
+                <div class="flex flex-wrap justify-between gap-2">
                     <Button class=" w-fit !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400">
                         <Link href={route('home')} class="flex items-center gap-1 ">
                             <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
-                            Back to Mixes
+                            Back to Mixes / Cancel
                         </Link>
                     </Button>
                     <Tooltip triggeredBy="#submitbutton">
                         {termsAccepted === false ? 'Please accept the terms' : ''}</Tooltip
                     >
+                    {#if mix?.data?.id}
+                        <Button
+                            onclick={(e) => {
+                                e.preventDefault(), removeMix();
+                            }}
+                            class="h-auto w-fit text-nowrap !bg-danger-500 !text-white"
+                        >
+                            <Icon icon="mdi:trash" class="mb-1 size-5" />
+                            Delete mix
+                        </Button>
+                    {/if}
 
                     <Button
                         id="submitbutton"

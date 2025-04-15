@@ -20,6 +20,7 @@ class IngredientResource extends JsonResource
             'mixes_id' => $this->mixes_id,
             'measure_id' => $this->measure_id,
             'quantity' => $this->quantity,
+            'optional' => $this->optional,
             'alternatives' => $this->alternatives,
             'show_alternatives' => $this->show_alternatives,
         ];

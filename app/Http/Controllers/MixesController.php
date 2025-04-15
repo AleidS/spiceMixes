@@ -18,6 +18,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\RateLimiter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class MixesController extends Controller
 {
@@ -172,6 +173,7 @@ class MixesController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:500',
+            'img_source' => 'nullable|string|max:300',
             'source_url' => 'nullable|string|max:255',
             'source_name' => 'nullable|string|max:255',
             'user_id' => 'nullable|integer',
@@ -284,6 +286,37 @@ class MixesController extends Controller
     /**
      * Display the specified mix.
      */
+    public function duplicate($id)
+    {
+        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
+        if (!$mix) {
+            return redirect()->route('home')->with('error', 'Mix not found.');
+        }
+        if ($mix->user_id != null) {
+            dd('woops, that does not seem to be a public mix');
+            return redirect()->route('home')->with('error', 'That is not yours, sorry.');
+        }
+
+        // $this->cuisines = CuisineResource::collection(Cuisine::all());
+        // $this->measures = MeasureResource::collection(Measure::all());
+
+        // Transform the pagination result using MixesResource
+
+        $newMix = $mix->replicate();
+        $newMix->name = 'Your ' . $mix->name;
+        $newMix->created_at = Carbon::now();
+        $newMix->user_id = Auth::id();
+        $newMix->save();
+
+        $mixResource = new MixesResource($newMix);
+
+        return Inertia::render(
+            'Mixes/Add',
+
+            ['mix' => $mixResource, 'measures' => $this->measures, 'cuisines' => $this->cuisines]
+        );
+    }
+
     public function edit($id)
     {
         $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
@@ -315,6 +348,7 @@ class MixesController extends Controller
             'description' => 'nullable|string|max:500',
             'source_url' => 'nullable|string|max:255',
             'source_name' => 'nullable|string|max:255',
+            'img_source' => 'nullable|string|max:300',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Make avatar nullable and validate file type
@@ -326,7 +360,12 @@ class MixesController extends Controller
 
         $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
 
+        // https://spatie.be/docs/laravel-medialibrary/v11/basic-usage/retrieving-media
         if ($request->hasFile('avatar')) {
+            $media = $mix->getFirstMedia('avatars');
+            if ($media) {
+                $media->delete();
+            }
             $mix->addMedia($request->file('avatar'))->toMediaCollection('avatars');
         }
 
@@ -348,6 +387,7 @@ class MixesController extends Controller
                     'quantity' => 'required|integer',
                     'measure_id' => 'required|integer',
                     'show_alternatives' => 'boolean',
+                    'optional' => 'nullable|boolean',
                     'mixes_id' => 'required|integer',
                 ])->validate();
                 if (isset($validatedIngredient['id'])) {
@@ -368,10 +408,9 @@ class MixesController extends Controller
             }
         }
 
+        // Otherwise you dont see the edits when intertia returns the page
+        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
         $mixResource = new MixesResource($mix);
-
-        // $this->cuisines = CuisineResource::collection(Cuisine::all());
-        // $this->measures = MeasureResource::collection(Measure::all());
 
         $this->show($id);
 
@@ -389,6 +428,11 @@ class MixesController extends Controller
     {
         // dd($id);
         $mix = Mixes::find($id);
+        // If someone deletes a mix with an image, delete the image.
+        $media = $mix->getFirstMedia('avatars');
+        if ($media) {
+            $media->delete();
+        }
         $mix->delete();
         return redirect()->route('home');
     }

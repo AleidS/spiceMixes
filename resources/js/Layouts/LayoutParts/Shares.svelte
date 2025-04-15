@@ -61,7 +61,9 @@
 {#if showMessage}
     <dialog open>
         <form method="dialog">
-            {showMessage.name ?? 'another user'} shared a mix with you called '....'<br />
+            {showMessage.name ?? 'another user'} shared a mix with you called {JSON.parse(
+                showMessage.mix
+            ).name}<br />
             {#if showMessage.message}
                 They left the following message: {showMessage.message}
             {/if}

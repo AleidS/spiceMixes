@@ -39,38 +39,6 @@
                 The documentation on the combination of Svelte/Laravel is a bit sparse, so that might
                 be a challenge.
             </p>
-
-            <h4 class="mt-4">Code sources:</h4>
-            <p>
-                Pagination & some code reference: <br />
-                <a
-                    class="underline"
-                    href="https://github.com/tapan288/inertia-svelte-students-management/blob/master/resources/js/Components/Pagination.svelte"
-                    >Tapan288 Github project/tutorial</a
-                >
-            </p>
-            <p>
-                Switch
-                <a
-                    class="underline"
-                    href="https://svelte.dev/playground/35d77f2ab11e4197a19ffd8e7c4ac74e?version=5.25.6"
-                    >Svelte playground</a
-                >
-            </p>
-            <h4 class="mt-4">Image sources:</h4>
-            <p>
-                Fallback image:
-                <img
-                    src="/storage/pexels-martabranco-1340116.jpg"
-                    alt="3 spoons with various spices"
-                    class="!-z-2 my-1 h-auto w-32 rounded-md object-cover object-center transition-transform duration-200 group-hover:scale-x-105 group-hover:scale-y-105"
-                />
-                <a
-                    class="underline"
-                    href="https://www.pexels.com/photo/four-assorted-spices-on-wooden-spoons-1340116/"
-                    >Photo by Marta Branco from Pexels
-                </a>
-            </p>
         </div>
     </div>
 </AuthenticatedLayout>

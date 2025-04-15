@@ -25,6 +25,7 @@ class Mixes extends Model implements HasMedia
         'source_url',
         'source_name',
         'show_alternatives',
+        'img_source',
     ];
 
     // Define the relationship with the Cuisine model

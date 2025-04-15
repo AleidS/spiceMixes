@@ -10,16 +10,17 @@
 
     let showDialog = $state(false);
 
-    const form = useForm({
+    const form = {
         email: '',
         name: '',
         message: '',
-        mix_id: mix.data.id
-    });
+        mix_id: mix.data.id,
+        mix: JSON.stringify(mix.data)
+    };
 
     function send() {
         console.log(form);
-        $form.post('/shares/send', form);
+        router.post('/shares/send', form);
         alert(
             'Thank you! We cannot tell you if the email adress is registered, but if it is,\
              the other user should get a notification when they login/refresh the page!'
@@ -43,7 +44,7 @@
 
                 <Input
                     type="text"
-                    bind:value={$form.email}
+                    bind:value={form.email}
                     placeholder="email"
                     class="w-80 flex-1 text-black"
                     wrapperClass="!w-80 col-span-1 lg:col-span-5"
@@ -53,7 +54,7 @@
                 <p>What is your name? If not given, you will send the recipe anonymously</p>
                 <Input
                     type="text"
-                    bind:value={$form.name}
+                    bind:value={form.name}
                     placeholder="name"
                     class="w-80 flex-1 text-black"
                     wrapperClass="col-span-1 lg:col-span-5"
@@ -63,7 +64,7 @@
                 <p>Want to include a personal message?</p>
                 <Input
                     type="textfield"
-                    bind:value={$form.message}
+                    bind:value={form.message}
                     placeholder="message"
                     class="w-80 flex-1 text-black"
                     wrapperClass="col-span-1 lg:col-span-5"
