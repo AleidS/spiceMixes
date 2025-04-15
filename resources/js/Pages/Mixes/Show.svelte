@@ -1,7 +1,6 @@
 <script>
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte';
 
-    let { mix, measures } = $props();
     import Icon from '@iconify/svelte';
     import { router, page, Link } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
@@ -10,52 +9,34 @@
     import ShareMix from '@/Pages/Mixes/ShareMix.svelte';
     import Calculator from '@/Components/calculator/Calculator.svelte';
     import Draggable from '@/Components/calculator/Draggable.svelte';
-    let multiplier = $state(1);
+    import Ingredient from './Ingredient.svelte';
+    import { writable, get } from 'svelte/store';
+
+    import {
+        wholeAndFraction,
+        calculateTotals,
+        totalStr,
+        multiplier,
+        double,
+        half,
+        original
+    } from './maths.svelte.js';
+    let { mix, measures } = $props();
+    calculateTotals(mix, measures);
+
+    let newTotalStr = $state();
+    totalStr.subscribe((value) => {
+        newTotalStr = value;
+    });
+
+    let newMultiplier = $state(1);
+    multiplier.subscribe((value) => {
+        newMultiplier = value;
+    });
 
     let calculator = $state(false);
     let unitConversions = $state(false);
-    console.log(mix.data);
-    const decToFrac = (dec) =>
-        [...Array(50).keys()]
-            .flatMap((i) =>
-                [...Array(50).keys()].map((j) => [
-                    i + 1,
-                    j + 1,
-                    (i + 1) / (j + 1),
-                    Math.abs((i + 1) / (j + 1) - dec)
-                ])
-            )
-            .sort((a, b) => a[3] - b[3])[0]
-            .slice(0, 2)
-            .toString()
-            .replace(',', '/');
-
-    function approximateFraction(decimal, maxDenominator) {
-        let numerator = 1;
-        let denominator = 1;
-        let minError = Math.abs(decimal - numerator / denominator);
-
-        for (let d = 2; d <= maxDenominator; d++) {
-            const n = Math.round(decimal * d);
-            const error = Math.abs(decimal - n / d);
-
-            if (error < minError) {
-                minError = error;
-                numerator = n;
-                denominator = d;
-            }
-        }
-
-        return [numerator, denominator];
-    }
-
-    function wholeAndFraction(float) {
-        const integerPart = Math.floor(float);
-        const decimalPart = float - integerPart;
-        const [numerator, denominator] = approximateFraction(decimalPart, 100);
-        const floatFraction = numerator !== 0 ? `${numerator}/${denominator}` : '';
-        return `${integerPart >= 1 ? integerPart : ''}${floatFraction ? ' ' : ''}${floatFraction}`;
-    }
+    // Reactive statement to calculate totals
 </script>
 
 <svelte:head>
@@ -143,142 +124,32 @@
                             <h4>Ingredients:</h4>
                             &nbsp;
                             <div class="mb-1 inline text-center font-light text-uiDark-100">
-                                {multiplier == 1
+                                {newMultiplier == 1
                                     ? ''
-                                    : multiplier < 1
-                                      ? `/ ${1 / multiplier}`
-                                      : `* ${multiplier}`}
+                                    : newMultiplier < 1
+                                      ? `/ ${1 / newMultiplier}`
+                                      : `* ${newMultiplier}`}
                             </div>
                         </div>
                         <ul class="relative">
                             {#each mix.data.ingredients.filter((ingredient) => !ingredient.optional) as ingredient}
-                                <li>
-                                    <input type="checkbox" class="checkbox" />
-                                    <span class="font-medium">
-                                        {wholeAndFraction(ingredient?.quantity * multiplier)}</span
-                                    >
-                                    <!-- Measure (tbs, ts, grams, cups etc) -->
-                                    <span>
-                                        {measures.data.find(
-                                            (measure) => measure.id == ingredient.measure_id
-                                        )?.name}
-                                    </span>
-                                    <!-- Name -->
-                                    <span> {ingredient?.name}</span>
-
-                                    {#if ingredient?.alternatives?.dutch_name}
-                                        <div class="group inline-flex justify-center sm:relative">
-                                            <div
-                                                class="inline w-fit -translate-y-2 rounded-full bg-uiDark-50 p-[2px] text-[6pt] font-bold text-uiDark-600"
-                                            >
-                                                NL
-                                            </div>
-                                            <div
-                                                class="absolute left-8 z-10 hidden w-40 translate-y-4 rounded-md bg-uiDark-400 p-4 group-hover:block sm:-right-8 sm:left-auto"
-                                            >
-                                                <span>
-                                                    <strong>Dutch translation:</strong>
-                                                    <br />{ingredient?.alternatives?.dutch_name ??
-                                                        ''}</span
-                                                >
-                                            </div>
-                                        </div>
-                                    {/if}
-                                    {#if ingredient?.alternatives?.alternatives}
-                                        <div class="group inline sm:relative">
-                                            <span
-                                                ><Icon
-                                                    icon="material-symbols:swap-horizontal-circle-rounded"
-                                                    class="inline -translate-y-2 text-uiDark-50"
-                                                /></span
-                                            >
-                                            <div
-                                                class="absolute left-8 z-10 hidden w-64
-                                            rounded-md bg-uiDark-400 p-4 group-hover:block sm:-left-20 sm:w-80"
-                                            >
-                                                <strong>
-                                                    Possible alternatives to {ingredient?.name}:<br
-                                                    /></strong
-                                                >
-                                                {ingredient?.alternatives?.alternatives ?? ''}
-                                                <div class="lh text-sm text-uiGray-200">
-                                                    <br />
-                                                    (Alternatives are not specific to this recipe)
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {/if}
-                                </li>
+                                <Ingredient {ingredient} {mix} {measures} />
                             {/each}
 
                             {#if mix.data.ingredients.filter((ingredient) => ingredient.optional).length > 0}
                                 <div class="mb-1 mt-2"><strong>Optional:</strong></div>
                                 {#each mix.data.ingredients.filter((ingredient) => ingredient.optional) as ingredient}
-                                    <li>
-                                        <input type="checkbox" class="checkbox" />
-                                        <span class="font-medium">
-                                            {wholeAndFraction(
-                                                ingredient?.quantity * multiplier
-                                            )}</span
-                                        >
-                                        <!-- Measure (tbs, ts, grams, cups etc) -->
-                                        <span>
-                                            {measures.data.find(
-                                                (measure) => measure.id == ingredient.measure_id
-                                            )?.name}
-                                        </span>
-                                        <!-- Name -->
-                                        <span> {ingredient?.name}</span>
-
-                                        {#if ingredient?.alternatives?.dutch_name}
-                                            <div
-                                                class="group inline-flex justify-center sm:relative"
-                                            >
-                                                <div
-                                                    class="inline w-fit -translate-y-2 rounded-full bg-uiDark-50 p-[2px] text-[6pt] font-bold text-uiDark-600"
-                                                >
-                                                    NL
-                                                </div>
-                                                <div
-                                                    class="absolute left-8 z-10 hidden w-40 translate-y-4 rounded-md bg-uiDark-400 p-4 group-hover:block sm:-right-8 sm:left-auto"
-                                                >
-                                                    <span>
-                                                        <strong>Dutch translation:</strong>
-                                                        <br />{ingredient?.alternatives
-                                                            ?.dutch_name ?? ''}</span
-                                                    >
-                                                </div>
-                                            </div>
-                                        {/if}
-                                        {#if ingredient?.alternatives?.alternatives}
-                                            <div class="group inline sm:relative">
-                                                <span
-                                                    ><Icon
-                                                        icon="material-symbols:swap-horizontal-circle-rounded"
-                                                        class="inline -translate-y-2 text-uiDark-50"
-                                                    /></span
-                                                >
-                                                <div
-                                                    class="absolute left-8 z-10 hidden w-64
-                                            rounded-md bg-uiDark-400 p-4 group-hover:block sm:-left-20 sm:w-80"
-                                                >
-                                                    <strong>
-                                                        Possible alternatives to {ingredient?.name}:<br
-                                                        /></strong
-                                                    >
-                                                    {ingredient?.alternatives?.alternatives ?? ''}
-                                                    <div class="lh text-sm text-uiGray-200">
-                                                        <br />
-                                                        (Alternatives are not specific to this recipe)
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {/if}
-                                    </li>
+                                    <Ingredient {ingredient} {mix} {measures} />
                                 {/each}
                             {/if}
                         </ul>
+                        <div class="mt-2 font-light">
+                            Total of volume measures approx. <span class="font-medium">
+                                {newTotalStr}
+                            </span>
+                        </div>
                     </div>
+
                     <button
                         class="rounded-lg border border-primary-400 p-1 text-white"
                         onclick={(event) => {
@@ -291,22 +162,25 @@
                     {#if mix.data.ingredients.length > 0}
                         <Button
                             class="!rounded-full !bg-primary-600 !px-2 !py-1 !text-white"
-                            onclick={() => {
-                                multiplier = multiplier / 2;
+                            onclick={(event) => {
+                                event.stopPropagation();
+                                half(mix, measures);
                             }}>half</Button
                         >
 
                         <Button
                             class="!rounded-full !bg-primary-600 !px-1 !py-1 !text-white"
-                            onclick={() => {
-                                multiplier = multiplier * 2;
+                            onclick={(event) => {
+                                event.stopPropagation();
+                                double(mix, measures);
                             }}>double</Button
                         >
-                        {#if multiplier != 1}
+                        {#if newMultiplier != 1}
                             <Button
                                 class="!rounded-full !bg-primary-600 !p-1 !text-white"
-                                onclick={() => {
-                                    multiplier = 1;
+                                onclick={(event) => {
+                                    event.stopPropagation();
+                                    original(mix, measures);
                                 }}><Icon icon="mdi:arrow-u-left-top" /></Button
                             >
                         {/if}
