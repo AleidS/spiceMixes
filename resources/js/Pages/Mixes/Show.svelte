@@ -15,6 +15,47 @@
     let calculator = $state(false);
     let unitConversions = $state(false);
     console.log(mix.data);
+    const decToFrac = (dec) =>
+        [...Array(50).keys()]
+            .flatMap((i) =>
+                [...Array(50).keys()].map((j) => [
+                    i + 1,
+                    j + 1,
+                    (i + 1) / (j + 1),
+                    Math.abs((i + 1) / (j + 1) - dec)
+                ])
+            )
+            .sort((a, b) => a[3] - b[3])[0]
+            .slice(0, 2)
+            .toString()
+            .replace(',', '/');
+
+    function approximateFraction(decimal, maxDenominator) {
+        let numerator = 1;
+        let denominator = 1;
+        let minError = Math.abs(decimal - numerator / denominator);
+
+        for (let d = 2; d <= maxDenominator; d++) {
+            const n = Math.round(decimal * d);
+            const error = Math.abs(decimal - n / d);
+
+            if (error < minError) {
+                minError = error;
+                numerator = n;
+                denominator = d;
+            }
+        }
+
+        return [numerator, denominator];
+    }
+
+    function wholeAndFraction(float) {
+        const integerPart = Math.floor(float);
+        const decimalPart = float - integerPart;
+        const [numerator, denominator] = approximateFraction(decimalPart, 100);
+        const floatFraction = numerator !== 0 ? `${numerator}/${denominator}` : '';
+        return `${integerPart >= 1 ? integerPart : ''}${floatFraction ? ' ' : ''}${floatFraction}`;
+    }
 </script>
 
 <svelte:head>
@@ -114,7 +155,7 @@
                                 <li>
                                     <input type="checkbox" class="checkbox" />
                                     <span class="font-medium">
-                                        {ingredient?.quantity * multiplier}</span
+                                        {wholeAndFraction(ingredient?.quantity * multiplier)}</span
                                     >
                                     <!-- Measure (tbs, ts, grams, cups etc) -->
                                     <span>
@@ -176,7 +217,9 @@
                                     <li>
                                         <input type="checkbox" class="checkbox" />
                                         <span class="font-medium">
-                                            {ingredient?.quantity * multiplier}</span
+                                            {wholeAndFraction(
+                                                ingredient?.quantity * multiplier
+                                            )}</span
                                         >
                                         <!-- Measure (tbs, ts, grams, cups etc) -->
                                         <span>

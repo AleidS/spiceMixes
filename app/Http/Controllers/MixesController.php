@@ -224,10 +224,11 @@ class MixesController extends Controller
                         }
                         $validatedIngredient = Validator::make($ingredient, [
                             'name' => 'required|string|max:255',
-                            'quantity' => 'required|integer',
+                            'quantity' => 'required|numeric',
                             'measure_id' => 'required|integer',
                             'show_alternatives' => 'boolean',
                             'mixes_id' => 'required|integer',
+                            'optional' => 'nullable|boolean',
                         ])->validate();
                         $ingredientCreated = Ingredient::create($validatedIngredient);
                     }
@@ -384,7 +385,7 @@ class MixesController extends Controller
                 $validatedIngredient = Validator::make($ingredient, [
                     'id' => 'sometimes|exists:ingredients,id',
                     'name' => 'required|string|max:255',
-                    'quantity' => 'required|integer',
+                    'quantity' => 'required|numeric',
                     'measure_id' => 'required|integer',
                     'show_alternatives' => 'boolean',
                     'optional' => 'nullable|boolean',

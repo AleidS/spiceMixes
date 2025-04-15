@@ -157,9 +157,24 @@
         <!-- Responsive Navigation Menu -->
         <div class={`${showingNavigationDropdown ? 'block' : 'hidden'} sm:hidden`}>
             <div class="space-y-1 pb-3 pt-2">
-                <ResponsiveNavLink href="/about" active={route().current('dashboard')}>
-                    About
-                </ResponsiveNavLink>
+                <ResponsiveNavLink href="/" active={route().current('home')}
+                    ><Icon icon="mdi:home" /></ResponsiveNavLink
+                >
+
+                {#if $page.props.auth.user}
+                    <ResponsiveNavLink href="/cuisines" active={route().current('cuisines')}
+                        >Cuisines</ResponsiveNavLink
+                    >
+                {/if}
+                <ResponsiveNavLink href="/about" active={route().current('about')}
+                    >About</ResponsiveNavLink
+                >
+                <ResponsiveNavLink href="/sources" active={route().current('sources')}
+                    >Sources</ResponsiveNavLink
+                >
+                <ResponsiveNavLink href="/contact" active={route().current('contact')}
+                    >Contact</ResponsiveNavLink
+                >
                 <!-- <ResponsiveNavLink href={route('mixes')} active={route().current('mixes.index')}>
                     Mixes
                 </ResponsiveNavLink> -->

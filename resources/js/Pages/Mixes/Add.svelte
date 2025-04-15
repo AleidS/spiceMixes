@@ -289,6 +289,7 @@
                                         wrapperClass="col-span-1 lg:col-span-2"
                                         class=" text-black"
                                         min="0"
+                                        step=".25"
                                     />
                                     <Input
                                         label="Measure"
