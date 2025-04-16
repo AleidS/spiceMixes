@@ -20,18 +20,14 @@ class CuisinesTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
             [
                 'name' => 'Indian',
                 'color' => '#C63D19',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'name' => 'Italian',
-                'color' => '#AB691D',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+
             [
                 'name' => 'South/East Asian',
                 'color' => '#4C1213',
@@ -40,32 +36,43 @@ class CuisinesTableSeeder extends Seeder
             ],
 
             [
-                'name' => 'Mexican',
+                'name' => 'Americas',
                 'color' => '#7F0F00',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Nordic',
+                'name' => 'European (other)',
                 'color' => '#BE7622',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Chinese',
+                'name' => 'East Asian',
                 'color' => '#A83513',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // ['name' => 'Japanese','color'=>'#4C1213', 'created_at' => now(), 'updated_at' => now()],
             [
-                'name' => 'French',
-                'color' => '#4C1213',
+                'name' => 'Middle Eastern',
+                'color' => '#8B4513',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Vegetables',
+                'name' => 'Sub-Saharan African',
+                'color' => '#563B1A',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Oceania',
+                'color' => '#31706F',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Vegetarian',
                 'color' => '#32561A',
                 'created_at' => now(),
                 'updated_at' => now(),

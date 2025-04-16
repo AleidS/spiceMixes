@@ -7,7 +7,7 @@
 </script>
 
 <div
-    class="z-1 group relative col-span-1 rounded-lg border-[1px] border-uiGray-500 bg-uiDark-700 transition duration-200 ease-out hover:brightness-105 md:p-4"
+    class="z-1 group relative col-span-1 rounded-lg border-[1px] border-uiGray-500 bg-uiDark-700 pb-4 transition duration-200 ease-out hover:brightness-105"
 >
     {#if mix.editable}
         <div
@@ -16,7 +16,7 @@
             Your mix
         </div>
     {/if}
-    <div class="!z-0 h-[300px] overflow-hidden object-cover md:h-[180px] lg:h-[220px]">
+    <div class="!z-0 h-[300px] overflow-hidden object-cover md:h-[180px] lg:h-[210px]">
         {#if mix.avatar}
             <img
                 src={mix.avatar}

@@ -158,8 +158,8 @@
                         }}><Icon icon="mdi:calculator" class="text-2xl" /></button
                     >
                 </div>
-                <div class="flex items-center gap-2">
-                    {#if mix.data.ingredients.length > 0}
+                {#if mix.data.ingredients.length > 0}
+                    <div class="flex items-center gap-2">
                         <Button
                             class="!rounded-full !bg-primary-600 !px-2 !py-1 !text-white"
                             onclick={(event) => {
@@ -184,29 +184,28 @@
                                 }}><Icon icon="mdi:arrow-u-left-top" /></Button
                             >
                         {/if}
-                    {/if}
-                </div>
-                <div class="-mb-2 mt-2 text-sm font-light">
-                    <strong>Total</strong> (excl. weight measures) ≈
-                    <span class="font-medium">
-                        {newTotalStr}
-                    </span>
-                </div>
-                <Switch
-                    switchClass="!scale-75"
-                    textClass="font-light text-sm"
-                    text="Use original units"
-                    bind:checked={useOriginalsState}
-                    click={() => {
-                        setTimeout(switchOriginals(), 100);
-                    }}
-                ></Switch>
+                    </div>
+                    <div class="-mb-2 mt-2 text-sm font-light">
+                        <strong>Total</strong> (excl. weight measures) ≈
+                        <span class="font-medium">
+                            {newTotalStr}
+                        </span>
+                    </div>
+                    <Switch
+                        switchClass="!scale-75"
+                        textClass="font-light text-sm"
+                        text="Use original units"
+                        bind:checked={useOriginalsState}
+                        click={() => {
+                            setTimeout(switchOriginals(), 100);
+                        }}
+                    ></Switch>{/if}
             </div>
         </div>
         {#if mix.data?.description}
             <div class="box">
                 <h4>Description</h4>
-                <p>{mix.data?.description}</p>
+                <p>{@html mix.data?.description}</p>
             </div>
         {/if}
 

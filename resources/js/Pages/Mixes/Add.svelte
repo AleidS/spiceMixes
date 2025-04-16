@@ -6,14 +6,18 @@
     import Button from '@/Components/Button.svelte';
     import Input from '@/Components/Input.svelte';
     import Icon from '@iconify/svelte';
+    import RichTextTipTap from '@/Components/RichTextTipTap.svelte';
 
     import { FileUpload } from 'melt/components';
     // import { Tooltip } from '@svelte-plugins/tooltips';
+    import Switch from '@/Components/Switch.svelte';
     import { Tooltip } from 'flowbite-svelte';
 
     // let fileUpload;
 
     let { mix, errors, measures, cuisines } = $props();
+
+    let richText = $state(false);
 
     $effect: if (Object.keys(errors)[0]) {
         open = true;
@@ -340,16 +344,25 @@
                     </div>
                 </div>
 
-                <div class="box !h-fit">
-                    <Input
-                        label="Description"
-                        type="textArea"
-                        bind:value={$form.description}
-                        placeholder="Description"
-                        wrapperClass="!max-w-full"
-                        class="h-fit !p-4 text-black"
-                        error={errors.description}
-                    />
+                <div class="box flex !h-fit flex-col gap-y-4">
+                    <div>Description</div>
+                    <Switch
+                        text="Show Rich Text Editor"
+                        switchClass="scale-75"
+                        bind:checked={richText}
+                    ></Switch>
+                    {#if !richText}
+                        <Input
+                            type="textArea"
+                            bind:value={$form.description}
+                            placeholder="Description"
+                            wrapperClass="!max-w-full"
+                            class="h-fit !p-4 text-black"
+                            error={errors.description}
+                        />
+                    {:else}
+                        <RichTextTipTap bind:value={$form.description} />
+                    {/if}
                 </div>
 
                 <div class="box flex items-center gap-2">

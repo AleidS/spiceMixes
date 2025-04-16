@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('mixes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('description', 2000)->nullable();
             $table->string('img_source')->nullable()->default(null);
             $table->integer('user_id')->nullable();
             $table->integer('cuisine_id')->default(1);

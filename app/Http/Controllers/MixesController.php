@@ -172,7 +172,7 @@ class MixesController extends Controller
         // }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
+            'description' => 'nullable|string|max:2000',
             'img_source' => 'nullable|string|max:300',
             'source_url' => 'nullable|string|max:255',
             'source_name' => 'nullable|string|max:255',
@@ -346,7 +346,7 @@ class MixesController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
+            'description' => 'nullable|string|max:2000',
             'source_url' => 'nullable|string|max:255',
             'source_name' => 'nullable|string|max:255',
             'img_source' => 'nullable|string|max:300',
