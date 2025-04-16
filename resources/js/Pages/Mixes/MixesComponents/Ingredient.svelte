@@ -1,20 +1,28 @@
 <script>
     import Icon from '@iconify/svelte';
-    import { wholeAndFraction, multiplier } from '../MixesLogic/maths.svelte';
+    import {
+        wholeAndFraction,
+        multiplier,
+        transformIngredient,
+        useOriginals
+    } from '../MixesLogic/maths.svelte';
     let { measures, ingredient } = $props();
     let multiplierValue = $state(1);
     multiplier.subscribe((value) => {
         multiplierValue = value;
     });
+
+    let measureName = measures.data.find((measure) => measure.id == ingredient.measure_id)?.name;
 </script>
 
 <li>
     <input type="checkbox" class="checkbox" />
-    <span class="font-medium"> {wholeAndFraction(ingredient?.quantity * multiplierValue)}</span>
+    {transformIngredient(ingredient?.quantity * multiplierValue, measureName)}
+    <!-- <span class="font-medium"> {wholeAndFraction(ingredient?.quantity * multiplierValue)}</span> -->
     <!-- Measure (tbs, ts, grams, cups etc) -->
-    <span>
-        {measures.data.find((measure) => measure.id == ingredient.measure_id)?.name}
-    </span>
+    <!-- <span>
+        {measureName}
+    </span> -->
     <!-- Name -->
     <span> {ingredient?.name}</span>
 

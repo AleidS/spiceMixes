@@ -1,25 +1,29 @@
 <script>
-    export let checked ;
+    export let checked;
     export let color = '#2196F3';
     export let text = '';
 
-    // https://svelte.dev/docs/svelte/v5-migration-guide Component events explains this 
+    // https://svelte.dev/docs/svelte/v5-migration-guide Component events explains this
     export let click;
+    export let wrapperClass;
+    export let textClass;
+    export let switchClass;
     // import { createEventDispatcher } from 'svelte';
     // const dispatch = createEventDispatcher(); // Create an event dispatcher
 
     // // Emit a custom 'change' event whenever the state changes
     // $: dispatch('change', { checked });
 </script>
-<div class='flex items-center gap-2'>
-    {text}
-    
-    <label class="switch">
-        <input type="checkbox" bind:checked onclick={click(checked)}/>
+
+<div class="flex items-center gap-2 {wrapperClass}">
+    <span class={textClass}> {text}</span>
+
+    <label class="switch {switchClass}">
+        <input type="checkbox" bind:checked onclick={click(checked)} />
         <span class="slider" />
     </label>
-    
 </div>
+
 <style>
     .switch {
         position: relative;
@@ -46,7 +50,6 @@
         transition: 0.4s;
         border-radius: 34px;
         @apply bg-uiDark-200 hover:bg-uiDark-100;
-
     }
 
     .slider:before {

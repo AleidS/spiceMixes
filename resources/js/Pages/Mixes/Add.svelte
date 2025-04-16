@@ -8,10 +8,8 @@
     import Icon from '@iconify/svelte';
 
     import { FileUpload } from 'melt/components';
-    import { writable } from 'svelte/store';
     // import { Tooltip } from '@svelte-plugins/tooltips';
-    import { Tooltip, Button as FlowButton } from 'flowbite-svelte';
-    import DangerButton from '@/Components/DangerButton.svelte';
+    import { Tooltip } from 'flowbite-svelte';
 
     // let fileUpload;
 
@@ -157,17 +155,6 @@
                             Back to Mixes / Cancel
                         </Link>
                     </Button>
-
-                    <!-- <Button
-                        type="submit"
-                        id="submitbutton"
-                        success
-                        disabled={!termsAccepted}
-                        class="h-auto w-fit text-nowrap !bg-success-600 !text-white !saturate-[120%]"
-                    >
-                        <Icon icon="mdi:floppy" class="mb-1 size-5" />
-                        {mix ? 'Save mix' : 'Add Mix'}
-                    </Button> -->
                 </div>
 
                 <div
@@ -215,13 +202,6 @@
                                                 : undefined}
                                             class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
                                         />
-                                        <!-- {:else if $form.avatar}
-                                      <img
-                                            ref="image"
-                                            src={$form.avatar}
-                                            alt=""
-                                            class="-z-1 absolute left-0 top-0 h-full w-full border-none object-cover"
-                                        /> -->
                                     {:else}
                                         <div
                                             class="absolute bottom-4 h-fit w-fit text-sm font-light"

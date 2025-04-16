@@ -5,6 +5,7 @@
     import Icon from '@iconify/svelte';
     import { router, page, Link } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
+    import Switch from '@/Components/Switch.svelte';
     import FavoriteStar from '@/Pages/Mixes/MixesComponents/FavoriteStar.svelte';
 
     import ShareMix from '@/Pages/Mixes/MixesComponents/ShareMix.svelte';
@@ -17,14 +18,21 @@
         multiplier,
         double,
         half,
-        original
+        original,
+        useOriginals,
+        switchOriginals
     } from './MixesLogic/maths.svelte.js';
     let { mix, measures } = $props();
+    original(mix, measures);
     calculateTotals(mix, measures);
 
     let newTotalStr = $state();
     totalStr.subscribe((value) => {
         newTotalStr = value;
+    });
+    let useOriginalsState = $state();
+    useOriginals.subscribe((value) => {
+        useOriginalsState = value;
     });
 
     let newMultiplier = $state(1);
@@ -140,11 +148,6 @@
                                 {/each}
                             {/if}
                         </ul>
-                        <div class="mt-2 font-light">
-                            Total of volume measures approx. <span class="font-medium">
-                                {newTotalStr}
-                            </span>
-                        </div>
                     </div>
 
                     <button
@@ -183,6 +186,21 @@
                         {/if}
                     {/if}
                 </div>
+                <div class="-mb-2 mt-2 text-sm font-light">
+                    <strong>Total</strong> (excl. weight measures) ≈
+                    <span class="font-medium">
+                        {newTotalStr}
+                    </span>
+                </div>
+                <Switch
+                    switchClass="!scale-75"
+                    textClass="font-light text-sm"
+                    text="Use original units"
+                    bind:checked={useOriginalsState}
+                    click={() => {
+                        setTimeout(switchOriginals(), 100);
+                    }}
+                ></Switch>
             </div>
         </div>
         {#if mix.data?.description}

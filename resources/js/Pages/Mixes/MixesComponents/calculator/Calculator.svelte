@@ -1,6 +1,7 @@
 <script>
     import { fly } from 'svelte/transition';
     import Keypad from './Keypad.svelte';
+    import Icon from '@iconify/svelte';
 
     let numberInput = '';
     let total = 0;
@@ -8,6 +9,12 @@
     // private function
     function addToEquation(value) {
         numberInput += value;
+    }
+    function removeFromEquation() {
+        console.log(numberInput.length);
+        if (numberInput.length > 0) {
+            numberInput = numberInput.slice(0, -1);
+        }
     }
 
     const clear = () => {
@@ -52,6 +59,7 @@
 
     <div class="input-pad">
         <Keypad expand="3" type="clear" clicked={clear} />
+
         <Keypad
             type="operator"
             clicked={(event) => {
@@ -139,11 +147,29 @@
             }}>+</Keypad
         >
         <Keypad
-            expand="3"
+            type="operator"
+            expand="1"
+            clicked={(event) => {
+                event.stopPropagation();
+                addToEquation('.');
+            }}>.</Keypad
+        >
+
+        <Keypad
+            expand="1"
             clicked={(event) => {
                 event.stopPropagation();
                 addToEquation(0);
             }}>0</Keypad
+        >
+        <Keypad
+            type="operator"
+            expand="1"
+            class="!flex !items-center !justify-center !text-center"
+            clicked={(event) => {
+                event.stopPropagation();
+                removeFromEquation();
+            }}><Icon icon="mdi:backspace" class="inline" /></Keypad
         >
 
         <Keypad

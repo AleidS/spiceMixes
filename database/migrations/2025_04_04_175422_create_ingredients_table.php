@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('mixes_id');
-            $table->foreign('mixes_id')->references('id')->on('mixes');
+            $table->foreign('mixes_id')->references('id')->on('mixes')->onDelete('cascade');
             $table->unsignedBigInteger('measure_id');
             $table->foreign('measure_id')->references('id')->on('measures');
             $table->boolean('optional')->default(false);

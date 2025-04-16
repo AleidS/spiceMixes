@@ -10,12 +10,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "cyberwizard/dbsafeguard": "dev-main",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.19",
         "laravel/telescope": "*",
         "laravel/tinker": "^2.9",
+        "spatie/laravel-backup": "^9.2",
         "spatie/laravel-medialibrary": "^11.12",
         "spatie/laravel-query-builder": "^6.3",
         "tightenco/ziggy": "^2.0"
