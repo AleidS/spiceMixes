@@ -1,10 +1,7 @@
 <script>
     import Icon from '@iconify/svelte';
-    import { wholeAndFraction, multiplier } from './maths.svelte';
-
-    import { writable, get } from 'svelte/store';
-
-    let { mix, measures, ingredient } = $props();
+    import { wholeAndFraction, multiplier } from '../MixesLogic/maths.svelte';
+    let { measures, ingredient } = $props();
     let multiplierValue = $state(1);
     multiplier.subscribe((value) => {
         multiplierValue = value;

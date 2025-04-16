@@ -1,26 +1,24 @@
 <script>
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte';
 
+    import CalculatorComponent from './MixesComponents/calculator/CalculatorWrapper.svelte';
     import Icon from '@iconify/svelte';
     import { router, page, Link } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
-    import FavoriteStar from '@/Components/FavoriteStar.svelte';
+    import FavoriteStar from '@/Pages/Mixes/MixesComponents/FavoriteStar.svelte';
 
-    import ShareMix from '@/Pages/Mixes/ShareMix.svelte';
-    import Calculator from '@/Components/calculator/Calculator.svelte';
-    import Draggable from '@/Components/calculator/Draggable.svelte';
-    import Ingredient from './Ingredient.svelte';
-    import { writable, get } from 'svelte/store';
+    import ShareMix from '@/Pages/Mixes/MixesComponents/ShareMix.svelte';
+
+    import Ingredient from './MixesComponents/Ingredient.svelte';
 
     import {
-        wholeAndFraction,
         calculateTotals,
         totalStr,
         multiplier,
         double,
         half,
         original
-    } from './maths.svelte.js';
+    } from './MixesLogic/maths.svelte.js';
     let { mix, measures } = $props();
     calculateTotals(mix, measures);
 
@@ -35,7 +33,6 @@
     });
 
     let calculator = $state(false);
-    let unitConversions = $state(false);
     // Reactive statement to calculate totals
 </script>
 
@@ -208,50 +205,6 @@
     </div>
 
     {#if calculator}
-        <div
-            class="w-xl h-xl pointer-events-none fixed bottom-0 left-0 top-0 z-40 m-auto flex h-full w-full flex-wrap items-center justify-center gap-2 bg-transparent backdrop-saturate-0"
-            open
-        >
-            <Draggable>
-                <div
-                    class="absolute -left-2 -top-2 hidden rounded-full bg-uiDark-300 p-1 text-2xl !text-white md:block"
-                >
-                    <Icon icon="fluent:arrow-move-24-regular" />
-                </div>
-                <div class="flex h-fit w-fit flex-wrap items-center justify-center gap-2">
-                    <div
-                        class="pointer-events-auto flex flex-col items-center justify-center gap-2"
-                    >
-                        <div class="flex w-full justify-end">
-                            <Button
-                                onclick={() => {
-                                    calculator = !calculator;
-                                }}>X</Button
-                            >
-                        </div>
-                        <Calculator class="!pointer-events-auto" />
-
-                        <Button
-                            onclick={(event) => {
-                                event.stopPropagation();
-                                unitConversions = !unitConversions;
-                            }}>Show Unit conversions ?</Button
-                        >
-                    </div>
-                    {#if unitConversions}
-                        <div
-                            class="flex h-fit flex-col items-center gap-2 rounded-md bg-uiDark-400 p-4"
-                        >
-                            <ul>
-                                <li>1 cup = 16 tbs or 240 ml</li>
-                                <li>1 tbsp (Tablespoon) = 3 ts or 15 ml</li>
-                                <li>1 ts (Teaspoon) = 5 ml</li>
-                                <li>1 pinch is around 1/16 teaspoon</li>
-                            </ul>
-                        </div>
-                    {/if}
-                </div>
-            </Draggable>
-        </div>
+        <CalculatorComponent on:close={() => (calculator = false)} />
     {/if}
 </AuthenticatedLayout>

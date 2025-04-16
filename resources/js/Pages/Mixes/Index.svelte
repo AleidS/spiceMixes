@@ -4,7 +4,7 @@
     import { router, page, Link, useForm } from '@inertiajs/svelte';
     import Button from '@/Components/Button.svelte';
     import MixesFilters from '@/Layouts/LayoutParts/MixesFilters.svelte';
-    import MixCard from '@/Components/MixCard.svelte';
+    import MixCard from '@/Pages/Mixes/MixesComponents/MixCard.svelte';
     import autoAnimate from '@formkit/auto-animate';
     import Pagination from '@/Components/Pagination.svelte';
     import Icon from '@iconify/svelte';

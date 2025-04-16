@@ -3,7 +3,7 @@
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte';
     import { router, page, Link, useForm } from '@inertiajs/svelte';
     import Icon from '@iconify/svelte';
-    import AddCuisineDialog from './AddCuisineDialog.svelte';
+    import AddCuisineDialog from './CuisinesComponents/AddCuisineDialog.svelte';
     import Switch from '@/Components/Switch.svelte';
     import Button from '@/Components/Button.svelte';
     export let cuisines;
