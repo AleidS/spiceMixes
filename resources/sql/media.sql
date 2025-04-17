@@ -27,26 +27,26 @@ SET time_zone = "+00:00";
 -- Table structure for table `media`
 --
 
-CREATE TABLE `media` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` char(36) DEFAULT NULL,
-  `collection_name` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `file_name` varchar(255) NOT NULL,
-  `mime_type` varchar(255) DEFAULT NULL,
-  `disk` varchar(255) NOT NULL,
-  `conversions_disk` varchar(255) DEFAULT NULL,
-  `size` bigint(20) UNSIGNED NOT NULL,
-  `manipulations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`manipulations`)),
-  `custom_properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`custom_properties`)),
-  `generated_conversions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`generated_conversions`)),
-  `responsive_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`responsive_images`)),
-  `order_column` int(10) UNSIGNED DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- CREATE TABLE `media` (
+--   `id` bigint(20) UNSIGNED NOT NULL,
+--   `model_type` varchar(255) NOT NULL,
+--   `model_id` bigint(20) UNSIGNED NOT NULL,
+--   `uuid` char(36) DEFAULT NULL,
+--   `collection_name` varchar(255) NOT NULL,
+--   `name` varchar(255) NOT NULL,
+--   `file_name` varchar(255) NOT NULL,
+--   `mime_type` varchar(255) DEFAULT NULL,
+--   `disk` varchar(255) NOT NULL,
+--   `conversions_disk` varchar(255) DEFAULT NULL,
+--   `size` bigint(20) UNSIGNED NOT NULL,
+--   `manipulations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`manipulations`)),
+--   `custom_properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`custom_properties`)),
+--   `generated_conversions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`generated_conversions`)),
+--   `responsive_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`responsive_images`)),
+--   `order_column` int(10) UNSIGNED DEFAULT NULL,
+--   `created_at` timestamp NULL DEFAULT NULL,
+--   `updated_at` timestamp NULL DEFAULT NULL
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `media`

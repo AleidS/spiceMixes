@@ -27,17 +27,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `ingredients`
 --
 
-CREATE TABLE `ingredients` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `mixes_id` bigint(20) UNSIGNED NOT NULL,
-  `measure_id` bigint(20) UNSIGNED NOT NULL,
-  `optional` tinyint(1) NOT NULL DEFAULT 0,
-  `quantity` double NOT NULL,
-  `show_alternatives` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- CREATE TABLE `ingredients` (
+--   `id` bigint(20) UNSIGNED NOT NULL,
+--   `name` varchar(255) NOT NULL,
+--   `mixes_id` bigint(20) UNSIGNED NOT NULL,
+--   `measure_id` bigint(20) UNSIGNED NOT NULL,
+--   `optional` tinyint(1) NOT NULL DEFAULT 0,
+--   `quantity` double NOT NULL,
+--   `show_alternatives` tinyint(1) NOT NULL DEFAULT 1,
+--   `created_at` timestamp NULL DEFAULT NULL,
+--   `updated_at` timestamp NULL DEFAULT NULL
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ingredients`

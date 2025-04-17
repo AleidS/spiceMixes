@@ -27,19 +27,19 @@ SET time_zone = "+00:00";
 -- Table structure for table `mixes`
 --
 
-CREATE TABLE `mixes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(2000) DEFAULT NULL,
-  `img_source` varchar(255) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `cuisine_id` int(11) NOT NULL DEFAULT 1,
-  `source_url` varchar(255) DEFAULT NULL,
-  `source_name` varchar(255) DEFAULT NULL,
-  `show_alternatives` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- CREATE TABLE `mixes` (
+--   `id` bigint(20) UNSIGNED NOT NULL,
+--   `name` varchar(255) NOT NULL,
+--   `description` varchar(2000) DEFAULT NULL,
+--   `img_source` varchar(255) DEFAULT NULL,
+--   `user_id` int(11) DEFAULT NULL,
+--   `cuisine_id` int(11) NOT NULL DEFAULT 1,
+--   `source_url` varchar(255) DEFAULT NULL,
+--   `source_name` varchar(255) DEFAULT NULL,
+--   `show_alternatives` tinyint(1) NOT NULL DEFAULT 1,
+--   `created_at` timestamp NULL DEFAULT NULL,
+--   `updated_at` timestamp NULL DEFAULT NULL
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `mixes`
