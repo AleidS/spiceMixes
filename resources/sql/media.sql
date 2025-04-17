@@ -74,12 +74,12 @@ INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, 
 
 --
 -- Indexes for table `media`
---
-ALTER TABLE `media`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `media_uuid_unique` (`uuid`),
-  ADD KEY `media_model_type_model_id_index` (`model_type`,`model_id`),
-  ADD KEY `media_order_column_index` (`order_column`);
+-- --
+-- ALTER TABLE `media`
+--   ADD PRIMARY KEY (`id`),
+--   ADD UNIQUE KEY `media_uuid_unique` (`uuid`),
+--   ADD KEY `media_model_type_model_id_index` (`model_type`,`model_id`),
+--   ADD KEY `media_order_column_index` (`order_column`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -88,9 +88,9 @@ ALTER TABLE `media`
 --
 -- AUTO_INCREMENT for table `media`
 --
-ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-COMMIT;
+-- ALTER TABLE `media`
+--   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+-- COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

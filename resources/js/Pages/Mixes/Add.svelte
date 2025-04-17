@@ -119,7 +119,9 @@
         }
         //Else send the entire thing as a post request for a new row
         else {
-            formData.post('/mixes');
+            router.post(`/mixes`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
         }
     }
     async function removeMix(event) {

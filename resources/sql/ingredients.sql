@@ -131,10 +131,10 @@ INSERT INTO `ingredients` (`id`, `name`, `mixes_id`, `measure_id`, `optional`, `
 --
 -- Indexes for table `ingredients`
 --
-ALTER TABLE `ingredients`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ingredients_mixes_id_foreign` (`mixes_id`),
-  ADD KEY `ingredients_measure_id_foreign` (`measure_id`);
+-- ALTER TABLE `ingredients`
+--   ADD PRIMARY KEY (`id`),
+--   ADD KEY `ingredients_mixes_id_foreign` (`mixes_id`),
+--   ADD KEY `ingredients_measure_id_foreign` (`measure_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -143,20 +143,20 @@ ALTER TABLE `ingredients`
 --
 -- AUTO_INCREMENT for table `ingredients`
 --
-ALTER TABLE `ingredients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+-- ALTER TABLE `ingredients`
+--   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
---
+-- --
 -- Constraints for dumped tables
 --
 
 --
 -- Constraints for table `ingredients`
 --
-ALTER TABLE `ingredients`
-  ADD CONSTRAINT `ingredients_measure_id_foreign` FOREIGN KEY (`measure_id`) REFERENCES `measures` (`id`),
-  ADD CONSTRAINT `ingredients_mixes_id_foreign` FOREIGN KEY (`mixes_id`) REFERENCES `mixes` (`id`) ON DELETE CASCADE;
-COMMIT;
+-- ALTER TABLE `ingredients`
+--   ADD CONSTRAINT `ingredients_measure_id_foreign` FOREIGN KEY (`measure_id`) REFERENCES `measures` (`id`),
+--   ADD CONSTRAINT `ingredients_mixes_id_foreign` FOREIGN KEY (`mixes_id`) REFERENCES `mixes` (`id`) ON DELETE CASCADE;
+-- COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
