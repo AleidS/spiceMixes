@@ -19,7 +19,7 @@
     <span class={textClass}> {text}</span>
 
     <label class="switch {switchClass}">
-        <input type="checkbox" bind:checked onclick={click(checked)} />
+        <input type="checkbox" bind:checked onclick={click ? click(checked) : ''} />
         <span class="slider" />
     </label>
 </div>

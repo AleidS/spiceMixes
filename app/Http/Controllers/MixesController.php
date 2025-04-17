@@ -160,6 +160,10 @@ class MixesController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'share_mix' => filter_var($request->share_mix, FILTER_VALIDATE_BOOLEAN),
+            'share_is_original' => filter_var($request->share_is_original, FILTER_VALIDATE_BOOLEAN),
+        ]);
         // dd($request->all());
 
         // {
@@ -176,6 +180,9 @@ class MixesController extends Controller
             'img_source' => 'nullable|string|max:300',
             'source_url' => 'nullable|string|max:255',
             'source_name' => 'nullable|string|max:255',
+            'share_mix' => 'nullable|boolean',
+            'share_is_original' => 'required_if:share_mix,1|boolean',
+            'share_name' => 'nullable|string',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',
             'avatar' => 'nullable|file|mimes:jpeg,png,jpg,svg|max:2048', // Validate file type and size
@@ -289,7 +296,7 @@ class MixesController extends Controller
      */
     public function duplicate($id)
     {
-        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
+        $mix = Mixes::with(['favoritedBy', 'cuisine', 'ingredients'])->find($id);
         if (!$mix) {
             return redirect()->route('home')->with('error', 'Mix not found.');
         }
@@ -304,10 +311,13 @@ class MixesController extends Controller
         // Transform the pagination result using MixesResource
 
         $newMix = $mix->replicate();
-        $newMix->name = 'Your ' . $mix->name;
+        $newMix->name = 'Your ' . $mix->name . ' mix';
         $newMix->created_at = Carbon::now();
         $newMix->user_id = Auth::id();
-        $newMix->save();
+
+        $newMix->ingredients = $mix->ingredients->map(function ($ingredient) {
+            return $ingredient->replicate(); // Create a copy of the ingredient
+        });
 
         $mixResource = new MixesResource($newMix);
 
@@ -344,11 +354,18 @@ class MixesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->merge([
+            'share_mix' => filter_var($request->share_mix, FILTER_VALIDATE_BOOLEAN),
+            'share_is_original' => filter_var($request->share_is_original, FILTER_VALIDATE_BOOLEAN),
+        ]);
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
             'source_url' => 'nullable|string|max:255',
             'source_name' => 'nullable|string|max:255',
+            'share_mix' => 'nullable|boolean',
+            'share_is_original' => 'required_if:share_mix,1|boolean',
+            'share_name' => 'nullable|string',
             'img_source' => 'nullable|string|max:300',
             'user_id' => 'nullable|integer',
             'cuisine_id' => 'required|integer',

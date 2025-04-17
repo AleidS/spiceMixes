@@ -121,8 +121,9 @@
         mix.data.ingredients.forEach((ingredient) => {
             const measure = measures.data.find((m) => m.id == ingredient.measure_id);
             if (!measure) return;
-            newTotal += toMl(ingredient.quantity, measure.name);
+            newTotal += toMl(ingredient.quantity, measure.name)??0;
         });
         newTotal*=get(multiplier)
+        console.log(newTotal)
         totalStr.set(mlStandardized(newTotal,false))
     }

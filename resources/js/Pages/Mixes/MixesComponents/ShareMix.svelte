@@ -39,7 +39,8 @@
                 <h2>Share recipe</h2>
                 <p>
                     Share this mix with another user by typing in their email adress below. The mix
-                    will be sent as-is (it's not collaborative), and images are not included.
+                    will be sent as-is (it's not collaborative), and images are not included. If you
+                    want to submit the mix for sharing on the homepage, click 'edit' instead!
                 </p>
 
                 <Input

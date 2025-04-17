@@ -13,9 +13,24 @@
     import Button from '@/Components/Button.svelte';
     import Shares from './LayoutParts/Shares.svelte';
     import Icon from '@iconify/svelte';
+    import { onMount } from 'svelte';
     let { children, header, cuisines, selectedCuisineId, showFilter = false } = $props();
 
     console.log($page.props);
+
+    let showDialog = $state(false);
+    onMount(() => {
+        const hasSeenDialog = localStorage.getItem('hasSeenDialog');
+        if (!hasSeenDialog) {
+            showDialog = true; // Show the dialog if it hasn't been seen
+        }
+    });
+
+    function handleDialogClose() {
+        // Mark the dialog as seen in localStorage
+        localStorage.setItem('hasSeenDialog', 'true');
+        showDialog = false; // Close the dialog
+    }
 
     let showingNavigationDropdown = $state(false);
 </script>
@@ -227,3 +242,22 @@
         {/if}
     </main>
 </div>
+
+{#if showDialog}
+    <dialog open>
+        <form method="dialog" onsubmit={handleDialogClose}>
+            <p>
+                Hello!
+                <br />
+                <br />
+                Please be aware this website is under construction and hiccups might occur (backup your
+                recipes!)
+
+                <br /><br />
+                That aside, hope you find this useful and happy cooking!:)
+                <br /><br />
+            </p>
+            <Button type="submit">Understood!</Button>
+        </form>
+    </dialog>
+{/if}

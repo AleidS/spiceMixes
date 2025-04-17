@@ -221,15 +221,42 @@
             </div>
         {/if}
 
-        <p><strong>Cuisine:</strong> {mix.data.cuisine.name}</p>
-        {#if mix.data?.source_url}
-            <p>
-                <strong>Source(s):</strong>
-                <a href={mix.data.source_url} class="underline">{mix.data?.source_name ?? 'link'}</a
-                >
-            </p>
-        {:else if mix.data?.source_name}
-            <strong>Source:</strong>{mix.data?.source_name}
+        <div class="px-4">
+            <p><strong>Cuisine:</strong> {mix.data.cuisine.name}</p>
+            {#if mix.data?.source_url}
+                <p>
+                    <strong>Source(s):</strong>
+                    <a href={mix.data.source_url} class="underline"
+                        >{mix.data?.source_name ?? 'link'}</a
+                    >
+                </p>
+            {:else if mix.data?.source_name}
+                <strong>Source:</strong>{mix.data?.source_name}
+            {/if}
+        </div>
+
+        {#if $page.props.auth.user && mix.data?.share_mix == true}
+            <div class="px-4">
+                <p>
+                    <strong class="mb-2">Share status: <br /></strong>
+
+                    Thank you for submitting your mix for sharing on the homepage! The status is:
+                    <br />
+                    {#if mix.data?.share_accepted == true}
+                        <strong>Accepted!</strong> Thank you for contributing to tastier cooking for
+                        all:) You should be able to find a public mix with this name now.
+                    {:else if mix.data?.share_accepted == false}
+                        <strong>Denied.</strong> Sorry! Maybe next time:)
+                        {#if mix.data?.share_decline_reason}
+                            <br />
+                            <strong>Reason given:</strong>
+                            {mix.data.share_decline_reason}
+                        {/if}
+                    {:else}
+                        <strong>Under review!</strong> Please be patient:)
+                    {/if}
+                </p>
+            </div>
         {/if}
     </div>
 

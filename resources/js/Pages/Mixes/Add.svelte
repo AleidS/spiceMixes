@@ -38,7 +38,10 @@
         user_id: $page.props.auth.user.id,
         cuisine_id: null,
         avatar: null,
-        img_source: ''
+        img_source: '',
+        share_mix: false,
+        share_is_original: false,
+        share_name: ''
     });
 
     let termsAccepted = $state(false);
@@ -52,6 +55,9 @@
             $form.cuisine_id = mix.data.cuisine_id;
             $form.avatar = mix.data.avatar;
             $form.img_source = mix.data.img_source;
+            $form.share_mix = mix.data.share_mix ? true : false;
+            $form.share_name = mix.data.share_name ?? '';
+            $form.share_is_original = mix.data.share_is_original ? true : false;
         }
     });
 
@@ -107,19 +113,17 @@
         if (typeof $form.avatar == 'string') {
             delete $form.avatar;
         }
-        let formData = { ...$form };
-        console.log(formData);
-        formData.ingredients = JSON.stringify(formData.ingredients); // Convert ingredients to JSON string
+        $form.ingredients = JSON.stringify($form.ingredients); // Convert ingredients to JSON string
         // Send a put request with the modified form data if we are editing
-        if (mix?.data) {
+        if (mix?.data.id) {
             // formData.avatar = 'lalala';
-            router.post(`/mixes/${mix.data.id}`, formData, {
+            router.post(`/mixes/${mix.data.id}`, $form, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
         }
         //Else send the entire thing as a post request for a new row
         else {
-            router.post(`/mixes`, formData, {
+            router.post(`/mixes`, $form, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
         }
@@ -399,6 +403,62 @@
                         error={errors.source_name}
                     />
                 </div>
+                <div class="box">
+                    <h4>Share this mix!</h4>
+                    <p>
+                        Do you want to submit this mix to be reviewed and shared on the platform <strong
+                            >for all to see?</strong
+                        ><br />
+                    </p>
+                    <Switch
+                        text="Share this mix"
+                        switchClass="scale-75"
+                        bind:checked={$form.share_mix}
+                    ></Switch>
+
+                    <br />
+                    {#if $form.share_mix}
+                        <p>
+                            Great! I'll review them when I have time.
+                            <br /><br />
+                            <strong>Please read: </strong><br />
+                            -Images will not be included. <br />
+                            -You will retain your own copy of the mix, but you won't be able to edit
+                            the public one anymore. <br />
+                            -Details might be changed to fit the audience.<br />
+                            -You won't be able to claim any rights regarding your submission. <br />
+                            -Only submit mixes that are your own original recipes (i.e. if it's a common
+                            blend, it must be your own variation) <br />
+                            -If you have submitted this mix before, it will not be reviewed again. Submit
+                            a new variant instead.
+                            <br /><br />
+                        </p>
+                        Please confirm you have read these terms and this is your own original mix:
+                        <input
+                            label="this is my own original mix"
+                            type="checkbox"
+                            bind:checked={$form.share_is_original}
+                            class="checkbox ml-2"
+                        />
+                        <br />
+                        <br />
+                        <p>
+                            If you want credits (in the description) please enter your name or
+                            pseudonym here. <br /> This cannot be changed or removed once accepted;
+                            <br /><br />
+                        </p>
+
+                        <Input
+                            label=""
+                            type="text"
+                            bind:value={$form.share_name}
+                            placeholder="Name for credits"
+                            class="w-full text-black"
+                            error={errors.share_name}
+                        />
+                    {/if}
+                </div>
+
                 <div class="w-full p-2 text-right font-light">
                     By uploading my content I agree to the
                     <a href="/uploadTerms" target="_blank" class="tab-link-class underline">
@@ -421,17 +481,6 @@
                     <Tooltip triggeredBy="#submitbutton">
                         {termsAccepted === false ? 'Please accept the terms' : ''}</Tooltip
                     >
-                    {#if mix?.data?.id}
-                        <Button
-                            onclick={(e) => {
-                                e.preventDefault(), removeMix();
-                            }}
-                            class="h-auto w-fit text-nowrap !bg-danger-500 !text-white"
-                        >
-                            <Icon icon="mdi:trash" class="mb-1 size-5" />
-                            Delete mix
-                        </Button>
-                    {/if}
 
                     <Button
                         id="submitbutton"
@@ -444,6 +493,22 @@
                         {mix ? 'Save mix' : 'Add Mix'}
                     </Button>
                 </div>
+                <br /><br /><br /><br />
+                {#if mix?.data?.id}
+                    <div class="box w-fit !bg-danger-600 text-xl font-medium">
+                        <Icon icon="solar:danger-triangle-bold" class="mb-2 inline" />&nbsp;Danger
+                        zone
+                        <br /><br />
+                        <Button
+                            onclick={(e) => {
+                                e.preventDefault(), removeMix();
+                            }}
+                            class="h-auto w-fit text-nowrap !bg-danger-500 !text-white"
+                        >
+                            <Icon icon="mdi:trash" class="mb-1" /> Delete mix
+                        </Button>
+                    </div>
+                {/if}
             </form>
         </div>
     {:else}

@@ -26,6 +26,9 @@ class Mixes extends Model implements HasMedia
         'source_name',
         'show_alternatives',
         'img_source',
+        'share_mix',
+        'share_name',
+        'share_is_original',
     ];
 
     // Define the relationship with the Cuisine model
@@ -33,10 +36,11 @@ class Mixes extends Model implements HasMedia
     {
         return $this->belongsTo(Cuisine::class, 'cuisine_id');
     }
-    public function allIngredients()
+    public function ingredients()
     {
         return $this->hasMany(Ingredient::class);
     }
+
     public function favoritedBy()
     {
         return $this->belongsToMany(User::class, 'mix_user', 'mix_id', 'user_id');

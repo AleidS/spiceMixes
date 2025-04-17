@@ -20,7 +20,7 @@
             <Icon icon="mdi:user" />
         </div>
     {/if}
-    <div class="!z-0 h-[300px] overflow-hidden rounded-md object-cover md:h-[180px] lg:h-[210px]">
+    <div class="!z-0 h-[300px] overflow-hidden rounded-md object-cover md:h-[180px] lg:h-[190px]">
         <!-- Try to load avatar if there should be one, if it doesnt load (no dimensions), show alternative. -->
         {#if !mix.avatar || imgError}
             <img

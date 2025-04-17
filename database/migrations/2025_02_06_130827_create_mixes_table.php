@@ -19,6 +19,15 @@ return new class extends Migration {
             $table->integer('cuisine_id')->default(1);
             $table->string('source_url')->nullable();
             $table->string('source_name')->nullable();
+            $table->boolean('share_mix')->nullable()->default(false);
+            $table->boolean('share_is_original')->nullable()->default(null);
+            $table->string('share_name')->nullable()->default(null);
+            $table->boolean('share_accepted')->nullable()->default(null);
+            $table
+                ->string('share_decline_reason')
+                ->after('share_accepted')
+                ->nullable()
+                ->default(null);
             $table->boolean('show_alternatives')->default(true);
             $table->timestamps();
         });
