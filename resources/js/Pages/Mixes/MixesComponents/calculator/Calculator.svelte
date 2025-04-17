@@ -185,7 +185,7 @@
 <style>
     .app {
         max-width: 220px;
-        @apply h-fit rounded-lg bg-uiDark-400 p-1;
+        @apply h-fit rounded-lg bg-uiDark-400 p-1 pb-4;
     }
 
     .input-pad {
@@ -194,7 +194,7 @@
         grid-template-rows: repeat(5, 19%);
         grid-column-gap: 4px;
         grid-row-gap: 4px;
-        @apply overflow-hidden rounded-md p-2;
+        @apply overflow-hidden rounded-md p-2 py-4;
     }
 
     .results {

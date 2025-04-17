@@ -15,7 +15,7 @@
     let measureName = measures.data.find((measure) => measure.id == ingredient.measure_id)?.name;
 </script>
 
-<li>
+<li class="list-none">
     <input type="checkbox" class="checkbox" />
     {transformIngredient(ingredient?.quantity * multiplierValue, measureName)}
     <!-- <span class="font-medium"> {wholeAndFraction(ingredient?.quantity * multiplierValue)}</span> -->

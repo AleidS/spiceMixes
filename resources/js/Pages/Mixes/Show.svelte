@@ -41,6 +41,11 @@
     });
 
     let calculator = $state(false);
+    let imgError = $state(false);
+    function handleError() {
+        imgError = true;
+    }
+
     // Reactive statement to calculate totals
 </script>
 
@@ -97,28 +102,35 @@
         </div>
         <div class="flex flex-wrap justify-stretch gap-6 md:justify-between">
             <div
-                class=" sm: relative h-[250px] w-full overflow-hidden object-cover sm:max-w-[300px] md:max-w-[300px]"
+                class=" sm: relative h-[250px] w-full overflow-hidden rounded-md border border-uiGray-400 object-cover sm:max-w-[300px] md:max-w-[300px]"
             >
-                {#if mix.data.avatar}
+                {#if !mix.data.avatar || imgError}
                     <img
+                        src="/storage/pexels-martabranco-1340116.jpg"
+                        alt="4 spoons with spices"
+                        class="max-h-full min-h-full min-w-full max-w-full overflow-hidden rounded-md object-cover object-center"
+                    />
+                    <a
+                        href={`https://www.pexels.com/photo/four-assorted-spices-on-wooden-spoons-1340116/`}
+                        target="_blank"
+                        class="z-2 absolute bottom-[0px] left-[0px] rounded-tr-md p-1 text-base font-light backdrop-blur-sm backdrop-brightness-50 hover:scale-105 hover:brightness-110"
+                        >Fallback<Icon icon="mdi:link-variant" class="inline" />
+                    </a>
+                {:else if mix.data.avatar && !imgError}
+                    <img
+                        onerror={handleError}
                         src={mix.data.avatar}
                         alt={mix.data.name}
-                        class="max-h-full min-h-full min-w-full max-w-full rounded-md border border-uiGray-400 object-cover object-center"
+                        class="max-h-full min-h-full min-w-full max-w-full overflow-hidden rounded-md object-cover object-center"
                     />
                     {#if mix.data.img_source != '' && mix.data.img_source != null}
                         <a
                             href={`${mix.data.img_source}`}
                             target="_blank"
-                            class="z-2 absolute bottom-[1px] left-[1px] rounded-md p-1 text-2xl backdrop-blur-sm hover:scale-105 hover:brightness-110"
-                            ><Icon icon="mdi:link-variant" class="inline" />
+                            class="z-2 absolute bottom-[0px] left-[0px] rounded-tr-md p-1 text-base font-light backdrop-blur-sm backdrop-brightness-50 hover:scale-105 hover:brightness-110"
+                            >src <Icon icon="mdi:link-variant" class="inline" />
                         </a>
                     {/if}
-                {:else}
-                    <img
-                        src="/storage/pexels-martabranco-1340116.jpg"
-                        alt="4 spoons with spices"
-                        class="max-h-full min-h-full min-w-full max-w-full rounded-md border border-uiGray-400 object-cover object-center"
-                    />
                 {/if}
             </div>
 
@@ -136,7 +148,7 @@
                                       : `* ${newMultiplier}`}
                             </div>
                         </div>
-                        <ul class="relative">
+                        <ul class="leading-0 relative ml-0 list-none">
                             {#each mix.data.ingredients.filter((ingredient) => !ingredient.optional) as ingredient}
                                 <Ingredient {ingredient} {mix} {measures} />
                             {/each}

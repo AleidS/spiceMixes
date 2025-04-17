@@ -377,21 +377,23 @@
                     />
                     <a href="/cuisines" target="_blank" class="underline">Manage cuisines</a>
                 </div>
-                <div class="box flex flex-wrap gap-2">
+                <div class="box flex flex-wrap gap-4">
                     <Input
                         label="Source link (optional)"
+                        labelClass="w-full"
                         type="text"
                         bind:value={$form.source_url}
                         placeholder="Source url"
-                        class="text-black"
+                        class="!w-full text-black"
                         error={errors.source_url}
+                        wrapperClass="flex-wrap"
                     />
                     <Input
                         label="Source name (optional)"
                         type="text"
                         bind:value={$form.source_name}
                         placeholder="Source name"
-                        class="text-black"
+                        class="w-full text-black"
                         error={errors.source_name}
                     />
                 </div>

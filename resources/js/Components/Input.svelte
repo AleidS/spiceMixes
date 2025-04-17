@@ -25,7 +25,7 @@
         lg:max-w-80 {wrapperClass}"
 >
     {#if label}
-        <div class="text-white {labelClass} {labelMobileOnly ? 'block lg:hidden' : ''}">
+        <div class=" text-white {labelClass} {labelMobileOnly ? 'block lg:hidden' : ''}">
             {label}
         </div>
     {/if}
