@@ -4,4 +4,4 @@ deployment:
     - export DEPLOYPATH=/home/alei5901/spicemixes.nl/build
 
     # Copy the build folder to the deployment path
-    - /bin/cp -a build/* $DEPLOYPATH
+    - /bin/cp -a public/build/* $DEPLOYPATH
