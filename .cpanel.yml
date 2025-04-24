@@ -18,4 +18,4 @@ deployment:
     - /bin/cp -a public/* /home/alei5901/spicemixes/public
     - /bin/cp -a bootstrap/* /home/alei5901/spicemixes/bootstrap
     - /bin/cp -a database/* /home/alei5901/spicemixes/database
-    - /bin/cp -a storage/app/public/* /home/alei5901/spicemixes/storage
+    - /bin/cp -a storage/app/public/* /home/alei5901/spicemixes/storage/app/public
