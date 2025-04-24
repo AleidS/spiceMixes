@@ -5,3 +5,11 @@ deployment:
 
     # Copy the build folder to the deployment path
     - /bin/cp -a public/build/* $DEPLOYPATH
+
+      # Copy other folders to the deployment path
+    - /bin/cp -a app/* /home/alei5901/spicemixes/app
+    - /bin/cp -a config/* /home/alei5901/spicemixes/config
+    - /bin/cp -a routes/* /home/alei5901/spicemixes/routes
+    - /bin/cp -a resources/* /home/alei5901/spicemixes/resources
+    - /bin/cp -a public/* /home/alei5901/spicemixes/public
+    - /bin/cp -a bootstrap/* /home/alei5901/spicemixes/bootstrap
