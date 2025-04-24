@@ -8,6 +8,7 @@ deployment:
 
     # Copy the build folder to the deployment path
     - /bin/cp -a public/build/* $DEPLOYPATH/build
+    - /bin/cp -a public/vendor/* $DEPLOYPATH/vendor
 
       # Copy other folders to the deployment path
     - /bin/cp -a app/* /home/alei5901/spicemixes/app
