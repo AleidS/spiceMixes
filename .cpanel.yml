@@ -17,3 +17,4 @@ deployment:
     - /bin/cp -a resources/* /home/alei5901/spicemixes/resources
     - /bin/cp -a public/* /home/alei5901/spicemixes/public
     - /bin/cp -a bootstrap/* /home/alei5901/spicemixes/bootstrap
+    - /bin/cp -a database/* /home/alei5901/spicemixes/database
