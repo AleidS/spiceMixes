@@ -1,0 +1,1 @@
+import{a8 as o,a9 as f,aa as i,O as p,al as c,a4 as d,a7 as h}from"./app-KVSHziSA.js";function _(e,n,...t){var s=e,r=p,a;o(()=>{r!==(r=n())&&(a&&(c(a),a=null),a=i(()=>r(s,...t)))},f),d&&(s=h)}export{_ as s};
