@@ -36,8 +36,16 @@
 <!-- <select class="bg-red-400" id="cuisine" bind:value={cuisine_id} on:change={applyFilter}>
         <option value="">All Cuisines</option> -->
 <div
+    class="absolute left-0 top-0 z-20 h-full w-full bg-transparent {showFilters
+        ? 'block'
+        : 'hidden'}"
+    onclick={() => {
+        showFilters = false;
+    }}
+></div>
+<div
     use:autoAnimate
-    class="!z-999 flex h-full w-full flex-col justify-end py-5 backdrop-blur-lg md:w-96 {showFilters
+    class="!z-[999] flex h-full w-full flex-col justify-end py-5 backdrop-blur-lg md:w-96 {showFilters
         ? 'h-full'
         : 'pointer-events-none h-fit !w-fit backdrop-blur-none '}"
 >
