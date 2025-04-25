@@ -13,7 +13,7 @@
 <AuthenticatedLayout {cuisines} {selectedCuisineId} class="z-0">
     <!-- <MixesFilters {cuisines} {selectedCuisineId} /> -->
     <!-- User ID: {$page.props.auth.user.id} -->
-    <div class="page m-auto mt-10 !max-w-[700px]">
+    <div class="box m-auto mt-10 !max-w-[700px]">
         <h1>About</h1>
         <div class="flex-1">
             <!-- <h4>Ingredients:</h4> -->
