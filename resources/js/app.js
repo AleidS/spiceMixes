@@ -1,3 +1,9 @@
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        window.scrollTo(0, 1); // Scroll slightly to hide the address bar
+    }, 0);
+});
+
 import '../css/app.css';
 import './bootstrap.js';
 
