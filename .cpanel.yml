@@ -4,7 +4,7 @@ deployment:
     - export DEPLOYPATH=/home/alei5901/spicemixes.nl
 
     # Copy only files from the public folder to the deployment path, except for index.php (we need our custom index.php file)
-    - /bin/find public -maxdepth 1 -type f ! -name "index.php" -exec /bin/cp {} $DEPLOYPATH/ \;
+    # - /bin/find public -maxdepth 1 -type f ! -name "index.php" -exec /bin/cp {} $DEPLOYPATH/ \;
 
     # Copy the build folder to the deployment path
     - /bin/cp -a public/build/* $DEPLOYPATH/build
