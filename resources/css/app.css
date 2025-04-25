@@ -33,10 +33,6 @@ body, html{
 * {
     @apply font-secondary;
 }
-body{
-    touch-action: none;
-}
-
 html {
   font-size: 18px;
 }
