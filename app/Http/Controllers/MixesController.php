@@ -70,7 +70,8 @@ class MixesController extends Controller
             ->with(['favoritedBy', 'cuisine'])
             ->where(function ($query) use ($userId) {
                 $query->where('user_id', $userId)->orWhereNull('user_id');
-            });
+            })
+            ->orderBy('created_at', 'desc'); // Sort by newest first
 
         if ($request->has('cuisine_id') && $request->cuisine_id) {
             $mixesQuery->where('cuisine_id', $request->cuisine_id);
@@ -115,7 +116,8 @@ class MixesController extends Controller
                 AllowedFilter::partial('name'), // Allows partial matching for the 'name' field
             ])
             ->with(['favoritedBy', 'cuisine'])
-            ->whereNull('user_id');
+            ->whereNull('user_id')
+            ->orderBy('created_at', 'desc'); // Sort by newest first;
 
         if ($request->has('cuisine_id') && $request->cuisine_id) {
             $mixesQuery->where('cuisine_id', $request->cuisine_id);

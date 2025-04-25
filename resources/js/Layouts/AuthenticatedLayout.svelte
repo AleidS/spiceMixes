@@ -35,7 +35,7 @@
     let showingNavigationDropdown = $state(false);
 </script>
 
-<div class="relative flex h-screen !max-h-[100%] flex-col bg-uiGray-100 dark:bg-uiDark-800">
+<div class="fixed flex h-full w-full flex-col bg-uiGray-100 dark:bg-uiDark-800">
     <nav
         class="sticky top-0 z-40 border-b border-uiGray-100 bg-white dark:border-uiGray-700 dark:bg-uiDark-600"
     >

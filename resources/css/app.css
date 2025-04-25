@@ -23,6 +23,12 @@
 
 @source "../node_modules/flowbite-svelte/dist";
 
+.app{
+    height:100dhv;
+}
+body, html{
+    height:100dhv;
+}
 
 * {
     @apply font-secondary;

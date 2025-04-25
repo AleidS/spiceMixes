@@ -1,0 +1,1 @@
+import{a6 as d,aa as l}from"./app-BRwVW5BY.js";function o(i,t,f,a,n){var s;d&&l();var e=(s=t.$$slots)==null?void 0:s[f],r=!1;e===!0&&(e=t.children,r=!0),e===void 0?n!==null&&n(i):e(i,r?()=>a:a)}export{o as s};
