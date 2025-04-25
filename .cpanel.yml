@@ -15,7 +15,7 @@ deployment:
     - /bin/cp -a config/* /home/alei5901/spicemixes/config
     - /bin/cp -a routes/* /home/alei5901/spicemixes/routes
     - /bin/cp -a resources/* /home/alei5901/spicemixes/resources
-    # - /bin/cp -a public/* /home/alei5901/spicemixes/public
+    - /bin/cp -a public/build/manifest.json /home/alei5901/spicemixes/public/build/manifest.json
     - /bin/cp -a bootstrap/* /home/alei5901/spicemixes/bootstrap
     - /bin/cp -a database/* /home/alei5901/spicemixes/database
     # below didnt work because contents are gitignored
