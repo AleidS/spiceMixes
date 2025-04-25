@@ -40,7 +40,7 @@
         class="sticky top-0 z-40 border-b border-uiGray-100 bg-white dark:border-uiGray-700 dark:bg-uiDark-600"
     >
         <!-- Primary Navigation Menu -->
-        <div class="mx-auto w-full px-4 sm:px-16 lg:px-16">
+        <div class="mx-auto w-full px-4 md:px-8 lg:px-16">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex h-full items-stretch">
                     <!-- Logo -->
@@ -53,7 +53,7 @@
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="top-0 z-40 hidden h-auto space-x-8 sm:ml-10 sm:flex">
+                    <div class="top-0 z-40 hidden h-auto space-x-8 sm:ml-10 md:flex">
                         <NavLink href="/" active={route().current('home')}
                             ><Icon icon="mdi:home" /></NavLink
                         >
@@ -76,7 +76,7 @@
                     <Button class="!bg-primary-600 !text-white">Log in</Button>
                 </ResponsiveNavLink> -->
 
-                <div class="hidden sm:ms-6 sm:flex sm:items-center">
+                <div class="hidden sm:ms-6 sm:items-center md:flex">
                     <!-- Settings Dropdown -->
                     {#if $page.props.auth.user}
                         <Shares />
@@ -131,7 +131,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3 sm:hidden">
+                <div class="flex items-center gap-3 md:hidden">
                     {#if $page.props.auth.user}
                         <Shares />
                     {/if}
@@ -170,7 +170,7 @@
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <div class={`${showingNavigationDropdown ? 'block' : 'hidden'} sm:hidden`}>
+        <div class={`${showingNavigationDropdown ? 'block' : 'hidden'} md:hidden`}>
             <div class="space-y-1 pb-3 pt-2">
                 <ResponsiveNavLink href="/" active={route().current('home')}
                     ><Icon icon="mdi:home" /></ResponsiveNavLink

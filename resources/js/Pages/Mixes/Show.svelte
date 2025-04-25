@@ -136,19 +136,28 @@
 
             <div class="box flex flex-1 flex-col justify-between gap-y-4">
                 <div class="flex w-full items-start justify-between">
-                    <div>
-                        <div class="flex items-center justify-start">
-                            <h4>Ingredients:</h4>
-                            &nbsp;
-                            <div class="mb-1 inline text-center font-light text-uiDark-100">
-                                {newMultiplier == 1
-                                    ? ''
-                                    : newMultiplier < 1
-                                      ? `/ ${1 / newMultiplier}`
-                                      : `* ${newMultiplier}`}
+                    <div class="w-full">
+                        <div class="flex w-full flex-1 items-start justify-between py-4">
+                            <div class="flex items-center justify-start">
+                                <h4>Ingredients:</h4>
+                                &nbsp;
+                                <div class="mb-1 inline text-center font-light text-uiDark-100">
+                                    {newMultiplier == 1
+                                        ? ''
+                                        : newMultiplier < 1
+                                          ? `/ ${1 / newMultiplier}`
+                                          : `* ${newMultiplier}`}
+                                </div>
                             </div>
+                            <button
+                                class="rounded-lg border border-primary-400 p-1 text-white"
+                                onclick={(event) => {
+                                    event.stopPropagation();
+                                    calculator = true;
+                                }}><Icon icon="mdi:calculator" class="text-2xl" /></button
+                            >
                         </div>
-                        <ul class="leading-0 relative ml-0 list-none">
+                        <ul class="leading-0 relative ml-0 w-fit list-none">
                             {#each mix.data.ingredients.filter((ingredient) => !ingredient.optional) as ingredient}
                                 <Ingredient {ingredient} {mix} {measures} />
                             {/each}
@@ -161,14 +170,6 @@
                             {/if}
                         </ul>
                     </div>
-
-                    <button
-                        class="rounded-lg border border-primary-400 p-1 text-white"
-                        onclick={(event) => {
-                            event.stopPropagation();
-                            calculator = true;
-                        }}><Icon icon="mdi:calculator" class="text-2xl" /></button
-                    >
                 </div>
                 {#if mix.data.ingredients.length > 0}
                     <div class="flex items-center gap-2">

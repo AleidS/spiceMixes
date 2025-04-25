@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-         if (!User::where('email', 'test@test.com')->exists()) {
+        if (!User::where('email', 'test@test.com')->exists()) {
             User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@test.com',
@@ -26,10 +26,12 @@ class DatabaseSeeder extends Seeder
             ]);
         }
         $this->call([
+            AlternativesTableSeeder::class,
             MixesTableSeeder::class,
             MeasuresTableSeeder::class,
-            MediaTableSeeder::class,  
+            MediaTableSeeder::class,
             CuisinesTableSeeder::class,
-             ]);
+            IngredientsTableSeeder::class,
+        ]);
     }
 }

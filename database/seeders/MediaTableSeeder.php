@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Database\Seeders;
 
@@ -8,15 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class MediaTableSeeder extends Seeder
 {
-/**
-* Run the database seeds.
-*/
-public function run()
-{
- $file_path = resource_path('sql/media.sql');
+    /**
+     * Run the database seeds.
+     */
+    public function run()
+    {
+        $file_path = resource_path('sql/media.sql');
 
-        DB::unprepared(
-            file_get_contents($file_path)
-        );
-}
+        DB::unprepared(file_get_contents($file_path));
+    }
 }
