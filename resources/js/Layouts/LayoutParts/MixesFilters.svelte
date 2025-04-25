@@ -47,7 +47,7 @@
             class="items-between flex w-fit flex-1 flex-col flex-wrap justify-end gap-y-2 overflow-auto pb-2 pt-10 backdrop-blur-sm sm:gap-y-1"
         >
             <Button
-                class="border-1 mb-4 h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full border-l-0 border-primary-500 !bg-transparent !text-lg !font-light !text-white transition-all duration-150 ease-in-out hover:pl-6
+                class="border-1 mb-4 h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full border-l-0 border-primary-500 !bg-uiDark-800 !bg-opacity-50 !text-lg !font-light !text-white transition-all duration-150 ease-in-out hover:pl-6
                                    "
                 onclick={() => {
                     router.visit('/cuisines');
@@ -75,13 +75,13 @@
         </div>
     {/if}
     <div
-        class="!z-999 pointer-events-auto flex w-fit !cursor-pointer items-center gap-2 rounded-r-full bg-primary-600 p-2 pl-1 shadow-lg shadow-uiDark-500"
+        class="!z-999 group pointer-events-auto relative flex w-fit !cursor-pointer items-center gap-2 rounded-r-full bg-primary-600 p-2 pl-1 shadow-lg shadow-uiDark-500"
     >
-        <FlowButton
+        <button
             onclick={() => {
                 showFilters = !showFilters;
             }}
-            class="w-fit px-1"
+            class="flex w-fit items-center px-1"
         >
             <Icon icon="mdi:filter" class="size-10" />
             <span class="text-base">
@@ -91,8 +91,8 @@
                     Cuisines &nbsp; &nbsp;
                 {/if}
             </span>
-        </FlowButton>
-        <Tooltip class="!z-[999] bg-uiDark-500">Filter mixes by cuisine</Tooltip>
+        </button>
+
         {#if selectedCuisineId}
             <button
                 onclick={(event) => {
@@ -105,6 +105,7 @@
                 <Icon icon="mdi:cross-circle" class="text-2xl" />
             </button>
         {/if}
+        <div class="popup smallPopup">Filter mixes by cuisine</div>
     </div>
 </div>
 <!-- </select> -->

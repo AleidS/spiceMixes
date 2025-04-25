@@ -98,7 +98,11 @@
                     >
                 </div>
                 {#if $page.props.auth.user}
-                    <Tooltip content={isOwn === false ? 'Show your mixes only' : 'Show all mixes'}>
+                    <div class="group relative w-fit">
+                        <div class="popup smallPopup">
+                            {isOwn === false ? 'Show your mixes only' : 'Show all mixes'}
+                        </div>
+
                         <Switch
                             text="Your mixes"
                             bind:checked={isOwn}
@@ -106,12 +110,12 @@
                                 setTimeout(applyFilter, 100);
                             }}
                         ></Switch>
-                    </Tooltip>
-                    <Tooltip
-                        content={isOwn === false
-                            ? 'Show your favorite mixes only'
-                            : 'Show all mixes'}
-                    >
+                    </div>
+
+                    <div class="group relative w-fit">
+                        <div class="popup smallPopup !-top-4 !-translate-y-28">
+                            {isOwn === false ? 'Show your favorite mixes only' : 'Show all mixes'}
+                        </div>
                         <Switch
                             text="Your favorites"
                             bind:checked={showFavorites}
@@ -119,7 +123,7 @@
                                 setTimeout(applyFilter, 100);
                             }}
                         ></Switch>
-                    </Tooltip>
+                    </div>
                 {:else}
                     <Link href={route('mixes.create')} class="ml-auto w-fit text-white sm:ml-0">
                         <Button class="w-fit text-nowrap !bg-primary-600 !text-white">

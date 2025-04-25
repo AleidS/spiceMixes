@@ -115,3 +115,20 @@ li {
 .popup{
    @apply absolute left-8 z-10 hidden w-64 rounded-md bg-uiDark-400 p-4 group-hover:block sm:-left-20 sm:w-80
 }
+.smallPopup{
+    @apply !left-8 !w-fit !-translate-y-20 !bg-uiDark-600 p-2;
+}
+.smallPopup::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -10px;
+	margin-bottom: -20px;
+    @apply border-t-uiDark-600;
+}
