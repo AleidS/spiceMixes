@@ -56,7 +56,7 @@ dialog form{
     @apply p-8 rounded-lg bg-uiDark-500 max-w-[600px] text-white m-auto my-auto;
 }
 .page {
-    @apply flex flex-col gap-6 rounded-lg bg-uiDark-700 p-0 md:p-8;
+    @apply flex flex-col gap-6 rounded-lg bg-uiDark-700 p-0 py-4 px-2 md:p-8;
 }
 .box {
     @apply rounded-md bg-uiDark-600 p-4 md:p-6 lg:p-8 2xl:p-10;
@@ -79,7 +79,7 @@ ul {
 }
 
 .inputClass{
-    @apply placeholder-uiGray-400 placeholder:font-normal inline-flex w-40 max-w-full flex-1 items-center rounded-md border border-transparent bg-uiGray-800 px-4 py-2 text-xs font-semibold tracking-widest text-white transition duration-150 ease-in-out hover:bg-uiGray-700 focus:bg-uiGray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-uiGray-900 dark:bg-uiDark-800 dark:text-uiGray-50 dark:hover:bg-uiDark-700 dark:focus:bg-uiDark-700 dark:focus:ring-offset-uiGray-800 dark:active:bg-uiGray-700 
+    @apply placeholder-uiGray-400 placeholder:font-normal inline-flex w-40 max-w-full flex-1 items-center rounded-md border border-transparent bg-uiGray-800 px-[6px] md:px-4 py-2 text-xs font-semibold tracking-widest text-white transition duration-150 ease-in-out hover:bg-uiGray-700 focus:bg-uiGray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-uiGray-900 dark:bg-uiDark-800 dark:text-uiGray-50 dark:hover:bg-uiDark-700 dark:focus:bg-uiDark-700 dark:focus:ring-offset-uiGray-800 dark:active:bg-uiGray-700 
 }
 .checkbox{
     @apply mb-1 mr-1 bg-uiDark-700 border border-uiDark-300 text-primary-500 focus:bg-uiDark-500 rounded-md;
@@ -118,8 +118,9 @@ li {
 .popup{
    @apply absolute left-8 z-10 hidden w-64 rounded-md bg-uiDark-400 p-4 group-hover:block sm:-left-20 sm:w-80
 }
+
 .smallPopup{
-    @apply !left-8 !w-fit !-translate-y-20 !bg-uiDark-600 p-2;
+    @apply !left-8 !w-fit !-translate-y-20 !bg-uiDark-500 p-2 group-hover:hidden lg:group-hover:block;
 }
 .smallPopup::after {
 	content: '';

@@ -9,7 +9,10 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.svelte',
     ],
-
+    future: {
+        // hoverOnlyWhenSupported: true,
+    },
+  // ...
     theme: {
         extend: {
             fontFamily: {

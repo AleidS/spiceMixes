@@ -63,7 +63,7 @@
         }}
         onclick={(calculator = false)}
     >
-        <div class="flex w-full items-center justify-between">
+        <div class="flex w-full items-center justify-between px-2">
             <Button class=" !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 ">
                 <Link href={route('home')} class="flex items-center gap-1 ">
                     <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
@@ -87,28 +87,30 @@
             {/if}
         </div>
         <div
-            class="flex w-full justify-between {calculator
+            class="flex w-full flex-wrap justify-between px-2 {calculator
                 ? 'pointer-events-none'
                 : 'pointer-events-auto'}"
         >
-            <h1 class="flex items-center gap-2 font-primary text-3xl font-medium">
+            <h1 class="flex w-full items-center gap-2 font-primary text-3xl font-medium">
                 {mix.data.name}
-                <FavoriteStar mix={mix.data} class="inline" />
             </h1>
 
             {#if mix.data.editable}
-                <ShareMix {mix} />
+                <div class="flex w-fit items-end">
+                    <FavoriteStar mix={mix.data} class="inline" />
+                    <ShareMix {mix} class="mt-2" />
+                </div>
             {/if}
         </div>
-        <div class="flex flex-wrap justify-stretch gap-6 md:justify-between">
+        <div class="flex flex-wrap items-stretch justify-stretch gap-6 md:justify-between">
             <div
-                class=" sm: relative h-[250px] w-full overflow-hidden rounded-md border border-uiGray-400 object-cover sm:max-w-[300px] md:max-w-[300px]"
+                class="relative max-h-[250px] !w-full !min-w-[calc(min(400px,100%))] flex-1 overflow-hidden rounded-md border border-uiGray-400 !bg-red-400 object-cover sm:max-h-[700px] md:max-w-[500px]"
             >
                 {#if !mix.data.avatar || imgError}
                     <img
                         src="/storage/pexels-martabranco-1340116.jpg"
                         alt="4 spoons with spices"
-                        class="max-h-full min-h-full min-w-full max-w-full overflow-hidden rounded-md object-cover object-center"
+                        class="max-h-full min-h-full w-full min-w-full max-w-full overflow-hidden rounded-md object-cover object-center"
                     />
                     <a
                         href={`https://www.pexels.com/photo/four-assorted-spices-on-wooden-spoons-1340116/`}
@@ -134,7 +136,9 @@
                 {/if}
             </div>
 
-            <div class="box flex flex-1 flex-col justify-between gap-y-4">
+            <div
+                class="box flex min-w-[calc(min(400px,100%))] flex-1 flex-col justify-between gap-y-4"
+            >
                 <div class="flex w-full items-start justify-between">
                     <div class="w-full">
                         <div class="flex w-full flex-1 items-start justify-between py-4">

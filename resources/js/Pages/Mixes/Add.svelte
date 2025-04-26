@@ -257,67 +257,92 @@
                         {/if}
                     </div>
 
-                    <div class="flex w-[300px] max-w-full flex-1 flex-col gap-4">
-                        <div class="box flex h-full flex-col gap-4">
+                    <div
+                        class="flex min-w-[calc(min(600px,100%))] max-w-full flex-1 flex-col gap-4"
+                    >
+                        <div class="box flex h-full flex-col gap-4 !p-4 !py-4 md:!px-6 md:!py-6">
                             <h3 class="">Ingredients</h3>
 
                             <div
                                 use:autoAnimate
-                                class="grid w-full grid-cols-1 items-end gap-2 lg:grid-cols-12"
+                                class="grid w-full grid-cols-12 items-end gap-2 lg:grid-cols-12"
                             >
-                                <div class="col-span-1 hidden lg:col-span-2 lg:block">Quantity</div>
-                                <div class="col-span-1 hidden lg:col-span-3 lg:block">Measure</div>
-                                <div class="col-span-1 hidden lg:col-span-4 lg:block">Name</div>
-                                <div class="col-span-1 hidden lg:col-span-2 lg:block">Optional</div>
-                                {#each $form.ingredients as ingredient, index}
-                                    <Input
-                                        label="Quantity"
-                                        labelMobileOnly
-                                        type="number"
-                                        bind:value={ingredient.quantity}
-                                        placeholder="Quantity"
-                                        wrapperClass="col-span-1 lg:col-span-2"
-                                        class=" text-black"
-                                        min="0"
-                                        step=".25"
-                                    />
-                                    <Input
-                                        label="Measure"
-                                        labelMobileOnly
-                                        options={measures.data}
-                                        type="select"
-                                        bind:value={ingredient.measure_id}
-                                        placeholder="Measure"
-                                        wrapperClass="col-span-1 lg:col-span-3"
-                                        class=" text-black"
-                                    />
-                                    <Input
-                                        label="Name"
-                                        labelMobileOnly
-                                        type="text"
-                                        bind:value={ingredient.name}
-                                        wrapperClass="col-span-1 lg:col-span-4"
-                                        placeholder="Name"
-                                        class="w-64 flex-1 text-black"
-                                    />
-                                    <div class="flex items-center">
-                                        <span class="block sm:hidden">optional </span><input
-                                            type="checkbox"
-                                            bind:checked={ingredient.optional}
-                                            class="checkbox mb-2 ml-2"
-                                        />
+                                <div class="col-span-2 py-2 text-sm lg:col-span-2 lg:text-base">
+                                    <div class="w-fit -rotate-45 lg:rotate-0">Quantity</div>
+                                </div>
+                                <div class="col-span-3 py-2 text-sm lg:col-span-3 lg:text-base">
+                                    <div class="w-fit -rotate-45 lg:rotate-0">Measure</div>
+                                </div>
+                                <div class="col-span-5 py-2 text-sm lg:col-span-4 lg:text-base">
+                                    <div class="w-fit translate-y-1 -rotate-45 lg:rotate-0">
+                                        Name
                                     </div>
-                                    <Button
-                                        type="button"
-                                        onclick={() => {
-                                            $form.ingredients.splice(index, 1);
-                                            $form.ingredients = $form.ingredients;
-                                        }}
-                                        class="col-span-1 w-fit !bg-transparent !text-danger-200 lg:col-span-2"
+                                </div>
+                                <div
+                                    class="col-span-1 py-2 text-sm lg:col-span-2 lg:block lg:text-left lg:text-base"
+                                >
+                                    <div class="w-fit -translate-x-4 -rotate-45 lg:rotate-0">
+                                        Optional
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-span-1 px-2 py-2 text-sm lg:col-span-2 lg:block lg:text-left lg:text-base"
+                                >
+                                    <div class="w-fit -rotate-45 lg:rotate-0"></div>
+                                </div>
+                                <div class="col-span-12 h-0"></div>
+                                {#each $form.ingredients as ingredient, index}
+                                    <div
+                                        class="col-span-12 grid w-full grid-cols-12 !content-center items-center gap-1 gap-y-1 lg:col-span-12 lg:grid-cols-12"
                                     >
-                                        <Icon icon="mdi:trash" class="mb-[2px] size-3" />
-                                        Remove
-                                    </Button>
+                                        <Input
+                                            type="number"
+                                            bind:value={ingredient.quantity}
+                                            placeholder="Quantity"
+                                            wrapperClass="col-span-2 lg:col-span-2 "
+                                            class="text-black"
+                                            min="0"
+                                            step=".25"
+                                        />
+                                        <Input
+                                            options={measures.data}
+                                            type="select"
+                                            bind:value={ingredient.measure_id}
+                                            placeholder="Measure"
+                                            wrapperClass="col-span-3 lg:col-span-3"
+                                            class=" text-black"
+                                        />
+                                        <Input
+                                            type="text"
+                                            bind:value={ingredient.name}
+                                            wrapperClass="col-span-5 lg:col-span-4 "
+                                            placeholder="Name"
+                                            class=" w-64 flex-1 text-black"
+                                        />
+                                        <div
+                                            class="col-span-1 flex items-center justify-start px-1 lg:col-span-1 lg:translate-x-0"
+                                        >
+                                            <span class="hidden">optional </span><input
+                                                type="checkbox"
+                                                bind:checked={ingredient.optional}
+                                                class="checkbox mb-2 ml-0 lg:ml-2"
+                                            />
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onclick={() => {
+                                                $form.ingredients.splice(index, 1);
+                                                $form.ingredients = $form.ingredients;
+                                            }}
+                                            class="!sm:justify-center col-span-1 flex items-center !justify-end gap-1 !text-danger-200 lg:col-span-2 lg:translate-x-0"
+                                        >
+                                            <span class="hidden items-center gap-2 lg:flex">
+                                                <Icon icon="mdi:trash" class="mb-[2px] size-3" />
+                                                remmove</span
+                                            >
+                                            <span class="block lg:hidden"> x </span>
+                                        </button>
+                                    </div>
                                 {/each}
                             </div>
                             <Button
@@ -419,32 +444,35 @@
                     <br />
                     {#if $form.share_mix}
                         <p>
-                            Great! I'll review them when I have time.
+                            Great! I'll review them when I have time:)
                             <br /><br />
                             <strong>Please read: </strong><br />
-                            -Images will not be included. <br />
-                            -You will retain your own copy of the mix, but you won't be able to edit
-                            the public one anymore. <br />
-                            -Details might be changed to fit the audience.<br />
-                            -You won't be able to claim any rights regarding your submission. <br />
+                            -You will not be able to edit the public version of your mix or claim any
+                            rights associated with your submission <br />
+                            -Details might be changed and images will not be included.<br />
                             -Only submit mixes that are your own original recipes (i.e. if it's a common
-                            blend, it must be your own variation) <br />
-                            -If you have submitted this mix before, it will not be reviewed again. Submit
-                            a new variant instead.
+                            blend, it must be your own variation)
                             <br /><br />
+
+                            <strong>
+                                Please confirm you have read these terms and this is your own
+                                original mix:
+                            </strong>
+                            <br />
+                            <br />
+                            I Agree
+                            <input
+                                label="this is my own original mix"
+                                type="checkbox"
+                                bind:checked={$form.share_is_original}
+                                class="checkbox ml-2"
+                            />
                         </p>
-                        Please confirm you have read these terms and this is your own original mix:
-                        <input
-                            label="this is my own original mix"
-                            type="checkbox"
-                            bind:checked={$form.share_is_original}
-                            class="checkbox ml-2"
-                        />
-                        <br />
+
                         <br />
                         <p>
                             If you want credits (in the description) please enter your name or
-                            pseudonym here. <br /> This cannot be changed or removed once accepted;
+                            pseudonym here. This cannot be changed or removed once accepted.
                             <br /><br />
                         </p>
 
@@ -475,7 +503,7 @@
                     <Button class=" w-fit !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400">
                         <Link href={route('home')} class="flex items-center gap-1 ">
                             <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
-                            Back to Mixes / Cancel
+                            Go Back / Cancel
                         </Link>
                     </Button>
                     <Tooltip triggeredBy="#submitbutton">
