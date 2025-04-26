@@ -250,11 +250,8 @@
                 Hello!
                 <br />
                 <br />
-                Please be aware this website is under construction and hiccups might occur (backup your
-                recipes!)
-
-                <br /><br />
-                That aside, hope you find this useful and happy cooking!:)
+                Please be aware this website is still a work in progress and hiccups might occur (backup
+                your recipes!)
                 <br /><br />
             </p>
             <Button type="submit">Understood!</Button>

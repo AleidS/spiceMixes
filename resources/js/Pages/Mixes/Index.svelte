@@ -77,7 +77,9 @@
                         </Button>
                     </Link>
                 {/if}
-                <div class="-gap-2 order-1 flex w-full items-stretch sm:order-none sm:w-fit">
+                <div
+                    class="-gap-2 order-1 flex w-full translate-x-2 items-stretch sm:order-none sm:w-fit"
+                >
                     <TextInput
                         onkeydown={(event) => {
                             if (event.key === 'Enter') {
@@ -93,7 +95,7 @@
 
                     <Button
                         onclick={applyFilter}
-                        class="z-10 my-[1px] -ml-2 !rounded-l-lg !rounded-r-full !bg-primary-600"
+                        class="z-10 my-[1px] -ml-2 -translate-x-4 scale-105 !rounded-full !bg-primary-600"
                         ><Icon icon="mdi:magnify" class="text-xl text-white" /></Button
                     >
                 </div>
@@ -113,8 +115,14 @@
                     </div>
 
                     <div class="group relative w-fit">
-                        <div class="popup smallPopup !-top-4 !-translate-y-28">
-                            {isOwn === false ? 'Show your favorite mixes only' : 'Show all mixes'}
+                        <div
+                            class="popup smallPopup !-top-4 !-translate-y-8 {showFavorites === true
+                                ? '!top-0'
+                                : ''}"
+                        >
+                            {showFavorites === false
+                                ? 'Show your favorite mixes only'
+                                : 'Show all mixes'}
                         </div>
                         <Switch
                             text="Your favorites"

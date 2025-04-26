@@ -11,7 +11,7 @@
     <!-- User ID: {$page.props.auth.user.id} -->
     <div class="box m-auto mt-10 !max-w-[700px]">
         <h1>Contact</h1>
-        <div class="flex-1">
+        <div class="mt-4 flex-1">
             <!-- <h4>Ingredients:</h4> -->
             <p>
                 For questions, remarks and suggestions, please email me at;

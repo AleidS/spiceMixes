@@ -50,7 +50,7 @@
 </script>
 
 <svelte:head>
-    <title>{mix.data.name}</title>
+    <title>{mix?.data?.name ?? 'mix'}</title>
 </svelte:head>
 
 <AuthenticatedLayout>
@@ -61,9 +61,11 @@
         onkeyup={() => {
             calculator = false;
         }}
-        onclick={(calculator = false)}
+        onclick={() => {
+            calculator = false;
+        }}
     >
-        <div class="flex w-full items-center justify-between px-2">
+        <div class="flex w-full items-center justify-between gap-6 px-2">
             <Button class=" !bg-secondary-600 !text-uiGray-50 hover:bg-secondary-400 ">
                 <Link href={route('home')} class="flex items-center gap-1 ">
                     <Icon icon="mdi:arrow-left-circle" class="mb-[2px] size-4" />
@@ -91,20 +93,30 @@
                 ? 'pointer-events-none'
                 : 'pointer-events-auto'}"
         >
-            <h1 class="flex w-full items-center gap-2 font-primary text-3xl font-medium">
+            <h1 class="flex w-full items-center gap-2 font-primary text-3xl font-medium sm:w-fit">
                 {mix.data.name}
+                <span class="hidden items-center sm:flex">
+                    <FavoriteStar mix={mix.data} class="inline" /></span
+                >
+                {#if !mix.data.editable}
+                    <span class=" flex items-center sm:hidden">
+                        <FavoriteStar mix={mix.data} /></span
+                    >
+                {/if}
             </h1>
 
-            {#if mix.data.editable}
-                <div class="flex w-fit items-end">
-                    <FavoriteStar mix={mix.data} class="inline" />
+            <div class="flex w-fit items-end">
+                {#if mix.data.editable}
+                    <span class="flex items-center sm:hidden">
+                        <FavoriteStar mix={mix.data} /></span
+                    >
                     <ShareMix {mix} class="mt-2" />
-                </div>
-            {/if}
+                {/if}
+            </div>
         </div>
         <div class="flex flex-wrap items-stretch justify-stretch gap-6 md:justify-between">
             <div
-                class="relative max-h-[250px] !w-full !min-w-[calc(min(400px,100%))] flex-1 overflow-hidden rounded-md border border-uiGray-400 !bg-red-400 object-cover sm:max-h-[700px] md:max-w-[500px]"
+                class="relative max-h-[250px] !w-full !min-w-[calc(min(400px,100%))] flex-1 overflow-hidden rounded-md border border-uiGray-400 object-cover sm:max-h-[700px] md:max-w-[500px]"
             >
                 {#if !mix.data.avatar || imgError}
                     <img

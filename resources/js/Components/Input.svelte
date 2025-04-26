@@ -39,7 +39,7 @@
         <textarea
             bind:value
             {...attrs}
-            class="inputClass w-full min-w-full h-fit{className}"
+            class="inputClass h-fit w-full min-w-full {className}"
             rows="5"
         >
         </textarea>

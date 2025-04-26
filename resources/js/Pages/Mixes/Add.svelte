@@ -188,7 +188,7 @@
                         ondragenter={(e) => e.preventDefault()}
                         aria-label="File upload dropzone"
                         role="region"
-                        class="flex h-fit w-full flex-col items-center justify-start rounded-md bg-uiDark-600 md:h-auto md:w-fit"
+                        class="flex h-fit w-full flex-col items-center justify-start rounded-md bg-uiDark-600 p-4 py-8 md:h-auto md:w-fit"
                     >
                         <FileUpload class="h-auto w-96">
                             {#snippet children(fileUpload)}
@@ -265,7 +265,7 @@
 
                             <div
                                 use:autoAnimate
-                                class="grid w-full grid-cols-12 items-end gap-2 lg:grid-cols-12"
+                                class="grid w-full grid-cols-12 items-end gap-2 lg:grid-cols-11"
                             >
                                 <div class="col-span-2 py-2 text-sm lg:col-span-2 lg:text-base">
                                     <div class="w-fit -rotate-45 lg:rotate-0">Quantity</div>
@@ -281,7 +281,9 @@
                                 <div
                                     class="col-span-1 py-2 text-sm lg:col-span-2 lg:block lg:text-left lg:text-base"
                                 >
-                                    <div class="w-fit -translate-x-4 -rotate-45 lg:rotate-0">
+                                    <div
+                                        class="w-fit -translate-x-4 -rotate-45 sm:translate-x-0 lg:rotate-0"
+                                    >
                                         Optional
                                     </div>
                                 </div>
@@ -293,14 +295,14 @@
                                 <div class="col-span-12 h-0"></div>
                                 {#each $form.ingredients as ingredient, index}
                                     <div
-                                        class="col-span-12 grid w-full grid-cols-12 !content-center items-center gap-1 gap-y-1 lg:col-span-12 lg:grid-cols-12"
+                                        class="col-span-12 grid w-full grid-cols-12 !content-center items-center gap-1 gap-y-1 lg:col-span-11 lg:grid-cols-11"
                                     >
                                         <Input
                                             type="number"
                                             bind:value={ingredient.quantity}
                                             placeholder="Quantity"
                                             wrapperClass="col-span-2 lg:col-span-2 "
-                                            class="text-black"
+                                            class="text-black placeholder:text-transparent md:placeholder:text-uiGray-200"
                                             min="0"
                                             step=".25"
                                         />
@@ -334,13 +336,13 @@
                                                 $form.ingredients.splice(index, 1);
                                                 $form.ingredients = $form.ingredients;
                                             }}
-                                            class="!sm:justify-center col-span-1 flex items-center !justify-end gap-1 !text-danger-200 lg:col-span-2 lg:translate-x-0"
+                                            class="!sm:justify-center col-span-1 flex items-center !justify-end gap-1 !text-danger-200 lg:col-span-1 lg:translate-x-0"
                                         >
-                                            <span class="hidden items-center gap-2 lg:flex">
+                                            <span class="hidden items-center gap-2 xl:flex">
                                                 <Icon icon="mdi:trash" class="mb-[2px] size-3" />
-                                                remmove</span
+                                                remove</span
                                             >
-                                            <span class="block lg:hidden"> x </span>
+                                            <span class="block xl:hidden"> x </span>
                                         </button>
                                     </div>
                                 {/each}
@@ -396,7 +398,7 @@
                     {/if}
                 </div>
 
-                <div class="box flex items-center gap-2">
+                <div class="box flex flex-wrap items-center gap-6">
                     <Input
                         label="*Cuisine"
                         type="select"
@@ -406,7 +408,9 @@
                         class="text-black"
                         error={errors.cuisine_id}
                     />
-                    <a href="/cuisines" target="_blank" class="underline">Manage cuisines</a>
+                    <a href="/cuisines" target="_blank" class="w-full underline md:w-fit"
+                        >Manage cuisines</a
+                    >
                 </div>
                 <div class="box flex flex-wrap gap-4">
                     <Input
@@ -487,15 +491,18 @@
                     {/if}
                 </div>
 
-                <div class="w-full p-2 text-right font-light">
-                    By uploading my content I agree to the
-                    <a href="/uploadTerms" target="_blank" class="tab-link-class underline">
-                        upload terms and conditions
-                    </a>
-                    and
-                    <a href="/generalTerms" target="_blank" class="tab-link-class underline">
-                        general terms and conditions
-                    </a>
+                <div class="flex w-full items-center justify-end gap-2 p-2 text-right font-light">
+                    <div>
+                        By uploading my content I agree to the
+                        <a href="/uploadTerms" target="_blank" class="tab-link-class underline">
+                            upload terms and conditions
+                        </a>
+                        and
+                        <a href="/generalTerms" target="_blank" class="tab-link-class underline">
+                            general terms and conditions
+                        </a>
+                    </div>
+
                     <input type="checkbox" bind:checked={termsAccepted} class="checkbox ml-2" />
                 </div>
 
