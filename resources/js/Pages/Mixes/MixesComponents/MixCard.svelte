@@ -42,7 +42,7 @@
     </div>
     <div class="absolute left-2 top-1 my-auto scale-125"><FavoriteStar {mix} /></div>
     <div
-        class="absolute bottom-0 left-0 z-0 w-full rounded-b-lg bg-primary-900 bg-opacity-10 p-4 text-center font-secondary text-2xl font-light text-white backdrop-blur-md backdrop-brightness-50"
+        class="absolute bottom-0 left-0 z-0 w-full rounded-b-lg bg-primary-900 bg-opacity-10 p-4 text-center font-secondary text-xl font-light text-white backdrop-blur-md backdrop-brightness-50"
     >
         {mix.name}
     </div>

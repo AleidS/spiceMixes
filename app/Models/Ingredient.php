@@ -21,7 +21,7 @@ class Ingredient extends Model
     public function getTransformedNameAttribute()
     {
         // Remove 'ground', 'dried', and 'powder' from the name
-        return trim(preg_replace('/\b(ground|dried|powder)\b/i', '', $this->name));
+        return trim(preg_replace('/\b(ground|dried|powder|seeds)\b/i', '', $this->name));
     }
 
     public function alternatives()
