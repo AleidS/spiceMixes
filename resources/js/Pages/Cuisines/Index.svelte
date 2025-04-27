@@ -20,7 +20,7 @@
     <!-- User ID: {$page.props.auth.user.id} -->
 
     <div
-        class="z-1 relative m-auto mt-10 flex h-fit max-w-[950px] flex-1 flex-wrap items-start justify-start gap-2 gap-y-10 py-10"
+        class="z-1 relative m-auto mt-10 flex h-fit max-w-[950px] flex-1 flex-wrap items-start justify-start gap-2 gap-y-10"
     >
         <div class="w-full">
             <div

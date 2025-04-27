@@ -74,9 +74,12 @@
             </Button>
             {#if mix.data.editable}
                 <Link href={route('mixes.edit', mix.data.id)}>
-                    <Button primary>
+                    <Button
+                        primary={mix.data.user_id == null ? 'false' : 'true'}
+                        class={mix.data.user_id == null ? '!bg-success-600' : 'bg-primary-600'}
+                    >
                         <Icon icon="mdi:pencil" class="" />
-                        Edit
+                        Edit {mix.data.user_id == null ? 'for everyone' : ''}
                     </Button>
                 </Link>
             {:else if $page.props.auth.user}
@@ -234,7 +237,7 @@
         {#if mix.data?.description}
             <div class="box">
                 <h4>Description</h4>
-                <p>{@html mix.data?.description}</p>
+                <p class="flex flex-col gap-1">{@html mix.data?.description}</p>
             </div>
         {/if}
 

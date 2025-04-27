@@ -62,6 +62,11 @@
             <div class="min-h-6 w-full text-uiDark-100">
                 {cuisines.data?.find((cuisine) => cuisine.id == cuisine_id)?.name}
             </div>
+            {#if $page.props.auth?.user?.is_admin}
+                <div class="mb-4">
+                    You are logged in as Admin. Mixes with green icons are public.
+                </div>
+            {/if}
             <div
                 class="flex h-fit w-full flex-1 flex-wrap items-center justify-between gap-2 gap-y-6 px-2"
             >

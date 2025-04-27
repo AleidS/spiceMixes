@@ -15,9 +15,12 @@
 >
     {#if mix.editable}
         <div
-            class="r-0 absolute -right-2 top-0 z-20 -mt-2 mr-0 w-fit rounded-full bg-primary-600 p-1 text-xl"
+            class="r-0 absolute -right-2 top-0 z-20 -mt-2 mr-0 w-fit rounded-full {mix.user_id ==
+            null
+                ? 'bg-success-600'
+                : 'bg-primary-600'} p-1 text-xl"
         >
-            <Icon icon="mdi:user" />
+            <Icon icon={mix.user_id == null ? 'mdi:people' : 'mdi:user'} />
         </div>
     {/if}
     <div class="!z-0 h-[300px] overflow-hidden rounded-md object-cover md:h-[180px] lg:h-[190px]">

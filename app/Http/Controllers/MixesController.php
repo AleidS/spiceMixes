@@ -337,10 +337,20 @@ class MixesController extends Controller
             return redirect()->route('home')->with('error', 'Mix not found.');
         }
 
-        // $this->cuisines = CuisineResource::collection(Cuisine::all());
-        // $this->measures = MeasureResource::collection(Measure::all());
-
-        // Transform the pagination result using MixesResource
+        $user = Auth::user();
+        $isAdmin = $user->is_admin;
+        $userId = Auth::id();
+        if ($mix->user_id != $userId && !$isAdmin) {
+            return redirect()
+                ->route('home')
+                ->with('error', 'You are not authorized to update this mix.');
+        }
+        // Admin cannot edit anyone elses mixes, just public
+        if ($isAdmin && $mix->user_id != null && $mix->user_id != $userId) {
+            return redirect()
+                ->route('home')
+                ->with('error', 'You are not authorized to update this mix.');
+        }
 
         $mixResource = new MixesResource($mix);
 
@@ -379,6 +389,19 @@ class MixesController extends Controller
         ]);
 
         $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
+        $user = Auth::user();
+        $isAdmin = $user->is_admin;
+        $userId = Auth::id();
+        if ($mix->user_id != $userId && !$isAdmin) {
+            return redirect()
+                ->route('home')
+                ->with('error', 'You are not authorized to update this mix.');
+        }
+        if ($isAdmin && $mix->user_id != null && $mix->user_id != $userId) {
+            return redirect()
+                ->route('home')
+                ->with('error', 'You are not authorized to update this mix.');
+        }
 
         // https://spatie.be/docs/laravel-medialibrary/v11/basic-usage/retrieving-media
         if ($request->hasFile('avatar')) {
@@ -446,6 +469,20 @@ class MixesController extends Controller
      */
     public function destroy($id)
     {
+        $mix = Mixes::with(['favoritedBy', 'cuisine'])->find($id);
+        $user = Auth::user();
+        $isAdmin = $user->is_admin;
+        $userId = Auth::id();
+        if ($mix->user_id != $userId && !$isAdmin) {
+            return redirect()
+                ->route('home')
+                ->with('error', 'You are not authorized to delete this mix.');
+        }
+        if ($isAdmin && $mix->user_id != null && $mix->user_id != $userId) {
+            return redirect()
+                ->route('home')
+                ->with('error', 'You are not authorized to delete this mix.');
+        }
         // dd($id);
         $mix = Mixes::find($id);
         // If someone deletes a mix with an image, delete the image.

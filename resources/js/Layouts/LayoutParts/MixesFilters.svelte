@@ -52,7 +52,7 @@
     {#if showFilters}
         <!-- {#if true} -->
         <div
-            class="items-between flex w-fit flex-1 flex-col flex-wrap justify-end gap-y-2 overflow-auto pb-2 pt-10 backdrop-blur-sm sm:gap-y-1"
+            class="items-between flex w-fit flex-1 flex-col flex-wrap justify-end gap-y-2 overflow-auto pb-2 pt-2 backdrop-blur-sm sm:gap-y-1"
         >
             <Button
                 class="border-1 mb-4 h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full border-l-0 border-primary-500 !bg-uiDark-800 !bg-opacity-50 !text-lg !font-light !text-white transition-all duration-150 ease-in-out hover:pl-6
@@ -66,7 +66,7 @@
             {#each cuisines.data as cuisine}
                 {#if cuisine.mixes_count > 0}
                     <Button
-                        class="h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full !bg-primary-600 !text-lg !text-white transition-all duration-150 ease-in-out hover:pl-6
+                        class="h-fit max-h-full w-fit origin-left rounded-l-none rounded-r-full !bg-primary-600 !py-[6px] !text-base !text-white transition-all duration-150 ease-in-out hover:pl-6
                                     {cuisine.id == selectedCuisineId
                             ? 'scale-x-99 left-5 border border-l-0 border-white'
                             : 'hover:scale-x-99 scale-x-95'}"

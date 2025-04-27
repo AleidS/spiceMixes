@@ -18,6 +18,14 @@ class MixesResource extends JsonResource
     public function toArray(Request $request): array
     {
         $currentUserId = Auth::id();
+        $userId = Auth::id();
+        $user = Auth::user();
+        if ($user) {
+            $isAdmin = $user->is_admin;
+        } else {
+            $isAdmin = false;
+        }
+
         $mix = Mixes::find($this->id);
         // dd($mix->allIngredients);
         // $ingredients2 = Mixes::find(1)->ingredients;
@@ -37,7 +45,8 @@ class MixesResource extends JsonResource
             'share_decline_reason' => $this->share_decline_reason,
             'cuisine' => new CuisineResource($this->whenLoaded('cuisine')),
             'favorite' => $this->isFavoritedByCurrentUser(),
-            'editable' => $this->user_id === $currentUserId && $this->user_id !== null,
+            'editable' =>
+                ($this->user_id === $currentUserId && $this->user_id !== null) || $isAdmin,
             'is_own' => $this->user_id === $currentUserId && $this->user_id !== null,
             // $this->cuisine->name : null, // Include the cuisine name
             'avatar' => $this?->getFirstMediaUrl('avatars'),

@@ -295,6 +295,7 @@
                                 <div class="col-span-12 h-0"></div>
                                 {#each $form.ingredients as ingredient, index}
                                     <div
+                                        key={index}
                                         class="col-span-12 grid w-full grid-cols-12 !content-center items-center gap-1 gap-y-1 lg:col-span-11 lg:grid-cols-11"
                                     >
                                         <Input
@@ -322,14 +323,35 @@
                                             class=" w-64 flex-1 text-black"
                                         />
                                         <div
-                                            class="col-span-1 flex items-center justify-start px-1 lg:col-span-1 lg:translate-x-0"
+                                            class="relative col-span-1 flex h-full items-center justify-start px-1 lg:col-span-1 lg:translate-x-0"
                                         >
                                             <span class="hidden">optional </span><input
                                                 type="checkbox"
                                                 bind:checked={ingredient.optional}
-                                                class="checkbox mb-2 ml-0 lg:ml-2"
+                                                class="checkbox mb-2 ml-0 translate-x-1 lg:ml-2"
                                             />
+                                            <button
+                                                type="button"
+                                                onclick={() => {
+                                                    $form.ingredients.splice(index, 0, {
+                                                        quantity: null,
+                                                        measure_id: null,
+                                                        name: null
+                                                    });
+                                                    $form.ingredients = $form.ingredients;
+                                                }}
+                                                class="!sm:justify-center absolute -left-1 bottom-5 col-span-1 flex h-full items-center !justify-end gap-1 !text-success-400"
+                                            >
+                                                <!-- <span class=" hidden items-center gap-2 xl:flex">
+                                                    <Icon
+                                                        icon="mdi:plus-circle"
+                                                        class="mb-[2px] size-4"
+                                                    />
+                                                </span> -->
+                                                <span class="n block"> + </span>
+                                            </button>
                                         </div>
+
                                         <button
                                             type="button"
                                             onclick={() => {
