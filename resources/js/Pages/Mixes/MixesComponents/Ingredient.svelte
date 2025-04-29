@@ -1,11 +1,6 @@
 <script>
     import Icon from '@iconify/svelte';
-    import {
-        wholeAndFraction,
-        multiplier,
-        transformIngredient,
-        useOriginals
-    } from '../MixesLogic/maths.svelte';
+    import { multiplier, transformIngredient } from '../MixesLogic/maths.svelte';
     let { measures, ingredient } = $props();
     let multiplierValue = $state(1);
     multiplier.subscribe((value) => {

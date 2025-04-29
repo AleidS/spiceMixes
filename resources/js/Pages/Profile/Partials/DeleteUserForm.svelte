@@ -43,9 +43,9 @@
     <header>
         <h4 class="text-lg font-medium text-uiGray-900 dark:text-uiGray-100">Delete Account</h4>
         <p class="mt-1 text-sm text-uiGray-600 dark:text-uiGray-400">
-            Once your account is deleted, all of its resources and data will be permanently deleted.
-            Before deleting your account, please download any data or information that you wish to
-            retain.
+            Once your account is deleted, you won't be able to restore it. Before deleting your
+            account, please download any data or information that you wish to retain. Also delete
+            any photos and recipes you want completely gone from the database.
         </p>
     </header>
 
@@ -58,9 +58,13 @@
             </h4>
 
             <p class="mt-1 text-sm text-uiGray-600 dark:text-uiGray-400">
-                Once your account is deleted, all of its resources and data will be permanently
-                deleted. Please enter your password to confirm you would like to permanently delete
-                your account.
+                Once your account is deleted, you won't be able to restore it. Please enter your
+                password to confirm you would like to permanently delete your account.
+                <br /><br />
+                <strong
+                    >If you used Google login, first logout, request a new password, then use it to
+                    delete your account.</strong
+                >
             </p>
 
             <div class="mt-6">

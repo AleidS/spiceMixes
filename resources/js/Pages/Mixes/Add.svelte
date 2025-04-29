@@ -46,7 +46,7 @@
 
     let termsAccepted = $state(false);
     $effect(() => {
-        console.log(mix?.data);
+        console.log(mix);
         if (mix?.data) {
             $form.name = mix.data.name;
             $form.ingredients = mix.data.ingredients;
@@ -118,13 +118,23 @@
         if (mix?.data.id) {
             // formData.avatar = 'lalala';
             router.post(`/mixes/${mix.data.id}`, $form, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
+                preserveState: true,
+                onError: () => {
+                    // Parse ingredients back to an array if validation fails
+                    $form.ingredients = JSON.parse($form.ingredients);
+                }
             });
         }
         //Else send the entire thing as a post request for a new row
         else {
             router.post(`/mixes`, $form, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
+                preserveState: true,
+                onError: () => {
+                    // Parse ingredients back to an array if validation fails
+                    $form.ingredients = JSON.parse($form.ingredients);
+                }
             });
         }
     }
