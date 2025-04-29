@@ -12,6 +12,7 @@
     // import { Tooltip } from '@svelte-plugins/tooltips';
     import Switch from '@/Components/Switch.svelte';
     import { Tooltip } from 'flowbite-svelte';
+    import DeleteMixDialog from './MixesComponents/DeleteMixDialog.svelte';
 
     // let fileUpload;
 
@@ -138,10 +139,10 @@
             });
         }
     }
+
+    let removeDialogOpen = $state(false);
     async function removeMix(event) {
-        console.log('deleting');
-        let formData = { ...$form };
-        router.delete(`/mixes/delete/${mix.data.id}`);
+        removeDialogOpen = !removeDialogOpen;
     }
 </script>
 
@@ -582,5 +583,7 @@
         Nope, manually typing in that url does not work :)
     {/if}
 </AuthenticatedLayout>
+
+<DeleteMixDialog bind:open={removeDialogOpen} {mix} {form} />
 
 <!-- <button onclick={deleteMix}>Delete Mix</button> -->
