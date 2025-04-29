@@ -25,7 +25,7 @@
 
         <div class="flex w-full justify-between">
             <Button type="submit" outline>Back</Button>
-            <Button type="submit" class="!bg-success-500 !text-white" onclick={remove}
+            <Button type="submit" class="!bg-danger-500 !text-white" onclick={remove}
                 >Yes, delete this mix</Button
             >
         </div>

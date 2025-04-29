@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('dutch_name');
-            $table->string('alternatives');
+            $table->string('alternatives', 2000);
             $table->timestamps();
         });
     }
