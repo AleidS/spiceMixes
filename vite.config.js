@@ -23,10 +23,10 @@ export default defineConfig({
      optimizeDeps: {
         exclude: ['js-big-decimal']
     },
-     build: {
-        outDir: 'static', // Output directory for the static build
-        rollupOptions: {
-            input: 'resources/index.html', // Entry point for the app
-        },
-    },
+    //  build: {
+    //     outDir: 'static', // Output directory for the static build
+    //     rollupOptions: {
+    //         input: 'resources/index.html', // Entry point for the app
+    //     },
+    // },
 });
