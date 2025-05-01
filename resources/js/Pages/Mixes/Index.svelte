@@ -23,7 +23,7 @@
     console.log(mixes);
     const updatedPageNumber = (page) => {
         pageNumber = page;
-        applyFilter();
+        applyFilter(true);
     };
 
     let cuisine_id = selectedCuisineId;
@@ -33,11 +33,11 @@
 
     import { Tooltip } from '@svelte-plugins/tooltips';
 
-    function applyFilter() {
+    function applyFilter(newpage = false) {
         router.get(
             '/',
             {
-                page: pageNumber,
+                page: newpage ? pageNumber : 0,
                 cuisine_id: cuisine_id,
                 is_own: isOwn,
                 show_favorites: showFavorites,
