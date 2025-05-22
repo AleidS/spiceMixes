@@ -28,16 +28,16 @@
                 for guidance, and used some copilot help too:)
 
                 <br /><br />Code can be found
-                <a class="underline" href="https://github.com/AleidS/spiceMixes">here</a>. Feel free
-                to adapt it for your own project. If you want to start a similar project from
-                scratch, here is a
+                <a class="underline" href="https://github.com/AleidS/spiceMixes">here</a>.
+                More info on this project (stack) is in the 
                 <a
                     class="underline"
-                    href="https://github.com/AleidS/spiceMixes/blob/main/how_to_set_up_svelte_laravel_breeze_inertia_project.docx"
-                    >how-to.
-                </a>
+                    href="https://www.notion.so/Spicemixes-project-1d1bb3b2e78080ecb630c03ee0738bfc?pvs=4"
+                    >Notion docs
+                </a>.
+                <br/><br/>
                 The documentation on the combination of Svelte/Laravel is a bit sparse, so that might
-                be a challenge.
+                be a challenge if you're looking to make something similar.
             </p>
         </div>
     </div>
