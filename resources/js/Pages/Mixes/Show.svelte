@@ -181,7 +181,7 @@
                                 <Ingredient {ingredient} {mix} {measures} />
                             {/each}
 
-                            {#if mix.data.ingredients.filter((ingredient) => ingredient.optional == 1).length > 0}
+                            {#if mix.data.ingredients.filter((ingredient) => ingredient.optional == 1 || ingredient.optional == '1').length > 0}
                                 <div class="mb-1 mt-2"><strong>Optional:</strong></div>
                                 {#each mix.data.ingredients.filter((ingredient) => ingredient.optional == 1 || ingredient.optional == '1') as ingredient}
                                     <Ingredient {ingredient} {mix} {measures} />
